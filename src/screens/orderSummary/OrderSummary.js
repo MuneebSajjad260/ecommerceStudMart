@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect} from "react";
 import {
   View,
   Text,
@@ -6,30 +6,30 @@ import {
   TouchableOpacity,
   Image,
   FlatList,
-} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {useDispatch} from "react-redux";
-import moment from "moment";
+} from "react-native";
+import {SafeAreaView} from "react-native-safe-area-context";
+import {useDispatch} from 'react-redux';
+import moment from 'moment';
 
-import {RetrieveOrder} from "../../services/actions/RetrieveOrder";
-import Wrapper from "../../components/Wrapper";
-import {renderStatusBar} from "../../utils/functions";
-import styles from "./Styles/OrderSummaryStyle";
-import {components} from "../../components";
-import UserCheck from "../../svg/UserCheck";
-import {theme} from "../../constants";
-import CreditCard from "../../svg/CreditCard";
-import VisaSvg from "../../svg/VisaSvg";
-import Card from "../../components/OrderSummaryCard";
-import Up from '../../svg/Up';
-import Down from "../../svg/Down";
-import RatingCardSvg from '../../svg/RatingCardSvg';
+import {RetrieveOrder} from '../../services/actions/RetrieveOrder';
+import Wrapper from '../../components/Wrapper';
+import {renderStatusBar} from '../../utils/functions';
+import styles from './Styles/OrderSummaryStyle';
+import {components} from '../../components';
+import UserCheck from '../../svg/UserCheck';
+import {theme} from '../../constants';
+import CreditCard from '../../svg/CreditCard';
+import VisaSvg from '../../svg/VisaSvg';
+import Card from '../../components/OrderSummaryCard';
+import Up from "../../svg/Up";
+import Down from '../../svg/Down';
+import RatingCardSvg from "../../svg/RatingCardSvg";
 
 const OrderSummary = ({route}) => {
   const dispatch = useDispatch();
   const {deliveryMethod, orderId} = route.params;
-  console.log('delivery method--', deliveryMethod);
-  console.log("order id --", orderId);
+  console.log("delivery method--", deliveryMethod);
+  console.log('order id --', orderId);
 
   //STATE
   const [up, setUp] = useState(false);
@@ -43,11 +43,11 @@ const OrderSummary = ({route}) => {
     dispatch(RetrieveOrder(orderId))
       .unwrap()
       .then((result) => {
-        console.log("retrieve order result--", result);
+        console.log('retrieve order result--', result);
         setRetrieveOrder(result);
       })
       .catch((err) => {
-        console.log('retrieve order error--', err);
+        console.log("retrieve order error--", err);
       })
       .finally(() => {
         setLoading(false);
@@ -71,11 +71,11 @@ const OrderSummary = ({route}) => {
     return (
       <View style={styles.contentContainer}>
         <Card
-          imageSource={require("../../assets/orderSummaryCard.png")}
+          imageSource={require('../../assets/orderSummaryCard.png')}
           heading={
-            deliveryMethod == 'self' ? 'Self pickup' : 'Standard delivery'
+            deliveryMethod == "self" ? "Self pickup" : "Standard delivery"
           }
-          Heading2={deliveryMethod == "self" ? "Pick up time" : "Estimated"}
+          Heading2={deliveryMethod == 'self' ? 'Pick up time' : 'Estimated'}
           time="May 08, 2023 06 - 08 pm "
         />
         <Text style={styles.statusTxt}>Status</Text>
@@ -96,11 +96,11 @@ const OrderSummary = ({route}) => {
       <View style={styles.contentContainer}>
         <Wrapper>
           <View
-            style={[styles.flexDirection, {justifyContent: 'space-between'}]}
+            style={[styles.flexDirection, {justifyContent: "space-between"}]}
           >
             <Text style={styles.placedBy}>{`Placed on: ${moment(
               retrieveOrder?.date_created,
-            ).format("DD MMMM, YYYY")}`}</Text>
+            ).format('DD MMMM, YYYY')}`}</Text>
             {retrieveOrder?.line_items &&
             retrieveOrder?.line_items.length > 1 ? (
               <TouchableOpacity onPress={handleIconToggle}>
@@ -120,13 +120,13 @@ const OrderSummary = ({route}) => {
               return (
                 <View
                   key={index}
-                  style={[styles.flexDirection, {alignItems: "center"}]}
+                  style={[styles.flexDirection, {alignItems: 'center'}]}
                 >
                   {/* {console.log("item0-", item)} */}
                   <View style={styles.imageContainer}>
                     <Image
                       key={Number(item?.image?.id)}
-                      style={{height: "100%", width: "100%"}}
+                      style={{height: '100%', width: '100%'}}
                       source={{uri: item?.image?.src}}
 
                       //resizeMode='cover'
@@ -138,7 +138,7 @@ const OrderSummary = ({route}) => {
                     <View
                       style={[
                         styles.flexDirection,
-                        {justifyContent: 'space-between', width: '70%'},
+                        {justifyContent: "space-between", width: "70%"},
                       ]}
                     >
                       <Text
@@ -164,7 +164,7 @@ const OrderSummary = ({route}) => {
     return (
       <View style={[styles.contentContainer, {marginTop: theme.MARGINS.hy10}]}>
         <Wrapper style={styles.ratingCardCont}>
-          <View style={[styles.flexDirection, {alignItems: "center"}]}>
+          <View style={[styles.flexDirection, {alignItems: 'center'}]}>
             <RatingCardSvg />
             <View style={styles.ratingTxtCont}>
               <Text style={styles.leaveRatingTxt}>Please leave a rating</Text>
@@ -185,23 +185,23 @@ const OrderSummary = ({route}) => {
     return (
       <View style={styles.contentContainer}>
         <Text style={styles.heading}>
-          {deliveryMethod == 'self' ? 'Pick up details' : 'Shipping'}
+          {deliveryMethod == "self" ? "Pick up details" : "Shipping"}
         </Text>
         <Wrapper>
-          <View style={[styles.flexDirection, {alignItems: 'center'}]}>
+          <View style={[styles.flexDirection, {alignItems: "center"}]}>
             <View style={styles.userCheck}>
               <UserCheck />
             </View>
 
             <View style={styles.productDetailCont}>
               <Text style={styles.name}>
-                {deliveryMethod == 'ship'
+                {deliveryMethod == "ship"
                   ? `${retrieveOrder?.billing?.first_name} ${retrieveOrder?.billing?.last_name}`
                   : retrieveOrder?.vendor_detail?.vendor_name}
               </Text>
 
               <Text style={styles.email}>
-                {deliveryMethod == 'ship'
+                {deliveryMethod == "ship"
                   ? retrieveOrder?.billing?.email
                   : retrieveOrder?.vendor_detail?.email}
               </Text>
@@ -213,11 +213,9 @@ const OrderSummary = ({route}) => {
               {marginLeft: 65, marginTop: theme.MARGINS.hy5},
             ]}
           >
-            {deliveryMethod == "ship" 
-            ?
-            `${retrieveOrder?.meta_data[0]?.value}, Building no.${retrieveOrder?.meta_data[2]?.value}, Street ${retrieveOrder?.meta_data[1]?.value}`
-             :
-              `${retrieveOrder?.vendor_detail?.zone}, Building no.${retrieveOrder?.vendor_detail?.building}, Street ${retrieveOrder?.vendor_detail?.street}`}
+            {deliveryMethod == 'ship'
+              ? `${retrieveOrder?.meta_data[0]?.value}, Building no.${retrieveOrder?.meta_data[2]?.value}, Street ${retrieveOrder?.meta_data[1]?.value}`
+              : `${retrieveOrder?.vendor_detail?.zone}, Building no.${retrieveOrder?.vendor_detail?.building}, Street ${retrieveOrder?.vendor_detail?.street}`}
           </Text>
           <Text
             style={[
@@ -225,7 +223,7 @@ const OrderSummary = ({route}) => {
               {marginTop: theme.MARGINS.hy10, marginLeft: 65},
             ]}
           >
-            {deliveryMethod == "ship"
+            {deliveryMethod == 'ship'
               ? retrieveOrder?.billing?.phone
               : retrieveOrder?.vendor_detail?.phone}
           </Text>
@@ -235,17 +233,17 @@ const OrderSummary = ({route}) => {
   };
 
   // Function to remove leading zeros and convert to a number
-function parsePrice(price) {
-  return Number(price.replace(/^0+/, ''));
-}
+  function parsePrice(price) {
+    return Number(price.replace(/^0+/, ""));
+  }
   // Function to calculate the total price
-function calculateTotalPrice(items) {
-  let totalPrice = 0;
-  items?.forEach((item) => {
-    totalPrice += parsePrice(item?.total);
-  });
-  return totalPrice;
-}
+  function calculateTotalPrice(items) {
+    let totalPrice = 0;
+    items?.forEach((item) => {
+      totalPrice += parsePrice(item?.total);
+    });
+    return totalPrice;
+  }
 
   //PAYMENT DETAILS
 
@@ -255,7 +253,7 @@ function calculateTotalPrice(items) {
         <Text style={styles.heading}>Payment</Text>
 
         <Wrapper>
-          <View style={[styles.flexDirection, {alignItems: "center"}]}>
+          <View style={[styles.flexDirection, {alignItems: 'center'}]}>
             <VisaSvg />
             <Text style={styles.visaTxt}>Visa **8845</Text>
           </View>
@@ -267,7 +265,9 @@ function calculateTotalPrice(items) {
                   style={styles.itemNo}
                 >{`(${retrieveOrder?.line_items.length} Item)`}</Text>
               </View>
-              <Text style={styles.orderSummary}>{`QAR ${calculateTotalPrice(retrieveOrder?.line_items).toFixed(2)}`}</Text>
+              <Text style={styles.orderSummary}>{`QAR ${calculateTotalPrice(
+                retrieveOrder?.line_items,
+              ).toFixed(2)}`}</Text>
             </View>
             <View style={styles.priceContALLign}>
               <Text style={styles.orderSummary}>Discount:</Text>
@@ -275,7 +275,9 @@ function calculateTotalPrice(items) {
             </View>
             <View style={styles.priceContALLign}>
               <Text style={styles.orderSummary}>shipping fee</Text>
-              <Text style={styles.orderSummary}>{`QAR ${retrieveOrder?.shipping_total}`}</Text>
+              <Text
+                style={styles.orderSummary}
+              >{`QAR ${retrieveOrder?.shipping_total}`}</Text>
             </View>
             <View
               style={[
@@ -284,7 +286,9 @@ function calculateTotalPrice(items) {
               ]}
             >
               <Text style={styles.total}>Total</Text>
-              <Text style={styles.totalPrice}>{`QAR ${retrieveOrder?.total}`}</Text>
+              <Text
+                style={styles.totalPrice}
+              >{`QAR ${retrieveOrder?.total}`}</Text>
             </View>
           </View>
         </Wrapper>
@@ -312,8 +316,8 @@ function calculateTotalPrice(items) {
             <Text
               style={[styles.responsibilityDesc, {color: theme.COLORS.darkRed}]}
             >
-              {" "}
-              communicate with each other{" "}
+              {' '}
+              communicate with each other{' '}
             </Text>
             and conduct their own due diligence before making any transactions.
           </Text>
@@ -330,9 +334,9 @@ function calculateTotalPrice(items) {
         style={[styles.contentContainer, {marginBottom: theme.MARGINS.hy20}]}
       >
         <components.SecondaryButton
-          title={"Browse products"}
+          title={'Browse products'}
           onPress={() => {
-            console.log(' i am browse button');
+            console.log(" i am browse button");
           }}
         />
       </View>
@@ -345,12 +349,12 @@ function calculateTotalPrice(items) {
       <ScrollView showsVerticalScrollIndicator={false}>
         {deliveryTime()}
         {productCard()}
-        {retrieveOrder?.status == 'completed' ? ratingCard() : null}
+        {retrieveOrder?.status == "completed" ? ratingCard() : null}
         {shippingDetails()}
 
-        {deliveryMethod == 'self' ? null : paymentDetails()}
+        {deliveryMethod == "self" ? null : paymentDetails()}
 
-        {deliveryMethod == 'self' ? resposibilityStatement() : null}
+        {deliveryMethod == "self" ? resposibilityStatement() : null}
 
         {browseButton()}
       </ScrollView>
