@@ -28,9 +28,12 @@ const wishlistSlice = createSlice({
         state.list = state.list.filter((item) => item.id !== action.payload.id);
       }
     },
+    clearWishlist: (state) => {
+      state.list = []; // Set the list to an empty array to clear all items
+    },
   },
 });
 
-export const { addToWishlist, removeFromWishlist } = wishlistSlice.actions;
+export const { addToWishlist, removeFromWishlist ,clearWishlist} = wishlistSlice.actions;
 
 export default wishlistSlice.reducer;

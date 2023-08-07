@@ -20,6 +20,8 @@ const Header = ({
   bag,
   searchIcon,
   level,
+  clearAll,
+  clearList
 }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -36,8 +38,8 @@ const Header = ({
       style={{
         flexDirection: "row",
         justifyContent: "center",
-        alignItems: "center",
-        height: 42,
+       // alignItems: "center",
+        height: 52,
         ...containerStyle,
         borderBottomWidth: border ? 1 : 0,
         borderBottomColor: theme.COLORS.lightBlue1,
@@ -83,7 +85,9 @@ const Header = ({
         >
           {title}
         </Text>
+      
       )}
+    
       {search && (
         <View
           style={{
@@ -102,7 +106,7 @@ const Header = ({
           <View style={{marginRight: 7}}>
             <svg.HeaderSearchSvg />
           </View>
-
+        
           <Text style={{...theme.FONTS.Mulish_400Regular,
                   fontSize: 10,
                   // paddingHorizontal: 6,
@@ -116,6 +120,29 @@ const Header = ({
           /> */}
         </View>
       )}
+      {clearAll ?
+      <TouchableOpacity
+      onPress={
+        clearList
+      }
+      style={{
+        position: "absolute",
+        right: 0,
+        // paddingRight: 0,
+        marginRight:20,
+        bottom:10,
+     //   padding:14,
+        //  alignItems:"center",
+        //  justifyContent:"center"
+      }}
+      >
+           <Text style={{
+            ...theme.FONTS.H12,
+            color:theme.COLORS.secondryTextColor
+           }}>clear all</Text>
+      </TouchableOpacity>
+     :
+     null}
       {/* {logo && (
         <View style={{top: -3}}>
           <svg.Logo1Svg />

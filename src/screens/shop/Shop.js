@@ -44,19 +44,24 @@ const Shop = () => {
 
 
   console.log('---Products--- ', products);;
-  const renderHeader = () => (
-    <components.Header
-      title={title}
-      goBack={true}
-      searchIcon={true}
-      // border
-      containerStyle={{
-        backgroundColor: theme.COLORS.white,
-        height: theme.RES_HEIGHT(90, 110, 125),
-      }}
-      level={theme.RES_HEIGHT(8, 12, 35)}
-    />
-  );
+  // const renderHeader = () => (
+  //   <components.Header
+  //     title={title}
+  //     goBack={true}
+  //     searchIcon={true}
+  //     // border
+  //     containerStyle={{
+  //       backgroundColor: theme.COLORS.white,
+  //       height: theme.RES_HEIGHT(90, 110, 125),
+  //     }}
+  //     level={theme.RES_HEIGHT(8, 12, 35)}
+  //   />
+  // );
+  const renderHeader = () => {
+    return (
+      <components.Header   title={title} goBack={true} searchIcon={true} border={true}  />
+    );
+  };
 
   const renderFilterAndSort = () => (
     <View
@@ -327,12 +332,12 @@ const Shop = () => {
   };;
 
   return (
-    <View style={{flex: 1, backgroundColor: theme.COLORS.appBg}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: theme.COLORS.appBg}}>
       {renderHeader()}
       {renderFilterAndSort()}
       {/* {renderProducts()} */}
       {renderProductsList()}
-    </View>
+    </SafeAreaView>
   );
 };
 

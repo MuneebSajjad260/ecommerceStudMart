@@ -47,10 +47,23 @@ const Category = ({route}) => {
   //     {id:6 , name:"Cosmetics", img :<CosmeticSvg/>},
 
   // ]
+  // const renderHeader = () => {
+  //   return (
+  //     <components.Header
+  //       title={"Categories"}
+  //       // bag={true}
+  //      // goBack={products.length > 0 ? true : false}
+  //      goBack={true} border={true}
+  //       containerStyle={{backgroundColor: theme.COLORS.white, height:theme.RES_HEIGHT(90, 110, 125)}} 
+  //   level={theme.RES_HEIGHT(8, 12, 35)}
+  //     />
+  //   );
+  // };
   const renderHeader = () => {
-    return <components.Header title="Categories" goBack={true} border={true} />;
+    return (
+      <components.Header title='Categories' goBack={true} border={true}  />
+    );
   };
-
   const renderContent = () => {
     return (
       <View style={styles.contentContainer}>

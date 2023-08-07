@@ -19,21 +19,22 @@ const Favorite = ({ item }) => {
   const dispatch = useDispatch();
 
   const removeFromWishlistHandler = (product) => {
-    return Alert.alert(
-      "Alert!",
-      "Are you sure you want to delete from wishlist ?",
-      [
-        {
-          text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel",
-        },
-        {
-          text: "OK",
-          onPress: () => dispatch(removeFromWishlist(product)),
-        },
-      ]
-    );
+    // return Alert.alert(
+    //   "Alert!",
+    //   "Are you sure you want to delete from wishlist ?",
+    //   [
+    //     {
+    //       text: "Cancel",
+    //       onPress: () => console.log("Cancel Pressed"),
+    //       style: "cancel",
+    //     },
+    //     {
+    //       text: "OK",
+    //       onPress: () => 
+          dispatch(removeFromWishlist(product))
+    //     },
+    //   ]
+    // );
   };
 
   return (

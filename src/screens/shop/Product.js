@@ -403,9 +403,10 @@ console.log("cartItem--",cartItem)
             }}
               onPress={() => {
                 itemExist(product)
-                  ? removeFromWishlistHandler(() =>
-                      dispatch(removeFromWishlist(product)),
-                    )
+                  ? 
+                //  removeFromWishlistHandler(() =>
+                      dispatch(removeFromWishlist(product))
+                  // )
                   : dispatch(addToWishlist(product));
               }}
             >

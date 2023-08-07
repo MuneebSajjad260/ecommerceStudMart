@@ -1,81 +1,72 @@
-import React from "react";
-import {View, Text, ScrollView, TouchableOpacity} from "react-native";
-import {removeFromWishlist} from "../../store/wishlistSlice";
-import {useSelector, useDispatch} from "react-redux";
-import {useNavigation} from "@react-navigation/native";
-import {setScreen} from "../../store/tabSlice";
-import {removeFromWishlistHandler} from "../../utils/functions";
-
-import {components} from "../../components";
-import {theme} from "../../constants";
-import {svg} from "../../svg";
+import React from 'react';
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  SafeAreaView,
+} from "react-native";
+import {removeFromWishlist} from '../../store/wishlistSlice';
+import {useSelector, useDispatch} from 'react-redux';
+import {useNavigation} from '@react-navigation/native';
+import {setScreen} from '../../store/tabSlice';
+import {removeFromWishlistHandler} from '../../utils/functions';
+import {renderStatusBar} from "../../utils/functions";
+import Wrapper from '../../components/Wrapper';
+import {components} from '../../components';
+import styles from './Style/WhishlistStyle';
+import {theme} from '../../constants';
+import EmptyWishlist from '../../svg/EmptyWishlistSvg';
+import {svg} from '../../svg';
+import { clearWishlist } from '../../store/wishlistSlice';
+import WishlistItems from '../../components/WishlistItems';
 
 const Wishlist = () => {
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
   const list = useSelector((state) => state.wishlist.list);
+  console.log("list---",list)
 
+  //CLEAR WISHLIST
+  const clearAllItemsHandler = () => {
+    // Dispatch an action to clear the entire wishlist
+    dispatch(clearWishlist());
+  };
   const renderHeader = () => {
     return (
       <components.Header
         title="Wishlist"
-        goBack={list.length > 0 ? false : true}
-        bag={false}
-        burgerMenu={list.length > 0 ? true : false}
-        containerStyle={{backgroundColor: theme.COLORS.white, height:theme.RES_HEIGHT(90, 110, 125)}} 
-        level={theme.RES_HEIGHT(8, 12, 35)}
+        goBack={true}
+        border={true}
+        clearAll={list.length > 0  ? true : false}
+        clearList={clearAllItemsHandler}
       />
     );
   };
-
+  
   const renderWishlistIsEmpty = () => {
     return (
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{
-          paddingHorizontal: 20,
-          paddingVertical: theme.SIZES.height * 0.05,
-        }}
+        contentContainerStyle={styles.emptyScroll}
       >
         <View
-          style={{
-            alignItems: "center",
-            marginBottom: 20,
-          }}
+          style={styles.imgCont}
         >
-          <svg.ShoppingBagSvg />
+          <EmptyWishlist />
         </View>
-        <components.Line containerStyle={{marginBottom: 14}} />
         <Text
-          style={{
-            textAlign: "center",
-            ...theme.FONTS.H2,
-            color: theme.COLORS.black,
-            paddingHorizontal: 60,
-            marginBottom: 14,
-          }}
+          style={styles.emptyTxt}
         >
           Your wishlist is empty!
         </Text>
         <Text
-          style={{
-            textAlign: "center",
-            ...theme.FONTS.Mulish_400Regular,
-            fontSize: 16,
-            color: theme.COLORS.gray1,
-            lineHeight: 16 * 1.7,
-            marginBottom: 30,
-          }}
+          style={styles.emptyDesc}
         >
-          Looks like you haven't added{"\n"}anything to your wishlist.
+          Enjoy a curated collection by saving your favorite items
         </Text>
-        <components.Button
-          title="add to wishlist"
-          onPress={() =>
-            navigation.navigate("MainLayout", dispatch(setScreen("Home")))
-          }
-        />
+       
       </ScrollView>
     );
   };
@@ -85,57 +76,14 @@ const Wishlist = () => {
       <ScrollView showsVerticalScrollIndicator={false}>
         {list.map((item, index, array) => {
           return (
-            <View
-              key={item.id}
-              style={{
-                borderBottomWidth: array.length - 1 === index ? 0 : 1,
-                borderColor: theme.COLORS.lightBlue1,
-              }}
-            >
-              <View
-                style={{
-                  flexDirection: "row",
-                  paddingVertical: 20,
-                  paddingHorizontal: 20,
-                }}
-              >
-                <components.ImageItem
-                  item={item}
-                  containerStyle={{width: 100, height: 100, marginRight: 14}}
-                >
-                  {item.is_sale === true && <components.Sale />}
-                </components.ImageItem>
-                <View style={{flex: 1}}>
-                  <Text
-                    style={{
-                      ...theme.FONTS.Mulish_400Regular,
-                      fontSize: 14,
-                      color: theme.COLORS.gray1,
-                      lineHeight: 14 * 1.7,
-                      marginBottom: 2,
-                    }}
-                  >
-                    {item.name}
-                  </Text>
-                  <components.Price
-                    item={item}
-                    containerStyle={{marginBottom: 9}}
-                  />
-                  <components.Rating item={item} />
-                </View>
-                <View style={{justifyContent: "space-between"}}>
-                  <TouchableOpacity
-                    onPress={() =>
-                      removeFromWishlistHandler(() =>
-                        dispatch(removeFromWishlist(item)),
-                      )
-                    }
-                  >
-                    <svg.WishlistLikeSvg />
-                  </TouchableOpacity>
-                  <components.inWishList item={item} />
-                </View>
-              </View>
+            <View style={styles.contentContainer}>
+              <WishlistItems
+                item={item}
+                index={index}
+                array={array}
+                dispatch={dispatch}
+                navigation={navigation}
+              />
             </View>
           );
         })}
@@ -144,10 +92,11 @@ const Wishlist = () => {
   };
 
   return (
-    <View style={{flex: 1}}>
+    <SafeAreaView style={styles.mainContainer}>
+      {renderStatusBar()}
       {renderHeader()}
       {list.length === 0 ? renderWishlistIsEmpty() : renderContent()}
-    </View>
+    </SafeAreaView>
   );
 };
 
