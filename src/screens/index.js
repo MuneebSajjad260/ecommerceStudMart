@@ -10,6 +10,7 @@ import Address from "./address/Address";
 import NewAddress from "./address/NewAddress";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
+import RegisterConfirmation from "./auth/RegisterConfirmation";
 import ForgotPass from "./auth/ForgotPass";
 import ResetPass from "./auth/ResetPass";
 import NewPass from "./auth/NewPass";
@@ -64,6 +65,7 @@ const screens = {
   NewAddress,
   Login,
   Register,
+  RegisterConfirmation,
   ForgotPass,
   ResetPass,
   NewPass,

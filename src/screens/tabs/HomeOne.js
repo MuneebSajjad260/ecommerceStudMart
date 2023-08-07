@@ -480,7 +480,6 @@ const HomeOne = () => {
             })
           }
         />
-
         {/* <CustomShimmerPlaceHolder visible={isPending} borderRadius={10} style={{width: "90%", height: 160, borderRadius: 10, alignSelf:'center'}}>
           <View style={{width: "90%", height: isPending? 160:0, borderRadius: 10, alignSelf:'center'}}></View>
         </CustomShimmerPlaceHolder> */}

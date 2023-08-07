@@ -1,31 +1,125 @@
-import {View, Text, ScrollView, TouchableOpacity} from "react-native";
-import React, {useState} from "react";
+import {View, Text, ScrollView, TouchableOpacity, FlatList, TextInput, Button} from "react-native";
+import React, {useState, useEffect} from "react";
 import {useNavigation} from "@react-navigation/native";
 import useFetch from "../../utils/useFetch";
 import {renderStatusBar} from "../../utils/functions";
+import styles from "./Style/SearchStyle";
+import _debounce from 'lodash/debounce'; // Import the debounce function from lodash
+import { throttle } from 'lodash';
+import { svg } from '../../svg'
+
 
 import {components} from "../../components";
-import {theme, clothingСategory, searchCategories} from "../../constants";
+import {theme, clothingСategory, searchCategories, names} from "../../constants";
+import { Base_Url, Payload_Keys, endPoints } from "../../constants/constants";
+import useAxios from "../../utils/useAxios";
+import wooAPI from "../../utils/axiosService";
 
-const Search = () => {
+const Search = ({ list, recentSearches }) => {
   const navigation = useNavigation();
   const [selectedCategory, setSelectedCategory] = useState("1");
 
   const url = "https://api.jsonbin.io/v3/b/638f8648c5b3a64f1bc56490";
-  const {data, isPending, error} = useFetch(url);
+  // const {data, isPending, error} = useFetch(url);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filteredList, setFilteredList] = useState([]);
+  const [debouncedFilteredList, setDebouncedFilteredList] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const renderHeader = () => {
+  // const {data, isPending, error} = useAxios('get',Payload_Keys ,Base_Url+endPoints.ProductsList+`?search=${searchTerm}`);
+
+
+  // useEffect(() => {
+  //   const debouncedFilter = _debounce((searchTerm) => {
+  //     const filteredData = filterData(searchTerm);
+  //     setDebouncedFilteredList(filteredData);
+  //   }, 300); // Set the debounce delay to 300ms
+  
+  //   debouncedFilter(searchTerm);
+   
+  // }, [searchTerm]);
+
+  useEffect(() => {
+    const debouncedFilter = _debounce(async (searchTerm, page) => {
+      try {
+        const filteredData = await filterData1(searchTerm, 10, page); // Change 10 to the desired number of items per page
+        // console.log("---filteredData---",filteredData)
+        if(filteredData.length>0)
+        var filteredDataArray = filteredData?.filter((item) => item?.name.toLowerCase().includes(searchTerm?.toLowerCase()))
+        // console.log("---filteredDataArray---",filteredDataArray)
+        if (page === 1 || filteredDataArray.length <10) {
+          setDebouncedFilteredList(filteredDataArray);
+        } else {
+          setDebouncedFilteredList((prevList) => [...prevList, ...filteredData]);
+        }
+      } catch (error) {
+        console.error('Error filtering products:', error);
+        setDebouncedFilteredList([]);
+      }
+    }, 300); // Set the debounce delay to 300ms
+  
+    if(searchTerm?.length > 2)
+    debouncedFilter(searchTerm, currentPage);
+  }, [searchTerm, currentPage]);
+
+
+  const handleChange = (text) => {
+    // debouncedHandleChange(text);
+    setSearchTerm(text);
+    // setCurrentPage(1);
+    console.log(text)
+  };
+
+  const handleClear = () => {
+    setSearchTerm("");
+    setCurrentPage(1);
+  };
+
+  const renderHeaderSearch = () => {
     return (
-      <components.Header
-        burgerMenu={true}
-        bag={true}
-        search={true}
-        border={true}
-        containerStyle={{backgroundColor: theme.COLORS.white, height:theme.RES_HEIGHT(90, 110, 125)}} 
-        // level={theme.RES_HEIGHT(8, 12, 35)}
-    
+      <View style={styles.container}>
+
+     <View style={styles.input}>
+      <svg.SearchIconSvg stroke={theme.COLORS.inputBorder}/>
+      <View style={styles.spaceX}/>
+      <TextInput
+        placeholder="Search..."
+        // style={styles.input}
+        onChangeText={handleChange}
+        value={searchTerm}
       />
+      </View>
+  
+      <TouchableOpacity style={styles.crossBtn}>
+        <svg.CrossSvg/>
+      </TouchableOpacity>
+      </View>
     );
+  };
+
+  const filterData1 = async (searchTerm, perPage = 10, page = 1) => {
+    try {
+        const response = await wooAPI.get(endPoints.ProductsList,{
+        headers:{
+          "Content-Type": "application/json",
+        },
+        params: {
+              // consumer_key: Payload_Keys.consumer_key,
+              // consumer_secret:Payload_Keys.consumer_secret,
+              search: searchTerm,
+              per_page: perPage,
+              page: page,
+            },
+      })
+      console.log("----Fetch product data from api-----", searchTerm)
+      console.log("----Fetch product data from api-----", searchTerm , "==> ", page)
+      console.log("----Fetch product data from api-----", response.data)
+
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching products:', error);
+      return [];
+    }
   };
 
   const renderCategory = () => {
@@ -151,12 +245,100 @@ const Search = () => {
     );
   };
 
+
+   // Throttle the fetchData function to prevent excessive API calls
+   const throttledFetchData = throttle(filterData1, 2000); // 2000 milliseconds (2 seconds) throttling
+
+  const handleLoadMore = () => {
+    if(debouncedFilteredList.length >9){
+
+      setCurrentPage((prevPage) => prevPage + 1);
+    }else{
+      setCurrentPage(1);
+
+    }
+  }; 
+
+  const renderContentSearch = () => {
+    return(
+      <View>
+        { searchTerm.length>2 && debouncedFilteredList?.length > 0  && 
+        <>
+        <View style={styles.totalSearches}>
+          
+          <Text style={styles.totalItems}>{debouncedFilteredList?.length}</Text>
+        
+        {debouncedFilteredList?.length > 1 &&
+        <Text style={styles.labelColor}>Search Items</Text>
+        }
+         {debouncedFilteredList?.length == 1 &&
+        <Text style={styles.labelColor}>Search Item</Text> }
+        
+        </View>
+        <FlatList
+        data={debouncedFilteredList}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+          onPress={()=>{  
+            navigation.navigate(names.Product, {
+            product: item,
+          }) 
+        }}
+          style={[styles.listItem]}>
+            <Text>{item.name}</Text>
+          </TouchableOpacity>
+        )}
+        onEndReached={handleLoadMore}
+        onEndReachedThreshold={0.1}
+        />
+        {/* Load More Button */}
+        <Button title="Load More" onPress={handleLoadMore} />
+        </>
+        }
+
+{/* ------Recent Searches------- */}
+         {debouncedFilteredList?.length == 0 &&  searchTerm.length ==0 && 
+          <View style={styles.recentSearches}>
+          {recentSearches?.map((search) => (
+            <Text key={search}>{search}</Text>
+          ))}
+          </View>
+         }
+      
+      </View>
+    )
+  }
+
   return (
-    <View style={{flex: 1}}>
-      {renderHeader()}
+    <View style={styles.mainContainer}>
+      {renderHeaderSearch()}
       {/* {renderContent()} */}
+      {renderContentSearch()}
     </View>
   );
 };
+
+const List = [
+  {
+    id: 1,
+    name: "John Doe",
+  },
+  {
+    id: 2,
+    name: "Jane Doe",
+  },
+  {
+    id: 3,
+    name: "John Smith",
+  },
+  {
+    id: 4,
+    name: "Jane Smith",
+  },
+];
+
+const recentSearches = ["John Doe", "Jane Doe", "John Smith"];
+
 
 export default Search;

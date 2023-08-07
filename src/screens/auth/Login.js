@@ -61,10 +61,10 @@ const Login = ({apColors}) => {
       setIsLoading(true)
       // TODO---
       let data ={
-         email: "usman.ali@devbeans.io",
-         password: 'Pakistan@123@',
-        // email: email.toLowerCase().toString(),
-        // password:password.toString(),
+        // email: "usman.ali@devbeans.io",
+        // password: 'Pakistan@123@',
+        email: email.toLowerCase().toString(),
+        password:password.toString(),
       }
 
       dispatch(LoginAction(data)).unwrap().then((result)=>{
@@ -176,7 +176,7 @@ const getProfileAPI=(result)=>{
         </Text> */}
         <components.InputField
           title="Email"
-          placeholder="xyz@mail.com"
+          placeholder="someone@mail.com"
           onChangeText={(val)=>{ setEmail(val)
                 }}
           autoFocused={true}
@@ -295,7 +295,7 @@ const getProfileAPI=(result)=>{
 
         <components.SecondaryButton
           title="Continue as a guest"
-          containerStyle={{marginBottom: theme.MARGINS.hy20}}
+          containerStyle={{marginBottom: theme.MARGINS.hy20, backgroundColor:"white"}}
           onPress={() => navigation.navigate(names.TabNavigator)}
         />
         <View
@@ -398,9 +398,9 @@ const getProfileAPI=(result)=>{
   }
 
   return (
-    <View style={{flex:1}}>
+    <View style={{...theme.Main_Container}}>
       {renderStatusBarLight()}
-      {renderHeaderAuth()}
+      {renderHeaderAuth('Welcome', 'Sign in to continue')}
       {renderContent()}
       {/* {BottomSheet1()} */}
 

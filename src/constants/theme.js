@@ -452,12 +452,18 @@ const SAFE_AREA = {
   backgroundColor: COLORS.white,
 };
 
+const Main_Container={
+  flex: 1,
+  backgroundColor: COLORS.appBg,
+};
+
 const theme = {
   COLORS,
   FONTS,
   SIZES,
   MARGINS,
   SAFE_AREA,
+  Main_Container,
   ALIGN_CENTER,
   ALIGN_CENTER_BTW,
   PARENT_CONTAINER_STYLE,

@@ -5,6 +5,7 @@ const names = {
   Code: "Code",
   Created: "Created",
   Register: "Register",
+  RegisterConfirm: "RegisterConfirmation",
   Phone: "Phone",
   NewPass: "NewPass",
   ResetPass: "ResetPass",

@@ -25,16 +25,6 @@ const StackNavigator = () => {
 
   useEffect(()=>{
     SplashScreen.hide();
-
-    // const ac = new AbortController();
-
-    // setTimeout(() => {
-    //   SplashScreen.hide();
-    // }, 1000);
-
-    // return function cleanup() {
-    //   ac.abort();
-    // };
   })
 
   return (
@@ -75,6 +65,11 @@ const StackNavigator = () => {
           options={{headerShown: false}}
         />
         <Stack.Screen
+          name={names.RegisterConfirm}
+          component={screens.RegisterConfirmation}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
           name={names.Phone}
           component={screens.Phone}
           options={{headerShown: false}}
@@ -102,6 +97,11 @@ const StackNavigator = () => {
         <Stack.Screen
           name={names.Track}
           component={screens.Track}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name={tabNames.Search}
+          component={screens.Search}
           options={{headerShown: false}}
         />
         <Stack.Screen

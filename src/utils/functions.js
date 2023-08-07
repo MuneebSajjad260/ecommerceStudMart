@@ -5,6 +5,8 @@ import { svg } from "../svg";
 import { names, theme } from "../constants";
 import { components } from "../components";
 import CustomShimmerPlaceHolder from "../components/CustomShimmerPlaceHolder";
+import SignupSvg from "../svg/SignupSvg";
+import MailSvg from "../svg/MailSvg";
 
 
 const screenWidth = Dimensions.get('screen').width
@@ -41,12 +43,18 @@ const renderStatusBar = () => {
   );
 };
 
-const renderHeaderAuth = (title, subtitle) => {
+const renderHeaderAuth = (title, subtitle, icon) => {
   return   <View style={{alignSelf:"center"}}>
   <svg.WelcomeSvg width={screenWidth}/>
   <View style={{position:"absolute", bottom: theme.MARGINS.hyMax, left: theme.MARGINS.maX_xxxs}}>
-    <Text style={{...theme.FONTS.H36, color: theme.COLORS.whiteOnly }}>Welcome</Text>
-    <Text style={{...theme.FONTS.H5, fontWeight:"700", color: theme.COLORS.whiteOnly, bottom:-5 }}>Sign in to continue</Text>
+   {icon == "signup" &&
+   <SignupSvg/>
+   } 
+   {icon == "mail" &&
+   <MailSvg/>
+   } 
+    <Text style={{...theme.FONTS.H36, color: theme.COLORS.whiteOnly }}>{title}</Text>
+    <Text style={{...theme.FONTS.H5, fontWeight:"700", color: theme.COLORS.whiteOnly, bottom:-5 }}>{subtitle}</Text>
   </View>
   </View>;
 };
@@ -73,7 +81,7 @@ const renderProducts = (data, navigation, isPending,  viewLeft, viewRight) => {
  data = data?.filter(item => item.status === 'publish');
 //  console.log("----item status------", data)
   return (
-    <View style={{marginBottom: 20}}>
+    <View style={{marginBottom: 40}}>
       
       <components.ProductCategory
         title={viewLeft.title}
