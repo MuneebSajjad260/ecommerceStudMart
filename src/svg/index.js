@@ -86,6 +86,9 @@ import EmptyCartSvg from "./EmptyCartSvg";
 import HomeHeaderSvg from "./HomeHeaderSvg";
 import PickupSvg from "./PickupSvg";
 import VerifiedTicSvg from "./VerifiedTicSvg";
+import CrossSvg from "./CrossSvg";
+import SignupSvg from "./SignupSvg";
+import MailSvg from "./MailSvg";
 
 const svg = {
   WishlistSvg,
@@ -175,6 +178,9 @@ const svg = {
   HomeHeaderSvg,
   PickupSvg,
   VerifiedTicSvg,
+  CrossSvg,
+  SignupSvg,
+  MailSvg,
 };
 
 export {svg};

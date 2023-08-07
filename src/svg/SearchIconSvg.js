@@ -9,7 +9,7 @@ const SearchIconSvg = (props) => (
     {...props}
   >
     <Path
-      stroke="#140023"
+      stroke={props.stroke}
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={2}
