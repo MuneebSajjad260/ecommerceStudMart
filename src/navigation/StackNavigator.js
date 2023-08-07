@@ -206,6 +206,11 @@ const StackNavigator = () => {
           component={screens.Category}
           options={{headerShown: false}}
         />
+         <Stack.Screen
+          name={names.UniversityScreen}
+          component={screens.UniversityScreen}
+          options={{headerShown: false}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

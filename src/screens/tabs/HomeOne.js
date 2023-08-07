@@ -19,6 +19,7 @@ import axios from "axios";
 import {renderStatusBar, renderStatusBarLight} from '../../utils/functions';
 import {useSelector, useDispatch} from 'react-redux';
 
+import styles from './Style/HomeOneStyle';
 import getRandomColor from "../../utils/randomColor";
 import {components} from '../../components';
 import {theme, homeCarousel, banner, Base} from '../../constants';
@@ -63,6 +64,24 @@ const HomeOne = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
+  const universities=[
+    {id:1,
+      name:'FAST University',
+      sellers:23
+  },
+  {id:2,
+    name:'UET University',
+    sellers:23
+},
+{id:3,
+  name:'LUMS University',
+  sellers:23
+},
+{id:4,
+  name:'NUST University',
+  sellers:23
+}
+  ]
   let viewLeft = {
     hide: false,
     title: 'Products',
@@ -511,6 +530,75 @@ const HomeOne = () => {
     );
   };
 
+  //RENDER UNIVERSITIES
+
+  const renderUniversities=()=>{
+    return (
+      <View style={styles.contentContainer}>
+        
+        <components.ProductCategory
+          title={'Universities'}
+          containerStyle={{marginHorizontal: 20, marginBottom: 14}}
+          onPress={() =>
+            navigation.navigate(names.UniversityScreen, {
+              title: "All products",
+             university: universities,
+              // product: data,
+            })
+          }
+          visibleRight={viewRight?.hide}
+        />
+        
+        <CustomShimmerPlaceHolder visible={isPending} borderRadius={10} style={{width: "90%", height: 160, borderRadius: 10, alignSelf:'center'}}>
+          <View style={{width: "90%", height: isPending? 160:0, borderRadius: 10, alignSelf:'center'}}></View>
+        </CustomShimmerPlaceHolder>
+  
+        {!isPending && <FlatList
+          data={universities?.slice(0,4)}
+          horizontal={true}
+          key={(Math.random() * 1000).toString()}
+          // scrollEnabled={false}              // set number of columns 
+          // columnWrapperStyle={styles.row}
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{paddingLeft: 13}}
+          renderItem={({item}) => (
+            <TouchableOpacity
+              style={styles.uniCont}
+              onPress={() =>
+                navigation.navigate(names.Product, {
+                  product: item,
+                })
+              }
+            >
+              <View>
+              <components.ImageItem
+                item={item}
+                containerStyle={styles.uniImage}
+                resizeMode="cover"
+                borderRadius={8}
+                indicatorBorderRadius={18}
+              >
+                {item.is_sale === true && <components.Sale />}
+      
+              </components.ImageItem>
+            
+              <Text style={styles.uniName}>{item.name}</Text>
+              <Text style={styles.sellerNo}>23+ <Text style={styles.sellerTxt}>seller</Text></Text>
+              <View style={styles.UniBottomView}/>
+        
+              </View>
+            </TouchableOpacity>
+          )}
+        />}
+  
+      </View>
+    );
+  };
+  
+  
+  
+ 
   const renderContent = () => {
     return (
       <ScrollView
@@ -545,7 +633,8 @@ const HomeOne = () => {
       {/* {renderBestSellers()} */}
       {/* {renderBanner()} */}
       {renderCategories()}
-      {renderProducts(data, navigation, isPending, viewLeft, viewRight)}
+      {/* {renderProducts(data, navigation, isPending, viewLeft, viewRight)} */}
+      {renderUniversities()}
       {data && renderFeatured()}
     </>
   );
@@ -582,54 +671,6 @@ const HomeOne = () => {
 
 export default HomeOne;
 
-const styles = StyleSheet.create({
-  row: {
-    flex: 1,
-    justifyContent: 'space-between',
-    // backgroundColor:"pink",
-  },
-  bannerView: {
-    width: '100%',
-    height: 150,
-    marginBottom: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  sellerImageContainer: {
-    width: 200,
-    height: 250,
-    marginBottom: 6,
-    backgroundColor: theme.COLORS.lightBlue2,
-  },
-  filterView: {
-    marginRight: 12,
-    borderWidth: 1,
-    borderColor: theme.COLORS.lightGray,
-    padding: 8,
-    borderRadius: 8,
-    margin: 5,
-  },
-  categoryView: {
-    borderWidth: 1,
-    flexDirection: 'row',
-    borderColor: theme.COLORS.lightGray,
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 8,
-    alignItems: 'center',
-    width: "auto",
-    height: 50,
-    // justifyContent: "center",
-  },
-  imageContainer: {
-    // width: 53,
-    // height: 51,
-    // padding: 12,
-    // borderRadius: 0,
-
-    width: 20,
-    height: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+// const styles = StyleSheet.create({
+ 
+// });

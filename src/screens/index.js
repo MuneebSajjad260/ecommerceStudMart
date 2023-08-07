@@ -34,6 +34,7 @@ import EditProfile from "./EditProfile";
 import OrderSummary from "./orderSummary/OrderSummary";
 import PaymentScreen from "./paymentScreen/PaymentScreen";
 import Category from "./tabs/category";
+import UniversityScreen from "./universityScreen/UniversityScreen";
 // import Payment from "./checkout/Payment";
 
 const screens = {
@@ -73,6 +74,7 @@ const screens = {
   OrderSummary,
   PaymentScreen,
   Category,
+  UniversityScreen,
   // Payment,
 };
 

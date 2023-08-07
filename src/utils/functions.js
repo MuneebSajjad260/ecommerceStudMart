@@ -73,7 +73,7 @@ const renderProducts = (data, navigation, isPending,  viewLeft, viewRight) => {
  data = data?.filter(item => item.status === 'publish');
 //  console.log("----item status------", data)
   return (
-    <View style={{marginBottom: 40}}>
+    <View style={{marginBottom: 20}}>
       
       <components.ProductCategory
         title={viewLeft.title}
@@ -151,6 +151,91 @@ const renderProducts = (data, navigation, isPending,  viewLeft, viewRight) => {
     </View>
   );
 };
+
+
+
+const renderUniversities = (data, navigation, isPending,  viewLeft, viewRight) => {
+  data = data?.filter(item => item.status === 'publish');
+ //  console.log("----item status------", data)
+   return (
+     <View style={{marginBottom: 40}}>
+       
+       <components.ProductCategory
+         title={viewLeft.title}
+         containerStyle={{marginHorizontal: 20, marginBottom: 14}}
+         onPress={() =>
+           navigation.navigate(names.Shop, {
+             title: "All products",
+             products: data,
+             // product: data,
+           })
+         }
+         visibleRight={viewRight?.hide}
+       />
+       
+       <CustomShimmerPlaceHolder visible={isPending} borderRadius={10} style={{width: "90%", height: 160, borderRadius: 10, alignSelf:'center'}}>
+         <View style={{width: "90%", height: isPending? 160:0, borderRadius: 10, alignSelf:'center'}}></View>
+       </CustomShimmerPlaceHolder>
+ 
+       {!isPending && <FlatList
+         data={data?.slice(0,4)}
+         horizontal={true}
+         // numColumns={2}    
+         key={(Math.random() * 1000).toString()}
+         // scrollEnabled={false}              // set number of columns 
+         // columnWrapperStyle={styles.row}
+         showsHorizontalScrollIndicator={false}
+         showsVerticalScrollIndicator={false}
+         contentContainerStyle={{paddingLeft: 13}}
+         renderItem={({item}) => (
+           <TouchableOpacity
+             style={{flex:1, width:171 , margin:6, borderWidth:1,borderColor: "rgba(20, 0, 35, 0.1)", padding:8, borderRadius:15}}
+             onPress={() =>
+               navigation.navigate(names.Product, {
+                 product: item,
+               })
+             }
+           >
+             <View>
+             <components.ImageItem
+               item={item}
+               containerStyle={{
+                 width: "100%",
+                 height: 150,
+                 marginBottom: 6,
+                 backgroundColor: theme.COLORS.lightBlue2,
+                 borderRadius:8
+               }}
+               resizeMode="cover"
+               borderRadius={8}
+               indicatorBorderRadius={18}
+             >
+               {item.is_sale === true && <components.Sale />}
+               <components.Favorite item={item} />
+               <NegotiableTag/>
+               {/* <components.InCart item={item} /> */}
+             </components.ImageItem>
+             {/* <components.Rating item={item} /> */}
+             <components.ProductName item={item} style={{fontWeight:'500'}} />
+             <components.Price item={item} textStyle={{color: theme.COLORS.appColor, fontWeight:'400'}}/>
+             <View style={{height:1, width: "90%", backgroundColor:"rgba(0, 0, 0, 0.05)", paddingHorizontal: 30, alignSelf:"center", marginTop: 15, marginBottom: 6 }}/>
+            <View style={{flexDirection:"row",  alignItems:"center"}}>
+            {/* TODO - Image & Store Name */}
+            {/* <View> */}
+             <ProfileImage />
+            {/* </View> */}
+            {/* <View> */}
+             <components.ProductName item={item} style={{fontWeight:'400', fontSize:11, marginLeft: 20, width: 100}} />
+            {/* </View> */}
+            </View>
+             </View>
+           </TouchableOpacity>
+         )}
+       />}
+ 
+     </View>
+   );
+ };
 
 const ProductListItem = (item, navigation)=>{
   console.log("-----ProductItem-----", item)

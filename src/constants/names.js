@@ -32,6 +32,7 @@ const names = {
   OrderSummary: "OrderSummary",
   Payment: "Payment",
   Category: "Categories",
+  UniversityScreen: "University",
 };
 
 const tabNames = {
