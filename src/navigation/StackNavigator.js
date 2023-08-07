@@ -4,7 +4,7 @@ import {NavigationContainer} from "@react-navigation/native";
 import {createStackNavigator} from "@react-navigation/stack";
 
 import {screens} from "../screens";
-import {names} from "../constants";
+import {names, tabNames} from "../constants";
 import getThemedColors from "../utils/themeMode";
 import SplashScreen from "react-native-splash-screen";
 
