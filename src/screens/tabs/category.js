@@ -61,7 +61,10 @@ const Category = ({route}) => {
   // };
   const renderHeader = () => {
     return (
-      <components.Header title='Categories' goBack={true} border={true}  />
+      <components.Header title='Categories' goBack={true} border={true}  
+       containerStyle={{backgroundColor: theme.COLORS.white, height:theme.RES_HEIGHT(90, 100, 125)}} 
+       level={theme.RES_HEIGHT(8, 12, 35)}
+      />
     );
   };
   const renderContent = () => {
@@ -82,11 +85,11 @@ const Category = ({route}) => {
   };
 
   return (
-    <SafeAreaView style={styles.mainContainer}>
+    <View style={styles.mainContainer}>
       {renderStatusBar()}
       {renderHeader()}
       {renderContent()}
-    </SafeAreaView>
+    </View>
   );
 };
 

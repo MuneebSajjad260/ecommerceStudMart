@@ -735,7 +735,7 @@ console.log("cartItem--",cartItem)
               {/* <View style={styles.productDetailCont}> */}
                 
                 <View style={{ flex:0.8, marginLeft: theme.RES_WIDTH(12), fontSize: theme.FONTS.dF_m }}>
-                <Text numberOfLines={1} style={styles.storeName}>Sold by <Text numberOfLines={2} style={[styles.storeName, {color: apColors.appColor}]}>AhmadStore</Text> </Text>
+                <Text numberOfLines={1} style={styles.storeName}>Sold by <Text numberOfLines={2} style={[styles.storeName, {color: apColors.appColor}]}>{product?.vendor_detail?.vendor_name}</Text> </Text>
                 <Text style={styles.prodRating}>{'\u2022' } 4.5 {'\u2022' } 3 reviews</Text>
                 </View>
                 
@@ -744,7 +744,7 @@ console.log("cartItem--",cartItem)
         <View>
 
             <View style={{borderRadius:8, borderWidth:1, paddingVertical:3, paddingHorizontal: 5, width: 100}}>
-            <Text numberOfLines={1} style={[styles.prodPrice,{ fontSize: theme.FONTS.dF_xs, color: apColors.inputLabel } ]}>Lusail University University</Text>
+            <Text numberOfLines={1} style={[styles.prodPrice,{ fontSize: theme.FONTS.dF_xs, color: apColors.inputLabel } ]}>{product?.vendor_detail?.university}</Text>
             </View>
         </View>
 
@@ -757,7 +757,7 @@ console.log("cartItem--",cartItem)
 
 <View style={{flexDirection:"column", justifyContent:"center", alignItems:"center"}}>
   <svg.VerifiedTicSvg/>
-<Text style={{marginTop: theme.RES_HEIGHT(8,8,8)}}>Verified Seller</Text>
+<Text style={{marginTop: theme.RES_HEIGHT(8,8,8),color:theme.COLORS.black}}>Verified Seller</Text>
   
   </View>
 
@@ -767,7 +767,7 @@ console.log("cartItem--",cartItem)
 
   <View style={{flexDirection:"column", justifyContent:"center", alignItems:"center"}}>
   <svg.VerifiedTicSvg/>
-  <Text style={{marginTop: theme.RES_HEIGHT(8,8,8)}}>15 Products</Text>
+  <Text style={{marginTop: theme.RES_HEIGHT(8,8,8),color:theme.COLORS.black}}>15 Products</Text>
 
 </View>
 </View>

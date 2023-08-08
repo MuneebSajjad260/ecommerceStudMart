@@ -88,7 +88,9 @@ const Checkout = () => {
   const [loadingPlaceOrder, setLoadingPlaceOrder] = useState(false);
 
   const renderHeader = () => {
-    return <components.Header title="Checkout" goBack={true} border={true} />;
+    return <components.Header title="Checkout" goBack={true} border={true} 
+    containerStyle={{backgroundColor: theme.COLORS.white, height:theme.RES_HEIGHT(90, 100, 125)}} 
+    level={theme.RES_HEIGHT(8, 12, 35)}/>;
   };
 
   //HANDLING ICON TOGGLE
@@ -285,7 +287,7 @@ const Checkout = () => {
 
   const deliveryDetail = () => {
     return (
-      <View style={[styles.deliveryContainer, {marginBottom: 120}]}>
+      <View style={[styles.deliveryContainer, {marginBottom: 140}]}>
         <Wrapper>
           {deliveryMethod == "ship" ? (
             <View>
@@ -544,7 +546,7 @@ console.log("pO id-",placeOrder.id)
   }
 
   return (
-    <SafeAreaView style={styles.mainContainer}>
+    <View style={styles.mainContainer}>
       {renderStatusBar()}
         {renderHeader()}
       <ScrollView
@@ -590,7 +592,7 @@ console.log("pO id-",placeOrder.id)
           </View>
         </BottomSheetView>
       </BottomSheet>
-    </SafeAreaView>
+    </View>
   );
 };
 

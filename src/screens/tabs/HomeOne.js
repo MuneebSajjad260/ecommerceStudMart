@@ -80,7 +80,8 @@ const HomeOne = () => {
 {id:4,
   name:'NUST University',
   sellers:23
-}
+},
+
   ]
   let viewLeft = {
     hide: false,
@@ -632,9 +633,9 @@ const HomeOne = () => {
       {/* {renderBestSellers()} */}
       {/* {renderBanner()} */}
       {renderCategories()}
-      {/* {renderProducts(data, navigation, isPending, viewLeft, viewRight)} */}
-      {renderUniversities()}
-      {data && renderFeatured()}
+      {renderProducts(data, navigation, isPending, viewLeft, viewRight)}
+      {/* {renderUniversities()} */}
+      {/* {data && renderFeatured()} */}
     </>
   );
 

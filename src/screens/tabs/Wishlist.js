@@ -41,6 +41,8 @@ const Wishlist = () => {
         border={true}
         clearAll={list.length > 0  ? true : false}
         clearList={clearAllItemsHandler}
+        containerStyle={{backgroundColor: theme.COLORS.white, height:theme.RES_HEIGHT(90, 100, 125)}} 
+        level={theme.RES_HEIGHT(8, 12, 35)}
       />
     );
   };
@@ -73,7 +75,7 @@ const Wishlist = () => {
 
   const renderContent = () => {
     return (
-      <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{flex:1}}>
         {list.map((item, index, array) => {
           return (
             <View style={styles.contentContainer}>
@@ -92,11 +94,11 @@ const Wishlist = () => {
   };
 
   return (
-    <SafeAreaView style={styles.mainContainer}>
+    <View style={styles.mainContainer}>
       {renderStatusBar()}
       {renderHeader()}
       {list.length === 0 ? renderWishlistIsEmpty() : renderContent()}
-    </SafeAreaView>
+    </View>
   );
 };
 

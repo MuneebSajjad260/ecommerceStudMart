@@ -74,7 +74,8 @@ const styles = StyleSheet.create({
     // flex:1
   },
   prodRating:{
-    marginTop: 5
+    marginTop: 5,
+    color:theme.COLORS.black
 
   },
   quantity: {

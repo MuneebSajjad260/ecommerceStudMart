@@ -28,7 +28,7 @@ const Header = ({
   const list = useSelector((state) => state.cart?.list);
   const quantity = list?.length;
   const total = useSelector((state) => state.cart?.price);
-
+console.log("goback---",goBack)
   const [showModal, setShowModal] = useState(false);
 
   //console.log("------Header Bag QTY------", quantity, total)
@@ -38,7 +38,7 @@ const Header = ({
       style={{
         flexDirection: "row",
         justifyContent: "center",
-       // alignItems: "center",
+      //  alignItems: "center",
         height: 52,
         ...containerStyle,
         borderBottomWidth: border ? 1 : 0,
@@ -51,7 +51,7 @@ const Header = ({
       {goBack && (
         <View
           style={{
-            position: "absolute",
+           position: "absolute",
             left: 0,
             bottom: level,
             alignItems: "center",
@@ -78,7 +78,7 @@ const Header = ({
             ...theme.FONTS.H4,
             color: theme.COLORS.black,
             // backgroundColor:"yellow",
-            paddingVertical: 6,
+            paddingVertical: 18,
             bottom: level,
             position: "absolute",
           }}

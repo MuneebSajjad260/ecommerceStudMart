@@ -9,9 +9,17 @@ const styles = StyleSheet.create({
   contentContainer: {
     
     marginHorizontal: theme.MARGINS.hy10,
-    marginTop: theme.MARGINS.hy20,
+    marginTop: 345,
+    marginBottom:theme.MARGINS.hy20
    
   },
+  headerContainer: {
+    position: 'absolute',
+    top: 0,
+    width: '100%',
+    //zIndex: 1,
+  },
+ 
   wrapperStyle:{justifyContent: "space-between"},
   imageContainer: {
     // width: 53,

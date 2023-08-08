@@ -61,7 +61,9 @@ const OrderSummary = ({route}) => {
 
   const renderHeader = () => {
     return (
-      <components.Header title={`STM-${orderId}`} goBack={true} border={true} />
+      <components.Header title={`STM-${orderId}`} goBack={true} border={true} 
+      containerStyle={{backgroundColor: theme.COLORS.white, height:theme.RES_HEIGHT(90, 100, 125)}} 
+      level={theme.RES_HEIGHT(8, 12, 35)}/>
     );
   };
 
@@ -343,7 +345,7 @@ const OrderSummary = ({route}) => {
     );
   };
   return (
-    <SafeAreaView style={styles.mainContainer}>
+    <View style={styles.mainContainer}>
       {renderStatusBar()}
       {renderHeader()}
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -358,7 +360,7 @@ const OrderSummary = ({route}) => {
 
         {browseButton()}
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 

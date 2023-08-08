@@ -42,7 +42,7 @@ const CategoryItem = ({item, itemWidth,navigation,data}) => {
       }
      >
       <View style={styles.flexDirection}>
-        <View>
+        <View >
         <Text style={styles.name}>{truncateName(item.name, 10)}</Text>
         <Text style={styles.productLength}>{`${item.count} products`}</Text>
         </View>
@@ -79,13 +79,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+   //marginLeft:10
 
   },
   imgCont: {
     width: 42,
     height: 42,
 
-    borderRadius: 20,
+    borderRadius: 40,
     backgroundColor: theme.COLORS.whiteOnly,
     alignItems: "center",
     justifyContent: "center",

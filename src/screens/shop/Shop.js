@@ -59,7 +59,9 @@ const Shop = () => {
   // );
   const renderHeader = () => {
     return (
-      <components.Header   title={title} goBack={true} searchIcon={true} border={true}  />
+      <components.Header   title={title} goBack={true} searchIcon={true} border={true}
+      containerStyle={{backgroundColor: theme.COLORS.white, height:theme.RES_HEIGHT(90, 100, 125)}} 
+      level={theme.RES_HEIGHT(8, 12, 35)}  />
     );
   };
 
@@ -332,12 +334,12 @@ const Shop = () => {
   };;
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: theme.COLORS.appBg}}>
+    <View style={{flex: 1, backgroundColor: theme.COLORS.appBg}}>
       {renderHeader()}
       {renderFilterAndSort()}
       {/* {renderProducts()} */}
       {renderProductsList()}
-    </SafeAreaView>
+    </View>
   );
 };
 

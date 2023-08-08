@@ -93,7 +93,9 @@ const History = () => {
 
   //HEADER
   const renderHeader = () => {
-    return <components.Header title="My Orders" goBack={true} border={true} />;
+    return <components.Header title="My Orders" goBack={true} border={true} 
+    containerStyle={{backgroundColor: theme.COLORS.white, height:theme.RES_HEIGHT(90, 100, 125)}} 
+    level={theme.RES_HEIGHT(8, 12, 35)}/>;
   };
 
   //FILTER LIST
@@ -257,6 +259,7 @@ const History = () => {
         showsVerticalScrollIndicator={false}
         renderItem={orderDetailsContent}
         ListEmptyComponent={emptyOrderDetailList}
+        contentContainerStyle={{marginBottom:theme.MARGINS.hy20}}
       />
       // </View>
     );
@@ -277,14 +280,14 @@ const History = () => {
   };
 
   return (
-    <SafeAreaView style={styles.mainContainer}>
+    <View style={styles.mainContainer}>
       {renderStatusBar()}
       {renderHeader()}
       <ScrollView showsVerticalScrollIndicator={false}>
         {renderFilterList()}
         {renderOrderList()}
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 

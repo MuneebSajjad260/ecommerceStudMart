@@ -6,6 +6,7 @@ import {
   useColorScheme,
   StyleSheet,
   Image,
+  Pressable
 } from 'react-native';
 import {removeFromWishlist} from '../store/wishlistSlice';
 import {removeFromWishlistHandler} from '../utils/functions';
@@ -20,7 +21,7 @@ import {svg} from '../svg';
 
 const WishlistItems = ({item, index, array, navigation, dispatch}) => {
   return (
-    <TouchableOpacity
+    <Pressable
       onPress={() =>
         navigation.navigate(names.Product, {
           product: item,
@@ -63,7 +64,7 @@ const WishlistItems = ({item, index, array, navigation, dispatch}) => {
           </View>
         </View>
       </Wrapper>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 const styles = StyleSheet.create({

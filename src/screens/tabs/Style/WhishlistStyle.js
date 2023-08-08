@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
   contentContainer: {
     marginHorizontal: theme.MARGINS.hy10,
     paddingTop: theme.SIZES.height * 0.02,
+   
   },
   emptyScroll: {
     paddingHorizontal: theme.MARGINS.hy20,
