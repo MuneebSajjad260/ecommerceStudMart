@@ -51,7 +51,7 @@ const History = () => {
   //     id: 11,
   //     placedOn: "9 june, 2023",
   //     productName: "Wireless charger",
-  //     price: "300",
+  //     price: "300",//
   //     status: "completed"}
   // ];
 
