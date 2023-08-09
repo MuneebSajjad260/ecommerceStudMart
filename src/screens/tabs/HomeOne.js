@@ -82,6 +82,7 @@ const HomeOne = () => {
   sellers:23
 },
 
+
   ]
   let viewLeft = {
     hide: false,
@@ -225,7 +226,7 @@ const HomeOne = () => {
       <View
         style={{
           position: "absolute",
-          top: 160,
+         top: 160,
           overflow: "hidden",
           marginHorizontal: 16,
           borderRadius: 16,
@@ -634,7 +635,7 @@ const HomeOne = () => {
       {/* {renderBanner()} */}
       {renderCategories()}
       {renderProducts(data, navigation, isPending, viewLeft, viewRight)}
-      {/* {renderUniversities()} */}
+      {renderUniversities()}
       {/* {data && renderFeatured()} */}
     </>
   );

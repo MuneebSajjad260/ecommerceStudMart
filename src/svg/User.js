@@ -4,8 +4,8 @@ import Svg, { G, Path, Defs, ClipPath } from "react-native-svg"
 function User({stroke}) {
   return (
     <Svg
-      width={21}
-      height={20}
+      width={26}
+      height={26}
       viewBox="0 0 21 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -14,7 +14,7 @@ function User({stroke}) {
       <G
         clipPath="url(#clip0_2594_28979)"
         stroke={stroke}
-        strokeWidth={2}
+        strokeWidth={1}
         strokeLinecap="round"
         strokeLinejoin="round"
       >

@@ -19,7 +19,9 @@ import UniIconSvg from "../../svg/UniIconSvg";
 import VerifiedSellerSvg from "../../svg/VerifiedSellerSvg";
 import VerifiedProdSvg from "../../svg/VerifiedProdSvg";
 
+
 const UniversityScreen = ({route}) => {
+ 
   const navigation = useNavigation();
   const [isScrolling, setIsScrolling] = useState(false);
   const uniDetails = [
@@ -63,7 +65,12 @@ const UniversityScreen = ({route}) => {
     return (
       <TouchableOpacity
         style={styles.uniCont}
-        // onPress={() => navigation.navigate(names.Product, {product: item})}
+         onPress={() => navigation.navigate(names.Shop, {
+          
+          //product: test,
+          university:true,
+          //  title: "All products",
+        })}
       >
         <View>
           <components.ImageItem
@@ -72,6 +79,7 @@ const UniversityScreen = ({route}) => {
             resizeMode="cover"
             borderRadius={8}
             indicatorBorderRadius={18}
+            simpleImage={true}
           >
             {item.is_sale === true && <components.Sale />}
           </components.ImageItem>

@@ -1,4 +1,4 @@
-import {View, Text, TouchableOpacity, TextInput} from "react-native";
+import {View, Text, TouchableOpacity, TextInput, ImageBackground} from "react-native";
 import React, {useState} from "react";
 import {useNavigation} from "@react-navigation/native";
 import {useSelector, useDispatch} from "react-redux";
@@ -8,6 +8,8 @@ import {cartIsEmpty} from "../utils/functions";
 import {svg} from "../svg";
 import {theme, names} from "../constants";
 import {components} from "../components";
+import User from "../svg/User";
+import Package from "../svg/Package";
 
 const Header = ({
   goBack,
@@ -21,7 +23,11 @@ const Header = ({
   searchIcon,
   level,
   clearAll,
-  clearList
+  clearList,
+  university,
+  seller,
+  products
+
 }) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -57,6 +63,7 @@ console.log("goback---",goBack)
             alignItems: "center",
             // backgroundColor:"pink",
             // marginTop: level,
+            zIndex:1
           }}
         >
           <TouchableOpacity
@@ -87,7 +94,56 @@ console.log("goback---",goBack)
         </Text>
       
       )}
+    {university && (
+     
+      <ImageBackground source={require("../assets/uniTest.png")} style={{
+        width: '100%', // or 'contain' depending on your preference
+        height: '100%',
+        position:'absolute',
+        top:0,
+        zIndex:0}}>
+<View style={{flexDirection:'row', paddingHorizontal:14,marginTop:theme.SIZES.rsHeight/4.3, alignItems:'center' ,justifyContent:'space-between'}}>
+<View style={{
+  width:166,
+  height:64,
+  backgroundColor:theme.COLORS.white,
+  borderRadius:8,
+  paddingVertical:theme.MARGINS.hy10,
+  paddingHorizontal:14
+}}>
+
+<View style={{flexDirection:'row',alignItems:'center'}}>
+<User stroke={theme.COLORS.appColor}/>
+<View style={{marginLeft:theme.MARGINS.hy10}}>
+<Text style={{...theme.FONTS.H12,color:theme.COLORS.black }}>Verified Sellers</Text>
+<Text style={{...theme.FONTS.H2,color:theme.COLORS.black }}>{seller}</Text>
+</View>
+</View>
+</View>
+<View style={{
+  width:166,
+  height:64,
+  backgroundColor:theme.COLORS.white,
+  borderRadius:8,
+  paddingVertical:theme.MARGINS.hy10,
+  paddingHorizontal:14
+}}>
+<View style={{flexDirection:'row',alignItems:'center'}}>
+<Package />
+<View style={{marginLeft:theme.MARGINS.hy10}}>
+<Text style={{...theme.FONTS.H12,color:theme.COLORS.black }}>
+  Products
+</Text>
+<Text style={{...theme.FONTS.H2,color:theme.COLORS.black }}>{products}</Text>
+</View>
+</View>
+</View>
+          </View>
+    </ImageBackground>
     
+    
+
+    )}
       {search && (
         <View
           style={{

@@ -79,7 +79,7 @@ const NegotiableTag = () => {
 
 const renderProducts = (data, navigation, isPending,  viewLeft, viewRight) => {
  data = data?.filter(item => item.status === 'publish');
-//  console.log("----item status------", data)
+  // console.log("----item status------", data)
   return (
     <View style={{marginBottom: 40}}>
       
@@ -148,7 +148,7 @@ const renderProducts = (data, navigation, isPending,  viewLeft, viewRight) => {
             <ProfileImage />
            {/* </View> */}
            {/* <View> */}
-            <components.ProductName item={item} style={{fontWeight:'400', fontSize:11, marginLeft: 20, width: 100}} />
+            <Text style={{...theme.FONTS.H12, color:theme.COLORS.black, marginLeft: 20, width: 100}}> {item?.vendor_detail?.vendor_name}</Text> 
            {/* </View> */}
            </View>
             </View>
@@ -286,7 +286,8 @@ const ProductListItem = (item, navigation)=>{
             <ProfileImage />
            {/* </View> */}
            {/* <View> */}
-            <components.ProductName item={item} style={{fontWeight:'400', fontSize:11, marginHorizontal: 20}} />
+            {/* <components.ProductName item={item} style={{fontWeight:'400', fontSize:11, marginHorizontal: 20}} /> */}
+            <Text style={{...theme.FONTS.H12, color:theme.COLORS.black, marginLeft: 20, width: 100}}> {item?.vendor_detail?.vendor_name}</Text> 
            {/* </View> */}
 
            </View>

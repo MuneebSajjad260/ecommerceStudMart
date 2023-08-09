@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   ImageBackground,
   Image,
+  ScrollView
 } from 'react-native';
 import React, {useState, useEffect} from "react";
 import {useDispatch} from "react-redux";
@@ -22,8 +23,9 @@ const Shop = () => {
   const route = useRoute();
   const dispatch = useDispatch();
 
-  const {title, products, categoryId} = route.params || {};
+  const {title,products ,categoryId} = route.params || {};
   const {category} = route.params || false;
+  const {university} = route.params || false;
   console.log("CATEGORY DETAILS--", category, "-", categoryId);
 
   //STATES
@@ -57,18 +59,19 @@ const Shop = () => {
   //     level={theme.RES_HEIGHT(8, 12, 35)}
   //   />
   // );
+ 
   const renderHeader = () => {
     return (
-      <components.Header   title={title} goBack={true} searchIcon={true} border={true}
-      containerStyle={{backgroundColor: theme.COLORS.white, height:theme.RES_HEIGHT(90, 100, 125)}} 
-      level={theme.RES_HEIGHT(8, 12, 35)}  />
+      <components.Header border={university ? false : true }  title={title} goBack={true} searchIcon={university ? false : true}  university={university} seller={105} products ={230}
+      containerStyle={{backgroundColor: theme.COLORS.white, height:university ? theme.RES_HEIGHT(90, 220, 125) : theme.RES_HEIGHT(90, 100, 125)}} 
+      level={ university ? theme.RES_HEIGHT(8, 100, 35) : theme.RES_HEIGHT(8, 12, 35)  }  />
     );
   };
 
   const renderFilterAndSort = () => (
     <View
       style={{
-        marginTop: 12,
+        marginTop: university ? 45 : 12,
         marginBottom: 9,
         flexDirection: 'row',
         alignItems: 'center',
@@ -205,10 +208,12 @@ const Shop = () => {
   const renderProductsList = () => (
     <FlatList
       data={ category ? categoryItem : products}
+      showsVerticalScrollIndicator={false}
       contentContainerStyle={{
         flexGrow: 1,
         marginHorizontal: 6,
         marginTop: 8,
+    paddingBottom:theme.MARGINS.hy20
       }}
       numColumns={2}
       columnWrapperStyle={{justifyContent: 'space-between'}}
@@ -281,6 +286,7 @@ const Shop = () => {
               item={item}
               style={{fontWeight: "400", fontSize: 11, marginLeft: 20}}
             />
+              {/* <Text style={{...theme.FONTS.H12, color:theme.COLORS.black, marginLeft: 20, width: 100}}> {item?.vendor_detail?.vendor_name}</Text>  */}
             {/* </View> */}
           </View>
         </View>
@@ -335,10 +341,22 @@ const Shop = () => {
 
   return (
     <View style={{flex: 1, backgroundColor: theme.COLORS.appBg}}>
-      {renderHeader()}
-      {renderFilterAndSort()}
-      {/* {renderProducts()} */}
-      {renderProductsList()}
+     {university ? (
+      <ScrollView
+      showsVerticalScrollIndicator={false}>
+        {renderHeader()}
+        {renderFilterAndSort()}
+        {/* {renderProducts()} */}
+        {renderProductsList()}
+      </ScrollView>
+    ) : (
+      <View>
+        {renderHeader()}
+        {renderFilterAndSort()}
+        {/* {renderProducts()} */}
+        {renderProductsList()}
+      </View>
+    )}
     </View>
   );
 };

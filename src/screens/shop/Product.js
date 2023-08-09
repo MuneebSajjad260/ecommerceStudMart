@@ -46,7 +46,7 @@ const Product =  ({apColors}) => {
   const {product} = route.params;
   // const product = productByID  // MOCK_DATA ---
   const dispatch = useDispatch();
-  //  console.log("---product---", product.vendor_detail)
+   console.log("---product---", product)
 
   const auth = useSelector(selectUser)
   console.log("auth-",auth.data)
@@ -315,7 +315,7 @@ console.log("cartItem--",cartItem)
           product?.images?.map((item, index) => {
             return (
               <components.ImageItem
-                item={product}
+                item={item}
                 key={index}
                 containerStyle={{
                   width: theme.SIZES.width,
@@ -323,6 +323,7 @@ console.log("cartItem--",cartItem)
                   backgroundColor: apColors.lightBlue2,
                 }}
                 resizeMode="cover"
+                showThreeImages={true}
               />
             );
           })

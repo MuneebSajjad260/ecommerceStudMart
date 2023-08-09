@@ -23,7 +23,7 @@ const Price = ({ item, containerStyle, textStyle }) => {
             textDecorationLine: "line-through",
           }}
         >
-          ${item.old_price}
+          QAR {item.old_price}
         </Text>
       )}
       <Text
@@ -35,7 +35,7 @@ const Price = ({ item, containerStyle, textStyle }) => {
           ...textStyle,
         }}
       >
-        ${item.price}
+        QAR {item.price}
       </Text>
     </View>
   );

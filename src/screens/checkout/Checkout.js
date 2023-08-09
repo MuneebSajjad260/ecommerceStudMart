@@ -366,7 +366,7 @@ const Checkout = () => {
 
                 <View style={styles.locationContent}>
                   <Text style={styles.pickupHeading}>Pickup location </Text>
-                  <Text style={styles.pickupDesc}>{`${products[0].vendorDetail?.zone}, Building no.${products[0].vendorDetail?.building}, Street ${products[0].vendorDetail?.street}`}</Text>
+                  <Text style={styles.pickupDesc}>{ products[0].vendorDetail ? `${products[0].vendorDetail?.zone}, Building no.${products[0].vendorDetail?.building}, Street ${products[0].vendorDetail?.street}` : ''}</Text>
                 </View>
               </View>
 
