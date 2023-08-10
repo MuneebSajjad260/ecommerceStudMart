@@ -44,8 +44,8 @@ import getThemedColors from "../../../utils/themeMode";
       signupView:{
         flexDirection: "row",
         alignItems: "center",
-        marginBottom: 40,
         alignSelf:"center",
+        bottom:40,
       },
       errorMsg:{
         // marginHorizontal: 20,
@@ -54,6 +54,12 @@ import getThemedColors from "../../../utils/themeMode";
           padding: 5,
         borderRadius:16,
         marginBottom: 8
+        },
+        errorTxt:{
+          ...theme.FONTS.Mulish_400Regular,
+          fontSize: 12,
+          lineHeight: 12 * 1.5,
+          color: apColors.redCBg,
         },
         apiError :{
           ...theme.FONTS.Mulish_400Regular,
