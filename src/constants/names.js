@@ -34,6 +34,7 @@ const names = {
   Payment: "Payment",
   Category: "Categories",
   UniversityScreen: "University",
+  BrandsScreen: "Brands",
 };
 
 const tabNames = {

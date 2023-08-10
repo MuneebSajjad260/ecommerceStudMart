@@ -36,6 +36,7 @@ import OrderSummary from "./orderSummary/OrderSummary";
 import PaymentScreen from "./paymentScreen/PaymentScreen";
 import Category from "./tabs/category";
 import UniversityScreen from "./universityScreen/UniversityScreen";
+import BrandsScreen from "./brandsScreen/BrandsScreen";
 // import Payment from "./checkout/Payment";
 
 const screens = {
@@ -77,6 +78,7 @@ const screens = {
   PaymentScreen,
   Category,
   UniversityScreen,
+  BrandsScreen
   // Payment,
 };
 

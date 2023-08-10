@@ -39,6 +39,7 @@ import {
   Payload_Keys,
   endPoints,
 } from "../../constants/constants";
+import Brands from '../../components/Brands';
 import getThemedColors from '../../utils/themeMode';
 import {svg} from "../../svg";
 import {selectLoginUser} from "../../store/loginSlice";
@@ -81,9 +82,15 @@ const HomeOne = () => {
   name:'NUST University',
   sellers:23
 },
-
-
   ]
+
+  const brands=[
+    {name:'FAST',rating:4.9},
+    {name:'UET University',rating:4.1},
+    {name:'ADIDAS',rating:4.7},
+    {name:'IRON GEAR',rating:4.9},
+  ]
+
   let viewLeft = {
     hide: false,
     title: 'Products',
@@ -566,11 +573,12 @@ const HomeOne = () => {
           renderItem={({item}) => (
             <TouchableOpacity
               style={styles.uniCont}
-              onPress={() =>
-                navigation.navigate(names.Product, {
-                  product: item,
-                })
-              }
+              onPress={() => navigation.navigate(names.Shop, {
+          
+                //product: test,
+                university:true,
+                //  title: "All products",
+              })}
             >
               <View>
               <components.ImageItem
@@ -597,7 +605,45 @@ const HomeOne = () => {
     );
   };
   
-  
+  //RENDER BRANDS
+
+  const renderBrands=()=>{
+return(
+  <View style={styles.contentContainer}>
+      <components.ProductCategory
+          title={'Student Friendly brands'}
+          containerStyle={{marginHorizontal: 20}}
+          onPress={() =>
+            navigation.navigate(names.BrandsScreen, {
+             brands: brands,
+              // product: data,
+            })
+          }
+          visibleRight={viewRight?.hide}
+        />
+    <FlatList
+    data={brands?.slice(0,4)}
+    horizontal={true}
+    key={(Math.random() * 1000).toString()}
+    contentContainerStyle={{paddingLeft: 13}}
+    showsHorizontalScrollIndicator={false}
+    renderItem={({item})=>{
+      return(
+<Brands data={item}         
+onPress={() => navigation.navigate(names.Shop, {
+          //product: test,
+          university:true,
+          //  title: "All products",
+        })} />
+      )
+    }}
+
+    />
+
+
+  </View>
+)
+  }
   
  
   const renderContent = () => {
@@ -636,6 +682,7 @@ const HomeOne = () => {
       {renderCategories()}
       {renderProducts(data, navigation, isPending, viewLeft, viewRight)}
       {renderUniversities()}
+      {renderBrands()}
       {/* {data && renderFeatured()} */}
     </>
   );
@@ -662,7 +709,7 @@ const HomeOne = () => {
   };
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1,backgroundColor:theme.COLORS.appBg}}>
       {renderStatusBarLight()}
       {renderContentVirtualized()}
       {/* {renderContent()} */}

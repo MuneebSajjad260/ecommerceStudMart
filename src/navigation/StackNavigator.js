@@ -211,6 +211,11 @@ const StackNavigator = () => {
           component={screens.UniversityScreen}
           options={{headerShown: false}}
         />
+         <Stack.Screen
+          name={names.BrandsScreen}
+          component={screens.BrandsScreen}
+          options={{headerShown: false}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
