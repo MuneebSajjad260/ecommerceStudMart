@@ -216,6 +216,11 @@ const StackNavigator = () => {
           component={screens.BrandsScreen}
           options={{headerShown: false}}
         />
+        <Stack.Screen
+          name={names.ShopFilter}
+          component={screens.ShopFilter}
+          options={{headerShown: false}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

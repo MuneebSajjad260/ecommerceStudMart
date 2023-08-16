@@ -20,6 +20,7 @@ import {renderStatusBar, renderStatusBarLight} from '../../utils/functions';
 import {useSelector, useDispatch} from 'react-redux';
 
 import styles from './Style/HomeOneStyle';
+import { GetUniversities } from '../../services/actions/GetUniversities';
 import getRandomColor from "../../utils/randomColor";
 import {components} from '../../components';
 import {theme, homeCarousel, banner, Base} from '../../constants';
@@ -119,6 +120,7 @@ const HomeOne = () => {
   const [bannerLoading, setBannerLoading] = useState(true);
   const [featuredLoading, setFeaturedLoading] = useState(true);
   const [category, setCategory] = useState();
+  const [universityList, setUniversityList] = useState();
   const [loading, setLoading] = useState(false);
   const updateCurrentSlideIndex = (e) => {
     const contentOffsetX = e.nativeEvent.contentOffset.x;
@@ -135,6 +137,7 @@ const HomeOne = () => {
     }, 1000);
   };
 
+  //GET CATEGORIES FROM API
   useEffect(() => {
     setLoading(true);
     dispatch(getCategoriesListAction())
@@ -145,6 +148,25 @@ const HomeOne = () => {
       })
       .catch((err) => {
         console.log('err category--', err);
+        // Handle the error by displaying it using <Text> component
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  }, []);
+
+  //GET UNIVERSITIES FROM API 
+
+  useEffect(() => {
+    setLoading(true);
+    dispatch(GetUniversities())
+      .unwrap()
+      .then((result) => {
+        console.log("result of university -", result);
+        setUniversityList(result);
+      })
+      .catch((err) => {
+        console.log('err university--', err);
         // Handle the error by displaying it using <Text> component
       })
       .finally(() => {
@@ -550,7 +572,7 @@ const HomeOne = () => {
           onPress={() =>
             navigation.navigate(names.UniversityScreen, {
               title: "All products",
-             university: universities,
+             university: universityList,
               // product: data,
             })
           }
@@ -562,7 +584,7 @@ const HomeOne = () => {
         </CustomShimmerPlaceHolder>
   
         {!isPending && <FlatList
-          data={universities?.slice(0,4)}
+          data={universityList?.slice(0,4)}
           horizontal={true}
           key={(Math.random() * 1000).toString()}
           // scrollEnabled={false}              // set number of columns 
@@ -593,8 +615,8 @@ const HomeOne = () => {
               </components.ImageItem>
             
               <Text style={styles.uniName}>{item.name}</Text>
-              <Text style={styles.sellerNo}>23+ <Text style={styles.sellerTxt}>seller</Text></Text>
-              <View style={styles.UniBottomView}/>
+              <Text style={styles.sellerNo}>{item?.count} <Text style={styles.sellerTxt}>seller</Text></Text>
+              {/* <View style={styles.UniBottomView}/> */}
         
               </View>
             </TouchableOpacity>

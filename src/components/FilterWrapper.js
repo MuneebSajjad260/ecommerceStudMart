@@ -1,36 +1,41 @@
-import {View, Text, StyleSheet, TouchableOpacity} from "react-native";
-import React, {useState} from "react";
-import {theme} from "../constants";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import React, { useState, useEffect } from "react";
+import { theme } from "../constants";
 import Wrapper from "./Wrapper";
 
-const FilterWrapper = ({category, university, price, renderPrice}) => {
-  const [selectedItems, setSelectedItems] = useState([]);
-  const [selectedUniversities, setSelectedUniversities] = useState([]);
+const FilterWrapper = ({ category, university, price, renderPrice, applyFilters,priceFilter }) => {
+  const [filterData, setFilterData] = useState({ category: [], university: [] }); // Separate arrays for category and university
 
-  //CATEGORIES.//////
-  const toggleItemSelection = (itemId) => {
-    if (selectedItems.includes(itemId)) {
-      setSelectedItems(selectedItems.filter((id) => id !== itemId));
-    } else {
-      setSelectedItems([...selectedItems, itemId]);
-    }
-  };
+  useEffect(() => {
+    applyFilters(filterData);
+  }, [filterData]);
 
-  const isItemSelected = (itemId) => selectedItems.includes(itemId);
+  //setting priceFilter in filterData array
+  useEffect(() => {
+    setFilterData((prevFilterData) => ({
+      ...prevFilterData,
+      priceFilter: priceFilter, // Update the count value in filterData
+    }));
+  }, [priceFilter]);
 
-  //UNIVERSITIES/////
-  const toggleUniversitySelection = (universityId) => {
-    if (selectedUniversities.includes(universityId)) {
-      setSelectedUniversities(
-        selectedUniversities.filter((id) => id !== universityId),
+
+  const toggleFilterSelection = (item, categoryType) => {
+    const updatedCategory = [...filterData[categoryType]];
+
+    if (updatedCategory.some((selectedItem) => selectedItem.id === item.id)) {
+      updatedCategory.splice(
+        updatedCategory.findIndex((selectedItem) => selectedItem.id === item.id),
+        1
       );
     } else {
-      setSelectedUniversities([...selectedUniversities, universityId]);
+      updatedCategory.push(item);
     }
+
+    setFilterData({ ...filterData, [categoryType]: updatedCategory });
   };
 
-  const isUniversitySelected = (universityId) =>
-    selectedUniversities.includes(universityId);
+  const isFilterSelected = (item, categoryType) =>
+    filterData[categoryType].some((selectedItem) => selectedItem.id === item.id);
 
   return (
     <Wrapper style={styles.wrapper}>
@@ -42,17 +47,17 @@ const FilterWrapper = ({category, university, price, renderPrice}) => {
           {category?.map((item) => (
             <TouchableOpacity
               key={item.id}
-              onPress={() => toggleItemSelection(item.id)}
+              onPress={() => toggleFilterSelection(item, "category")}
               style={[
                 styles.nameContainer,
-                isItemSelected(item.id) && styles.selectedContainer,
+                isFilterSelected(item, "category") && styles.selectedContainer,
               ]}
             >
               <Text
                 style={[
                   styles.filterTxt,
                   {
-                    color: isItemSelected(item.id)
+                    color: isFilterSelected(item, "category")
                       ? theme.COLORS.white
                       : theme.COLORS.black,
                   },
@@ -73,17 +78,17 @@ const FilterWrapper = ({category, university, price, renderPrice}) => {
           {university?.map((item) => (
             <TouchableOpacity
               key={item.id}
-              onPress={() => toggleUniversitySelection(item.id)}
+              onPress={() => toggleFilterSelection(item, "university")}
               style={[
                 styles.nameContainer,
-                isUniversitySelected(item.id) && styles.selectedContainer,
+                isFilterSelected(item, "university") && styles.selectedContainer,
               ]}
             >
               <Text
                 style={[
                   styles.filterTxt,
                   {
-                    color: isUniversitySelected(item.id)
+                    color: isFilterSelected(item, "university")
                       ? theme.COLORS.white
                       : theme.COLORS.black,
                   },
@@ -101,17 +106,13 @@ const FilterWrapper = ({category, university, price, renderPrice}) => {
         <Text style={styles.name}>Price</Text>
 
         <View style={styles.nameContainerWrapper}>
-          {/* {price?.map((item) => (
-            <View style={styles.nameContainer} key={item.id}>
-              <Text>{item.name}</Text>
-            </View>
-          ))} */}
           {renderPrice}
         </View>
       </View>
     </Wrapper>
   );
 };
+
 const styles = StyleSheet.create({
   wrapper: {
     borderColor: theme.COLORS.lightBlue1,

@@ -22,7 +22,7 @@ import Method from "./cart/Method";
 import Checkout from "./checkout/Checkout";
 // import Shipping from "./checkout/Shipping";
 import Product from "./shop/Product";
-import Filter from "./shop/Filter";
+import Filter from "./filterScreen/Filter";
 import Shop from "./shop/Shop";
 import Discount from "./shop/Discount";
 import HomeOne from "./tabs/HomeOne";
@@ -37,6 +37,7 @@ import PaymentScreen from "./paymentScreen/PaymentScreen";
 import Category from "./tabs/category";
 import UniversityScreen from "./universityScreen/UniversityScreen";
 import BrandsScreen from "./brandsScreen/BrandsScreen";
+import ShopFilter from "./shopFilter/ShopFilter";
 // import Payment from "./checkout/Payment";
 
 const screens = {
@@ -78,7 +79,8 @@ const screens = {
   PaymentScreen,
   Category,
   UniversityScreen,
-  BrandsScreen
+  BrandsScreen,
+  ShopFilter,
   // Payment,
 };
 

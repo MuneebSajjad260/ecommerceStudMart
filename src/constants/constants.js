@@ -9,7 +9,8 @@ const endPoints = {
   GetProfile: "wp-json/wc/v3/customers/",
   RetrieveOrder:"wp-json/wc/v3/orders/",
   OrderList:'wp-json/wc/v3/orders',
-  productsOfCategory:'wp-json/wc/v3/products'
+  productsOfCategory:'wp-json/wc/v3/products',
+  getUniversities:'wp-json/wc/v3/products/tags'
 }
 
 const onboardingData = [

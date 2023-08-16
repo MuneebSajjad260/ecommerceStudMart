@@ -26,6 +26,8 @@ const Shop = () => {
   const {title,products ,categoryId} = route.params || {};
   const {category} = route.params || false;
   const {university} = route.params || false;
+  const {filter} = route.params || false;
+  console.log("filter data ----",filter)
   console.log("CATEGORY DETAILS--", category, "-", categoryId);
 
   //STATES
@@ -210,10 +212,10 @@ const Shop = () => {
       data={ category ? categoryItem : products}
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{
-        flexGrow: 1,
+        //flex: 1,
         marginHorizontal: 6,
         marginTop: 8,
-    paddingBottom:theme.MARGINS.hy20
+    paddingBottom:200
       }}
       numColumns={2}
       columnWrapperStyle={{justifyContent: 'space-between'}}

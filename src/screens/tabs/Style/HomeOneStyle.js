@@ -58,12 +58,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  uniName: {...theme.FONTS.H5, color: theme.COLORS.black},
+  uniName: {
+    ...theme.FONTS.H5, 
+    color: theme.COLORS.black,
+    width:'80%'
+  },
   sellerNo: {
     ...theme.FONTS.Mulish_600SemiBold,
     fontSize: theme.FONTS.dF_sm,
     color: theme.COLORS.black,
     marginTop: 10,
+    
   },
   sellerTxt: {...theme.FONTS.H14, color: theme.COLORS.black},
   uniBottomView: {
@@ -84,8 +89,9 @@ const styles = StyleSheet.create({
   },
   uniCont: {
     flex: 1,
-    width: 171,
+    width:171,
     margin: 6,
+    height:250,
     borderWidth: 1,
     borderColor: "rgba(20, 0, 35, 0.1)",
     padding: 8,

@@ -35,6 +35,7 @@ const names = {
   Category: "Categories",
   UniversityScreen: "University",
   BrandsScreen: "Brands",
+  ShopFilter:'ShopFilter'
 };
 
 const tabNames = {
