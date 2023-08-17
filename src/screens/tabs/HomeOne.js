@@ -10,6 +10,7 @@ import {
   StyleSheet,
   useColorScheme,
   VirtualizedList,
+  ImageBackground,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
@@ -468,6 +469,7 @@ const HomeOne = () => {
                     title: `${item.name}`,
                     category: true,
                     categoryId: item.id,
+                    categoryData:item
                     // product: data,
                   })
                 }
@@ -595,12 +597,12 @@ const HomeOne = () => {
           renderItem={({item}) => (
             <TouchableOpacity
               style={styles.uniCont}
-              onPress={() => navigation.navigate(names.Shop, {
-          
-                //product: test,
-                university:true,
-                //  title: "All products",
-              })}
+              onPress={() =>
+                navigation.navigate(names.Shop, {
+                  university:true,
+                  universityData:item,
+                })
+              }
             >
               <View>
               <components.ImageItem
@@ -609,8 +611,9 @@ const HomeOne = () => {
                 resizeMode="cover"
                 borderRadius={8}
                 indicatorBorderRadius={18}
+                university={true}
               >
-                {item.is_sale === true && <components.Sale />}
+              
       
               </components.ImageItem>
             
@@ -652,11 +655,12 @@ return(
     renderItem={({item})=>{
       return(
 <Brands data={item}         
-onPress={() => navigation.navigate(names.Shop, {
-          //product: test,
-          university:true,
-          //  title: "All products",
-        })} />
+// onPress={() => navigation.navigate(names.Shop, {
+//           //product: test,
+//           university:true,
+//           //  title: "All products",
+//         })} 
+        />
       )
     }}
 

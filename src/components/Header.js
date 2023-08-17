@@ -1,4 +1,4 @@
-import {View, Text, TouchableOpacity, TextInput, ImageBackground} from "react-native";
+import {View, Text, TouchableOpacity, TextInput, ImageBackground,Image} from "react-native";
 import React, {useState} from "react";
 import {useNavigation} from "@react-navigation/native";
 import {useSelector, useDispatch} from "react-redux";
@@ -25,6 +25,7 @@ const Header = ({
   clearAll,
   clearList,
   university,
+  universityData,
   seller,
   products
 
@@ -35,6 +36,7 @@ const Header = ({
   const quantity = list?.length;
   const total = useSelector((state) => state.cart?.price);
 console.log("goback---",goBack)
+// console.log("universityData 2232-",universityData?.banner_url)
   const [showModal, setShowModal] = useState(false);
 
   //console.log("------Header Bag QTY------", quantity, total)
@@ -96,13 +98,22 @@ console.log("goback---",goBack)
       )}
     {university && (
      
-      <ImageBackground source={require("../assets/uniTest.png")} style={{
+      <ImageBackground    source={{uri: universityData.banner_url}} style={{
         width: '100%', // or 'contain' depending on your preference
         height: '100%',
         position:'absolute',
+        justifyContent:'center',
         top:0,
         zIndex:0}}>
-<View style={{flexDirection:'row', paddingHorizontal:14,marginTop:theme.SIZES.rsHeight/4.3, alignItems:'center' ,justifyContent:'space-between'}}>
+           <Image
+            key={Number(universityData?.id)}
+            style={{height: "50%", width: "50%",position:'absolute',alignSelf:'center'}}
+            source={{uri: universityData.logo_url}}
+           
+            resizeMode='contain'
+             borderRadius={20}
+          />
+<View style={{flexDirection:'row', paddingHorizontal:14,marginTop:theme.SIZES.rsHeight/3.9, alignItems:'center' ,justifyContent:'space-between'}}>
 <View style={{
   width:166,
   height:64,

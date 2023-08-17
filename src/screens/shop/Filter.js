@@ -26,7 +26,7 @@ const Filter = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const route = useRoute();
-  const {title} = route.params || {};
+  const {title,productId,categoryData,universityData} = route.params || {};
   const [category, setCategory] = useState();
   const [universityList, setUniversityList] = useState();
   const [loading, setLoading] = useState(false);
@@ -36,6 +36,7 @@ const Filter = () => {
   const [max, setMax] = useState(1000);
   const [filter, setFilter] = useState();
   const [priceFilter, setPriceFilter] = useState([]);
+  console.log("productId----",productId,'--',categoryData)
 
   //GET CATEGORIES FROM API
   useEffect(() => {
@@ -146,50 +147,6 @@ const Filter = () => {
   const renderPrice = () => {
     return (
       <View style={styles.sliderCont}>
-        {/* <MultiSlider
-          isMarkersSeparated={true}
-          customMarkerLeft={(e) => {
-            return (
-              <View style={styles.alignItem}>
-                <View style={styles.leftMark} />
-                <Text style={styles.leftTxt}>QAR {e.currentValue}</Text>
-              </View>
-            );
-          }}
-          customMarkerRight={(e) => {
-            return (
-              <View style={styles.alignItem}>
-                <View style={styles.rightMark} />
-                <Text style={styles.rightTxt}>QAR {e.currentValue}</Text>
-              </View>
-            );
-          }}
-          values={[0, 800]}
-          min={0}
-          max={800}
-          step={1}
-          sliderLength={theme.SIZES.width / 1.25}
-          onValuesChange={(e) => {}}
-          selectedStyle={{
-            backgroundColor: theme.COLORS.black,
-            width: 300,
-          }}
-          unselectedStyle={{
-            backgroundColor: "#DBE3F5",
-            width: 300,
-          }}
-          containerStyle={
-            {
-              // height: 20,
-              // width: '100%',
-            }
-          }
-          trackStyle={{
-            height: 3,
-            width: "100%",
-          }}
-        /> */}
-
         <View style={styles.priceSliderContainer}>
           <Slider
             style={styles.slider}
@@ -221,6 +178,8 @@ const Filter = () => {
         renderPrice={renderPrice()}
         applyFilters={applyFilters} // Pass the function here
         priceFilter={priceFilter}
+        categoryData={categoryData}
+        universityData={universityData}
       />
     );
   };
@@ -230,10 +189,11 @@ const Filter = () => {
       <components.Button
         title="apply filters"
         onPress={() => {
-          navigation.navigate(names.ShopFilter, {
+          navigation.navigate(names.Shop, {
             // products: data,
-            // title: title
+             title: 'All Products',
             filter: filter,
+            isFilter : true
           });
         }}
       />

@@ -18,7 +18,7 @@ export const ProductList = createAsyncThunk(
       const response = await axios.get(
         `${
             Base_Url + endPoints.ProductsList
-          }?category=${data}&consumer_key=${Consumer_Key}&consumer_secret=${Consumer_Secret}`,
+          }?${data}&consumer_key=${Consumer_Key}&consumer_secret=${Consumer_Secret}`,
         {
           headers: {
             'Content-Type': 'application/json',

@@ -1,6 +1,6 @@
-import {ActivityIndicator, Image, View} from "react-native";
+import {ActivityIndicator, Image, ImageBackground, View} from "react-native";
 import React, {useState} from "react";
-
+import LinearGradient from "react-native-linear-gradient";
 import {theme} from "../constants";
 
 const ImageItem = ({
@@ -12,6 +12,7 @@ const ImageItem = ({
   indicatorBorderRadius,
   simpleImage,
   showThreeImages,
+  university,
 }) => {
   const [loading, setLoading] = useState(true);
 
@@ -41,7 +42,32 @@ const ImageItem = ({
           }}
         />
       )}
-      {showThreeImages ? (
+      {university ? (
+        <ImageBackground
+          key={Number(item?.id)}
+          style={{height: '100%', width: '100%',justifyContent:'flex-end',alignItems:'center'}}
+          source={{uri: item.banner_url}}
+          onLoadStart={() => onloading(true)}
+          onLoadEnd={() => onloading(false)}
+          resizeMode={resizeMode}
+          borderRadius={borderRadius}
+        >
+            {/* Add the LinearGradient */}
+            <LinearGradient
+            colors={["transparent", "rgba(255,255,255,1)"]} // Customize gradient colors and opacity as needed
+            style={{ position: "absolute", left: 0, right: 0, top: 0, bottom: 0 }}
+          />
+          <Image
+            key={Number(item?.id)}
+            style={{height: "50%", width: "50%",position:'absolute',bottom:-10}}
+            source={{uri: item.logo_url}}
+            onLoadStart={() => onloading(true)}
+            onLoadEnd={() => onloading(false)}
+            resizeMode={resizeMode}
+            borderRadius={borderRadius}
+          />
+          </ImageBackground>
+      ) : showThreeImages ? (
         <Image
           key={Number(item?.id)}
           style={{height: "100%", width: "100%"}}
@@ -68,7 +94,6 @@ const ImageItem = ({
           borderRadius={borderRadius}
         />
       )}
-
       {children}
     </View>
   );

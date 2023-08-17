@@ -3,8 +3,8 @@ import React, { useState, useEffect } from "react";
 import { theme } from "../constants";
 import Wrapper from "./Wrapper";
 
-const FilterWrapper = ({ category, university, price, renderPrice, applyFilters,priceFilter }) => {
-  const [filterData, setFilterData] = useState({ category: [], university: [] }); // Separate arrays for category and university
+const FilterWrapper = ({ category, university, price, renderPrice, applyFilters,priceFilter,categoryData,universityData }) => {
+  const [filterData, setFilterData] = useState({ category: categoryData ? [categoryData] : [], university: universityData ? [universityData] : [] }); // Separate arrays for category and university
 
   useEffect(() => {
     applyFilters(filterData);

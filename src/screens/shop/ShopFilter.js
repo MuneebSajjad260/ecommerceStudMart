@@ -35,9 +35,10 @@ useEffect(()=>{
 
   const ids = filter.category.map(item => item.id);
   const filterIds = ids.join(',');
-  console.log("ids---",filterIds)
-dispatch(ProductList(filterIds)).unwrap().then(result=>{
-  console.log("product list result--",result,'--',result.length)
+  id =`category=${filterIds}`
+  console.log("ids---",id)
+dispatch(ProductList(id)).unwrap().then(result=>{
+  console.log("product list result--",result,'-length-',result.length)
   setProducts(result)
 }).catch(err=>{
   console.log("product list error--",err)
@@ -47,7 +48,7 @@ dispatch(ProductList(filterIds)).unwrap().then(result=>{
     return (
       <components.Header
         border={true}
-        title={title}
+        title={'All Products'}
         goBack={true}
         searchIcon={true}
        

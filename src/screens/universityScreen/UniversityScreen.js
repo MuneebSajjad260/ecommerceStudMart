@@ -24,28 +24,29 @@ const UniversityScreen = ({route}) => {
  
   const navigation = useNavigation();
   const [isScrolling, setIsScrolling] = useState(false);
+ 
+  const {university} = route.params || {};
+  console.log("prod--", university);
   const uniDetails = [
     {
       image: <UniIconSvg />,
       heading: "universities",
-      count: "25+",
+      count: university.length,
       color: "rgba(186, 237, 237, 1)",
     },
     {
       image: <VerifiedSellerSvg />,
       heading: "Verified sellers",
-      count: "1200+",
+      count: "1200",
       color: "rgba(212, 192, 236, 1)",
     },
     {
       image: <VerifiedProdSvg />,
       heading: "Verified products",
-      count: "2300+",
+      count: "2300",
       color: "rgba(249, 227, 195, 1)",
     },
-  ];;
-  const {university} = route.params || {};
-  console.log("prod--", university);
+  ];
   const renderHeader = () => {
     return (
       <components.Header
@@ -67,8 +68,9 @@ const UniversityScreen = ({route}) => {
         style={styles.uniCont}
          onPress={() => navigation.navigate(names.Shop, {
           
-          //product: test,
+          //product: item,
           university:true,
+          universityData:item,
           //  title: "All products",
         })}
       >
@@ -80,13 +82,14 @@ const UniversityScreen = ({route}) => {
             borderRadius={8}
             indicatorBorderRadius={18}
             simpleImage={true}
+            university={true}
           >
-            {item.is_sale === true && <components.Sale />}
+            
           </components.ImageItem>
 
           <Text style={styles.uniName}>{item.name}</Text>
           <Text style={styles.sellerNo}>
-            23+ <Text style={styles.sellerTxt}>seller</Text>
+            {item?.count} <Text style={styles.sellerTxt}>seller</Text>
           </Text>
         </View>
       </TouchableOpacity>
@@ -135,7 +138,8 @@ const UniversityScreen = ({route}) => {
               ...theme.FONTS.H2,
               textAlign: "center",
               alignSelf: "center",
-              color:theme.COLORS.black
+              color:theme.COLORS.black,
+              marginTop:theme.MARGINS.hy5
             }}
           >
             Trust of Qatar’s Universities students sellers{" "}

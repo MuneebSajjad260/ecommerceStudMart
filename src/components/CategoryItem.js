@@ -36,7 +36,8 @@ const CategoryItem = ({item, itemWidth,navigation,data}) => {
         navigation.navigate(names.Shop, {
           title: `${item.name}`,
           category:true,
-          categoryId:item.id
+          categoryId:item.id,
+          categoryData:item
             // product: data,
         })
       }
