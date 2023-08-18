@@ -5,9 +5,7 @@ import {
   TouchableOpacity,
   FlatList,
   Image,
-  ActivityIndicator,
   RefreshControl,
-  StyleSheet,
   useColorScheme,
   VirtualizedList,
   ImageBackground,
@@ -36,8 +34,6 @@ import ArrowSvg from "../../svg/categories/ArrowSvg";
 import {getCategoriesListAction} from "../../services/actions/ProductAction";
 import {
   Base_Url,
-  Consumer_Key,
-  Consumer_Secret,
   Payload_Keys,
   endPoints,
 } from "../../constants/constants";
@@ -60,8 +56,8 @@ import {useCallback} from "react";
 //   {id: 5, name: "View all", image: <ArrowSvg />},
 // ]
 
-const HomeOne = () => {
-  console.log('-----I am home one ----');
+const HomeOne = (props) => {
+  console.log('-----I am home one ----', props);
   const colors = getThemedColors(useColorScheme());
 
   const navigation = useNavigation();
@@ -204,11 +200,16 @@ const HomeOne = () => {
     );
   };
 
-  const renderHeaderNew = () => {
+  const renderHeaderHome = () => {
     return (
-      <View style={{flex: 1, backgroundColor: theme.COLORS.primaryBg}}>
-        <svg.HomeHeaderSvg />
+      <>
+      <View style={{flex:1, backgroundColor: theme.COLORS.primaryBg, flexDirection:'row', justifyContent:"space-between"}}>
+       <svg.HomeHeaderSvg/>
       </View>
+       <TouchableOpacity 
+       onPress={()=>{navigation.navigate("Search", {apColors: props.apColors})}}
+       style={{position:"absolute", top:70, right: 30 }}><svg.SearchIconSvg stroke={theme.COLORS.whiteOnly}/></TouchableOpacity>
+      </>
     );
   };
 
@@ -699,7 +700,7 @@ return(
 
   const Item = () => (
     <>
-      {renderHeaderNew()}
+      {renderHeaderHome()}
       {/* {renderFilters()} */}
       {renderCarousel()}
       {spaceY()}

@@ -5,7 +5,7 @@ import getThemedColors from "../utils/themeMode";
 import { theme } from "../constants";
 
 const Button = ({ title, onPress, containerStyle, style, textStyle, disable, loading }) => {
-  
+
   const colors = getThemedColors(useColorScheme())
 
   return (
@@ -17,14 +17,14 @@ const Button = ({ title, onPress, containerStyle, style, textStyle, disable, loa
           borderRadius: 50,
           justifyContent: "center",
           alignItems: "center",
-          backgroundColor: !disable? colors.appColor : colors.appColorLight,
+          // backgroundColor: !disable? colors.appColor : colors.appColorLight,
           ...style
         }}
         onPress={onPress}
       >
         {loading ? (
           <ActivityIndicator color={colors.white} />
-        ) :(<Text
+        ) : (<Text
           style={{
             color: colors.whiteOnly,
             // textTransform: "capitalize",

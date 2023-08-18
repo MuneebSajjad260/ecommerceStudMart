@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
-import { endPoints,Consumer_Params, Base_Url } from '../../constants/constants';
+import { endPoints, Consumer_Params, Base_Url } from '../../constants/constants';
 import { setUser } from '../../store/userSlice';
 
 
@@ -12,10 +12,9 @@ export const LoginAction = createAsyncThunk('auth/login', async (data, thunkAPI)
         // console.log("----login 333333 a------", data);
         const response = await axios.post(loginUrl, data, {
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': 'application/json'
             }
         })
-
 
         await thunkAPI.dispatch(setUser(response?.data))
         return response?.data
@@ -33,26 +32,23 @@ export const LoginAction = createAsyncThunk('auth/login', async (data, thunkAPI)
 export const SignupAction = createAsyncThunk('auth/signup', async (data, thunkAPI) => {
     try {
         console.log("----signup 333333 a------", data);
-        const datam ={
-            Consumer_Key,
-            Consumer_Secret,
-            data,
-        }
-        const response = await axios.post(Base_Url+endPoints.SignUp+Consumer_Params, datam, {
+
+        const response = await axios.post(Base_Url + endPoints.SignUp, data, {
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
+                'Content-Type': 'application/json'
             }
         })
-        
-        console.log("--signup response res 444444--", response);
-        console.log("--signup response 444444--", response?.data);
+
+        console.log("--signup response res 444444 b--", response);
+        console.log("--signup response 444444 c--", response?.data);
         // await thunkAPI.dispatch(setUser(response?.data))
         // await thunkAPI.dispatch(setUserType({type: userTypeEnum.PASSENGER}))
 
         return response?.data
     } catch (error) {
-        console.log("---error---")
-        console.log("error", error)
+        console.log("---error d---")
+        console.log("---error d---", error?.response?.data)
+        console.log("error e", error)
         // return error
         return thunkAPI.rejectWithValue(error)
         // return thunkAPI.rejectWithValue(error?.response?.data)

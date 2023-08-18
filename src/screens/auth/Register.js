@@ -1,158 +1,164 @@
-import React, {useState} from "react";
-import {View, Text, TouchableOpacity} from "react-native";
-import {SafeAreaView} from "react-native-safe-area-context";
-import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view";
-import {useNavigation} from "@react-navigation/native";
-import {renderHeaderAuth, renderStatusBar, renderStatusBarLight} from "../../utils/functions";
+import React, { useState } from "react";
+import { View, Text, TouchableOpacity } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { useNavigation } from "@react-navigation/native";
+import { renderHeaderAuth, renderStatusBarLight } from "../../utils/functions";
+import { useDispatch } from "react-redux";
+import { components } from "../../components";
+import { theme, names } from "../../constants";
+import { SignupAction } from "../../services/actions/AuthAction";
+import makeStyles from "./Styles/SignupStyle";
 
-import {components} from "../../components";
-import {theme, names} from "../../constants";
-import {svg} from "../../svg";
-
-const Register = () => {
+const Register = ({ apColors }) => {
   const navigation = useNavigation();
+  const dispatch = useDispatch()
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
   const [errorMessage, setErrorMessage] = useState({});
   const [isLoading, setIsLoading] = useState(false)
+
+  const styles = makeStyles(apColors)
+
+  const handleSignup = () => {
+    if (email != "" && name != "") {
+      setIsLoading(true)
+      let data = {
+        email: email,
+        name: name
+      }
+      navigation.navigate(names.RegisterConfirm, { email: email })
+
+      try {
+        dispatch(SignupAction(data)).unwrap().then((result) => {
+          // console.log("result", result)
+          if (result?.success) {
+            setErrorMessage({})
+            navigation.navigate(names.RegisterConfirm, { email: email })
+
+          } else {
+            let obj = {
+              error: true,
+              message: result?.message
+            }
+            setErrorMessage(obj)
+          }
+          setIsLoading(false)
+
+        }).catch((error) => {
+          // console.log("--signup error--", error?.response?.data?.message)
+          setIsLoading(false)
+          let obj = {
+            error: true,
+            message: error?.response?.data?.message
+          }
+          setErrorMessage(obj)
+
+        })
+      } catch (error) {
+        console.log("--signup error--", error)
+        setIsLoading(false)
+
+      }
+    } else {
+      // Kindly fill all the feilds
+      let obj = {
+        error: true,
+        message: "Fill all feilds."
+      }
+      setErrorMessage(obj)
+    }
+  }
 
   const renderContent = () => {
     return (
       <KeyboardAwareScrollView
-        contentContainerStyle={{
-          paddingHorizontal: 20,
-          paddingVertical: theme.SIZES.height * 0.06,
-          flexGrow: 1,
-        }}
+        contentContainerStyle={styles.contentScroll}
         enableOnAndroid={true}
         showsVerticalScrollIndicator={false}
       >
         {/* <components.Line containerStyle={{marginBottom: 14}} /> */}
-        {/* <Text
-          style={{
-            textAlign: "center",
-            ...theme.FONTS.H1,
-            marginBottom: 30,
-            textTransform: "capitalize",
-            color: theme.COLORS.black,
-          }}
-        >
-          Sign up
-        </Text> */}
+
         <components.InputField
           title="Full Name"
           placeholder=""
-          containerStyle={{marginBottom: 20}}
-          // check={true}
+          containerStyle={{ marginBottom: 20 }}
+          onChangeText={(val) => { setName(val) }}
         />
         <components.InputField
           title="Email"
           placeholder=""
-          onChangeText={(val)=>{ setEmail(val)
-                }}
-          // autoFocused={true}
+          onChangeText={(val) => { setEmail(val) }}
           apColors
-          // check={true}
-          containerStyle={{marginBottom: 20}}
-
+          containerStyle={{ marginBottom: 20 }}
         />
 
-        {errorMessage?.email?<View style={styles.errorMsg}>
-        <Text
-              style={{
-                ...theme.FONTS.Mulish_400Regular,
-                fontSize: 12,
-                lineHeight: 12 * 1.5,
-                color: apColors.redCBg,
-              }}
-            >
-              {errorMessage?.email}
-            </Text>
-        </View>:null}
-        {/* <components.InputField
-          title="password"
-          placeholder="••••••••"
-          containerStyle={{marginBottom: 20}}
-          eyeOffSvg={true}
-          secureTextEntry={true}
-        />
-        <components.InputField
-          title="confirm password"
-          placeholder="••••••••"
-          containerStyle={{marginBottom: 20}}
-          eyeOffSvg={true}
-          secureTextEntry={true}
-        /> */}
-
-       {/* -------STUDENT BENEFITS INFO------ */}
-
-       <View style={{backgroundColor:"#d3d3d3", padding:14, borderRadius: 16, marginBottom:20, marginTop: 20}}>
-        <Text style={{fontSize: 16}}>As a student, you'll enjoy exclusive benefits:</Text>
-        <Text style={{fontSize: 12, fontWeight: '300', lineHeight: 24}}>Brands discounts</Text>
-        <Text style={{fontSize: 12, fontWeight: '300', lineHeight: 24}}>Discount Vouchers</Text>
-       </View>
-
-        <components.Button
-          title="Next"
-          containerStyle={{marginBottom: 20}}
-          onPress={() => navigation.navigate(names.RegisterConfirm)}
-        />
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            marginBottom: 40,
-            alignSelf:"center"
-          }}
-        >
+        {errorMessage?.email ? <View style={styles.errorMsg}>
           <Text
+            style={styles.errorText}
+          >
+            {errorMessage?.email}
+          </Text>
+        </View> : null}
+
+        {/* -------STUDENT BENEFITS INFO------ */}
+
+        <View style={{ backgroundColor: "#d0d0d0", padding: 14, borderRadius: 16, marginBottom: 20, marginTop: 20 }}>
+          <Text style={{ fontSize: 16 }}>As a student, you'll enjoy exclusive benefits:</Text>
+          <Text style={{ fontSize: 12, fontWeight: '300', lineHeight: 24 }}>Brands discounts</Text>
+          <Text style={{ fontSize: 12, fontWeight: '300', lineHeight: 24 }}>Discount Vouchers</Text>
+        </View>
+
+        <View style={styles.footerView}>
+          {errorMessage?.error ? <View style={styles.errorMsg}>
+            <Text
+              style={styles.errorText}
+            >
+              {errorMessage?.message}
+            </Text>
+          </View> : null}
+          <components.Button
+            title="Next"
+            containerStyle={{ marginBottom: theme.MARGINS.hy20 }}
+            style={{ backgroundColor: (email === "" || name === "") ? apColors.appColorLight : apColors.appColor }}
+            onPress={() => handleSignup()}
+            disable={email === "" || name === ""}
+            loading={isLoading}
+          />
+          <View
             style={{
-              ...theme.FONTS.Mulish_400Regular,
-              fontSize: 16,
-              color: theme.COLORS.gray1,
-              marginRight: 3,
+              flexDirection: "row",
+              alignItems: "center",
+              marginBottom: 0,
+              alignSelf: "center"
             }}
           >
-            Already have an account?
-          </Text>
-          <TouchableOpacity onPress={() => navigation.navigate(names.Login)}>
             <Text
               style={{
                 ...theme.FONTS.Mulish_400Regular,
                 fontSize: 16,
-                color: theme.COLORS.black,
+                color: theme.COLORS.gray1,
+                marginRight: 3,
               }}
             >
-              Sign in
+              Already have an account?
             </Text>
-          </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate(names.Login)}>
+              <Text
+                style={styles.signinText}
+              >
+                Sign in
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
-        {/* <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <TouchableOpacity style={{marginHorizontal: 7}} onPress={() => {}}>
-            <svg.FacebookSvg />
-          </TouchableOpacity>
-          <TouchableOpacity style={{marginHorizontal: 7}} onPress={() => {}}>
-            <svg.TwitterSvg />
-          </TouchableOpacity>
-          <TouchableOpacity style={{marginHorizontal: 7}} onPress={() => {}}>
-            <svg.GoogleSvg />
-          </TouchableOpacity>
-        </View> */}
       </KeyboardAwareScrollView>
     );
   };
 
   return (
-    <View style={{...theme.Main_Container}}>
+    <View style={styles.mainContainer}>
       {renderStatusBarLight()}
       {renderHeaderAuth('Personal info', 'Fill the details to continue', "signup")}
-      {/* {renderHeader()} */}
       {renderContent()}
     </View>
   );

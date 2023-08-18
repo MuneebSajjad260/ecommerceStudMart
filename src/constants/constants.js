@@ -4,7 +4,7 @@ const endPoints = {
   GetAllCategoryList : "wp-json/wc/v3/products/categories",
   PlaceOrder: "wp-json/wc/v3/orders",
   LogIn: "",
-  SignUp: 'wp-json/wc/v3/customers',
+  SignUp: 'wp-json/sm-api/v1/user-password-reset-link',
   ProductsList: "wp-json/wc/v3/products",
   GetProfile: "wp-json/wc/v3/customers/",
   RetrieveOrder:"wp-json/wc/v3/orders/",

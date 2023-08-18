@@ -1,10 +1,10 @@
-import { View, Text, TouchableOpacity,ActivityIndicator, useColorScheme } from "react-native";
+import { View, Text, TouchableOpacity, ActivityIndicator, useColorScheme } from "react-native";
 import React from "react";
 
 import getThemedColors from "../utils/themeMode";
 import { theme } from "../constants";
 
-const Button = ({ title, onPress, containerStyle, style, textStyle, disable,loading }) => {
+const Button = ({ title, onPress, containerStyle, style, textStyle, disable, loading }) => {
   const colors = getThemedColors(useColorScheme())
 
   return (
@@ -14,31 +14,31 @@ const Button = ({ title, onPress, containerStyle, style, textStyle, disable,load
           width: "100%",
           height: 50,
           borderRadius: 50,
-          borderWidth:1,
+          borderWidth: 1,
           borderColor: colors.inputBorder,
           justifyContent: "center",
           alignItems: "center",
-          backgroundColor:  colors.white ,
+          // backgroundColor:  colors.white ,
           ...style
         }}
         onPress={onPress}
       >
-          {loading ? (
+        {loading ? (
           <ActivityIndicator color={colors.white} />
-        ) :(
-        <Text
-          style={{
-            color: colors.black,
-            // textTransform: "capitalize",
-            ...theme.FONTS.Mulish_600SemiBold,
-            fontSize: 16,
-            fontWeight: '700',
-            letterSpacing: 1.1,           
-             ...textStyle,
-          }}
-        >
-          {title}
-        </Text>)}
+        ) : (
+          <Text
+            style={{
+              color: colors.black,
+              // textTransform: "capitalize",
+              ...theme.FONTS.Mulish_600SemiBold,
+              fontSize: 16,
+              fontWeight: '700',
+              letterSpacing: 1.1,
+              ...textStyle,
+            }}
+          >
+            {title}
+          </Text>)}
       </TouchableOpacity>
     </View>
   );
