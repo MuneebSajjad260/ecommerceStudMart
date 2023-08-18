@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
+import { View, Text, TouchableOpacity, Dimensions } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import React, { useState, useCallback, useRef, useMemo } from "react";
 import { useDispatch } from "react-redux";
@@ -141,6 +141,7 @@ const Login = ({ apColors }) => {
         <components.InputField
           title="Email"
           placeholder="someone@mail.com"
+          containerStyle={styles.inpContainer}
           onChangeText={(val) => {
             setEmail(val)
           }}
@@ -156,10 +157,12 @@ const Login = ({ apColors }) => {
           </Text>
         </View> : null}
 
+        <View style={styles.mTop}></View>
+
         <components.InputField
           title="Password"
           placeholder="••••••••"
-          containerStyle={{ marginTop: theme.MARGINS.hy20 }}
+          containerStyle={styles.inpContainer}
           eyeOffSvg={true}
           secureTextEntry={true}
           onChangeText={(val) => {
@@ -184,7 +187,6 @@ const Login = ({ apColors }) => {
           //   setRememberMe((rememberMe) => !rememberMe);
           // }}
           >
-
           </View>
           <TouchableOpacity
             onPress={() => navigation.navigate(names.ForgotPass)}
@@ -200,6 +202,7 @@ const Login = ({ apColors }) => {
         <components.Button
           title="Sign in"
           containerStyle={{ marginBottom: theme.MARGINS.hy20 }}
+          style={{ backgroundColor: (email === "" || password === "") ? apColors.appColorLight : apColors.appColor }}
           disable={email === "" || password === ""}
           loading={isLoading}
           onPress={() => {
@@ -211,7 +214,7 @@ const Login = ({ apColors }) => {
 
         <components.SecondaryButton
           title="Continue as a guest"
-          containerStyle={{ marginBottom: theme.MARGINS.hy20, backgroundColor: "white" }}
+          containerStyle={{ marginBottom: theme.MARGINS.hy20, backgroundColor: apColors.white }}
           onPress={() => navigation.navigate(names.TabNavigator)}
         />
 
@@ -302,7 +305,7 @@ const Login = ({ apColors }) => {
   }
 
   return (
-    <View style={{ ...theme.Main_Container }}>
+    <View style={styles.mainContainer}>
       {renderStatusBarLight()}
       {renderHeaderAuth('Welcome', 'Sign in to continue')}
       {renderContent()}

@@ -20,30 +20,52 @@ const Register = ({ apColors }) => {
   const styles = makeStyles(apColors)
 
   const handleSignup = () => {
-
     if (email != "" && name != "") {
+      setIsLoading(true)
       let data = {
-        email: email
+        email: email,
+        name: name
       }
       navigation.navigate(names.RegisterConfirm, { email: email })
 
-      console.log("----Email Signup -----", email)
-      // try {
-      //   dispatch(SignupAction(data)).unwrap().then((result) => {
-      //     console.log("result", result)
-      //     if (result?.success) {
-      //       navigation.navigate(names.RegisterConfirm, { email: email })
+      try {
+        dispatch(SignupAction(data)).unwrap().then((result) => {
+          // console.log("result", result)
+          if (result?.success) {
+            setErrorMessage({})
+            navigation.navigate(names.RegisterConfirm, { email: email })
 
-      //     } else {
-      //       console.log("--signup else errr--")
-      //     }
+          } else {
+            let obj = {
+              error: true,
+              message: result?.message
+            }
+            setErrorMessage(obj)
+          }
+          setIsLoading(false)
 
-      //   })
-      // } catch (error) {
-      //   console.log("--signup error--", error)
-      // }
+        }).catch((error) => {
+          // console.log("--signup error--", error?.response?.data?.message)
+          setIsLoading(false)
+          let obj = {
+            error: true,
+            message: error?.response?.data?.message
+          }
+          setErrorMessage(obj)
+
+        })
+      } catch (error) {
+        console.log("--signup error--", error)
+        setIsLoading(false)
+
+      }
     } else {
-
+      // Kindly fill all the feilds
+      let obj = {
+        error: true,
+        message: "Fill all feilds."
+      }
+      setErrorMessage(obj)
     }
   }
 
@@ -80,17 +102,27 @@ const Register = ({ apColors }) => {
 
         {/* -------STUDENT BENEFITS INFO------ */}
 
-        <View style={{ backgroundColor: "#d3d3d3", padding: 14, borderRadius: 16, marginBottom: 20, marginTop: 20 }}>
+        <View style={{ backgroundColor: "#d0d0d0", padding: 14, borderRadius: 16, marginBottom: 20, marginTop: 20 }}>
           <Text style={{ fontSize: 16 }}>As a student, you'll enjoy exclusive benefits:</Text>
           <Text style={{ fontSize: 12, fontWeight: '300', lineHeight: 24 }}>Brands discounts</Text>
           <Text style={{ fontSize: 12, fontWeight: '300', lineHeight: 24 }}>Discount Vouchers</Text>
         </View>
 
         <View style={styles.footerView}>
+          {errorMessage?.error ? <View style={styles.errorMsg}>
+            <Text
+              style={styles.errorText}
+            >
+              {errorMessage?.message}
+            </Text>
+          </View> : null}
           <components.Button
             title="Next"
-            containerStyle={styles.btnNext}
+            containerStyle={{ marginBottom: theme.MARGINS.hy20 }}
+            style={{ backgroundColor: (email === "" || name === "") ? apColors.appColorLight : apColors.appColor }}
             onPress={() => handleSignup()}
+            disable={email === "" || name === ""}
+            loading={isLoading}
           />
           <View
             style={{
@@ -124,7 +156,7 @@ const Register = ({ apColors }) => {
   };
 
   return (
-    <View style={{ ...theme.Main_Container }}>
+    <View style={styles.mainContainer}>
       {renderStatusBarLight()}
       {renderHeaderAuth('Personal info', 'Fill the details to continue', "signup")}
       {renderContent()}

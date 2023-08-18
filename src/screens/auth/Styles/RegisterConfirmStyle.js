@@ -5,11 +5,10 @@ import getThemedColors from "../../../utils/themeMode";
 const makeStyles = (apColors) => StyleSheet.create({
     mainContainer: {
         flex: 1,
+        backgroundColor: apColors.appBg
     },
     footer: {
-
         marginHorizontal: 20
-
     },
     browse: { marginBottom: 20 },
     contentFooter: {
@@ -21,7 +20,7 @@ const makeStyles = (apColors) => StyleSheet.create({
     haveAccount: {
         ...theme.FONTS.Mulish_400Regular,
         fontSize: 16,
-        color: theme.COLORS.gray1,
+        color: apColors.gray1,
         marginRight: 3,
     },
     errorText: {
@@ -33,7 +32,7 @@ const makeStyles = (apColors) => StyleSheet.create({
     signinText: {
         ...theme.FONTS.Mulish_400Regular,
         fontSize: 16,
-        color: theme.COLORS.black,
+        color: apColors.black,
     },
     btnNext: { marginBottom: 20 },
     footerView: {
@@ -44,7 +43,7 @@ const makeStyles = (apColors) => StyleSheet.create({
     },
     emailSentText: {
         marginBottom: 80,
-        color: theme.COLORS.black,
+        color: apColors.black,
         fontSize: theme.FONTS.dF_m,
     },
     emailSentView: {

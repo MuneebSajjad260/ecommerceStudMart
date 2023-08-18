@@ -56,8 +56,8 @@ import {useCallback} from "react";
 //   {id: 5, name: "View all", image: <ArrowSvg />},
 // ]
 
-const HomeOne = () => {
-  console.log('-----I am home one ----');
+const HomeOne = (props) => {
+  console.log('-----I am home one ----', props);
   const colors = getThemedColors(useColorScheme());
 
   const navigation = useNavigation();
@@ -207,7 +207,7 @@ const HomeOne = () => {
        <svg.HomeHeaderSvg/>
       </View>
        <TouchableOpacity 
-       onPress={()=>{navigation.navigate("Search")}}
+       onPress={()=>{navigation.navigate("Search", {apColors: props.apColors})}}
        style={{position:"absolute", top:70, right: 30 }}><svg.SearchIconSvg stroke={theme.COLORS.whiteOnly}/></TouchableOpacity>
       </>
     );

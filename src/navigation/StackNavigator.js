@@ -17,6 +17,7 @@ import Login from "../screens/auth/Login";
 import Product from "../screens/shop/Product";
 import Register from "../screens/auth/Register";
 import RegisterConfirmation from "../screens/auth/RegisterConfirmation";
+import Search from "../screens/tabs/Search";
 
 const StackNavigator = () => {
 
@@ -41,9 +42,12 @@ const StackNavigator = () => {
       >
         <Stack.Screen
           name={names.TabNavigator}
-          component={TabNavigator}
+          // component={TabNavigator}
           options={{ headerShown: false }}
-        />
+        >
+          {props => <TabNavigator {...props} apColors={colors} />}
+
+        </Stack.Screen>
         <Stack.Screen
           name={names.GetStarted}
           component={screens.GetStarted}
@@ -63,7 +67,6 @@ const StackNavigator = () => {
         </Stack.Screen>
         <Stack.Screen
           name={names.Register}
-          // component={screens.Register}
           options={{ headerShown: false }}
         >
           {props => <Register {...props} apColors={colors} />}
@@ -107,9 +110,12 @@ const StackNavigator = () => {
         />
         <Stack.Screen
           name={tabNames.Search}
-          component={screens.Search}
+          // component={screens.Search}
           options={{ headerShown: false }}
-        />
+        >
+          {props => <Search {...props} apColors={colors} />}
+
+        </Stack.Screen>
         <Stack.Screen
           name={names.ForgotPass}
           component={screens.ForgotPass}

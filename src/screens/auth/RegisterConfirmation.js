@@ -9,9 +9,9 @@ import makeStyles from "./Styles/RegisterConfirmStyle"
 
 const RegisterConfirmation = ({ route, apColors }) => {
   const params = route.params
-  const styles = makeStyles(apColors)
   let EMAIL = params?.email
   const navigation = useNavigation();
+  const styles = makeStyles(apColors)
 
   const renderFooter = () => {
     return (
@@ -55,7 +55,7 @@ const RegisterConfirmation = ({ route, apColors }) => {
   };
 
   return (
-    <View style={{ ...theme.Main_Container }}>
+    <View style={styles.mainContainer}>
       {renderStatusBarLight()}
       {renderHeaderAuth('One step away!', 'Verifying your email address', "mail")}
       {renderContent()}

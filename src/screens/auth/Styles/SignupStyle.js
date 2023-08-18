@@ -5,6 +5,8 @@ import getThemedColors from "../../../utils/themeMode";
 const makeStyles = (apColors) => StyleSheet.create({
   mainContainer: {
     flex: 1,
+    backgroundColor: apColors.appBg,
+
   },
   contentScroll: {
     paddingHorizontal: 20,
@@ -17,12 +19,18 @@ const makeStyles = (apColors) => StyleSheet.create({
     lineHeight: 12 * 1.5,
     color: apColors.redCBg,
   },
+  errorMsg: {
+    backgroundColor: apColors.appBg,
+    padding: 5,
+    borderRadius: 16,
+    marginBottom: 8
+  },
   signinText: {
     ...theme.FONTS.Mulish_400Regular,
     fontSize: 16,
-    color: theme.COLORS.black,
+    color: apColors.black,
   },
-  btnNext: { marginBottom: 20 },
+  btnNext: { marginBottom: 20, },
   footerView: {
     width: "100%",
     position: "absolute",
