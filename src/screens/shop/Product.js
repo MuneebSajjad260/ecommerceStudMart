@@ -398,7 +398,7 @@ console.log("cartItem--",cartItem)
               </View>
                       {/* ------ Add product to wishlist ------- */}
 
-            <TouchableOpacity
+            {/* <TouchableOpacity
             style={{
               // marginTop: theme.RES_HEIGHT(-50),
             }}
@@ -421,7 +421,8 @@ console.log("cartItem--",cartItem)
                   itemExist(product) ? apColors.appColor : apColors.gray1
                 }
               />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
+             <components.Favorite item={product} />
              
              
               </View>

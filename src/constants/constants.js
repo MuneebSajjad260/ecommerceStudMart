@@ -10,7 +10,9 @@ const endPoints = {
   RetrieveOrder:"wp-json/wc/v3/orders/",
   OrderList:'wp-json/wc/v3/orders',
   productsOfCategory:'wp-json/wc/v3/products',
-  getUniversities:'wp-json/wc/v3/products/tags'
+  getUniversities:'wp-json/wc/v3/products/tags',
+  manageWhishlist:'wp-json/sm-api/v1/add-to-wishlist',
+  wishlistItems:'wp-json/sm-api/v1/get-wishlist-items',
 }
 
 const onboardingData = [

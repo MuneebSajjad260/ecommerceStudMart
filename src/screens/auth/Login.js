@@ -61,10 +61,10 @@ const Login = ({apColors}) => {
       setIsLoading(true)
       // TODO---
       let data ={
-        // email: "usman.ali@devbeans.io",
-        // password: 'Pakistan@123@',
-        email: email.toLowerCase().toString(),
-        password:password.toString(),
+         email: "usman.ali@devbeans.io",
+        password: 'Pakistan@123@',
+        // email: email.toLowerCase().toString(),
+        // password:password.toString(),
       }
 
       dispatch(LoginAction(data)).unwrap().then((result)=>{
