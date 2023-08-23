@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Dimensions } from "react-native";
+import { View, Text, TouchableOpacity, Dimensions, KeyboardAvoidingView } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import React, { useState, useCallback, useRef, useMemo } from "react";
 import { useDispatch } from "react-redux";
@@ -132,12 +132,12 @@ const Login = ({ apColors }) => {
 
   const renderContent = () => {
     return (
-      <KeyboardAwareScrollView
-        contentContainerStyle={styles.contentContainerStyle}
-        enableOnAndroid={true}
-        showsVerticalScrollIndicator={false}
-      >
-
+      // <KeyboardAwareScrollView
+      //   contentContainerStyle={styles.contentContainerStyle}
+      //   enableOnAndroid={true}
+      //   showsVerticalScrollIndicator={false}
+      // >
+      <View style={styles.contentContainerStyle}>
         <components.InputField
           title="Email"
           placeholder="someone@mail.com"
@@ -218,7 +218,9 @@ const Login = ({ apColors }) => {
           onPress={() => navigation.navigate(names.TabNavigator)}
         />
 
-      </KeyboardAwareScrollView>
+        {renderFooter()}
+      </View>
+      // {/* </KeyboardAwareScrollView> */ }
     );
   };
 
@@ -268,8 +270,12 @@ const Login = ({ apColors }) => {
   const renderFooter = () => {
 
     return (
+      // <KeyboardAvoidingView
+      //   contentContainerStyle={styles.contentContainerStyle}
+      //   // enableOnAndroid={true}
+      //   showsVerticalScrollIndicator={false}
+      // >
       <View style={styles.signupView}>
-
         <Text
           style={styles.dontHavAcc}
         >
@@ -283,7 +289,7 @@ const Login = ({ apColors }) => {
           </Text>
         </TouchableOpacity>
       </View>
-
+      // </KeyboardAvoidingView>
     )
   }
 
@@ -309,7 +315,7 @@ const Login = ({ apColors }) => {
       {renderStatusBarLight()}
       {renderHeaderAuth('Welcome', 'Sign in to continue')}
       {renderContent()}
-      {renderFooter()}
+      {/* {renderFooter()} */}
       {/* {BottomSheet1()} */}
 
       <BottomSheetWrapper

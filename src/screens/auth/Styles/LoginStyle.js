@@ -8,16 +8,16 @@ const makeStyles = (apColors) => StyleSheet.create({
     backgroundColor: apColors.appBg,
   },
   contentContainerStyle: {
+    flex: 1,
     marginHorizontal: 20,
-    paddingVertical: theme.SIZES.height * 0.02,
+    paddingTop: theme.SIZES.height * 0.02,
     backgroundColor: apColors.appBg,
-    // paddingBottom: theme.MARGINS.hy20,
-    // flexGrow: 1,
   },
   contentStyle: {
+    // flex: 1,
     marginHorizontal: 20,
     paddingVertical: theme.MARGINS.hy20,
-    backgroundColor: apColors.appBg,
+    // backgroundColor: apColors.appBg,
   },
   forgotPassView: {
     flexDirection: "row",
@@ -48,14 +48,14 @@ const makeStyles = (apColors) => StyleSheet.create({
     marginRight: 3,
   },
   signupView: {
+    flex: 0.2,
     flexDirection: "row",
     alignItems: "center",
     alignSelf: "center",
-    bottom: 40,
+    bottom: 20,
+    zIndex: -1
   },
   errorMsg: {
-    // marginHorizontal: 20,
-    // marginTop: theme.RES_WIDTH(5),
     backgroundColor: apColors.appBg,
     padding: 5,
     borderRadius: 16,
