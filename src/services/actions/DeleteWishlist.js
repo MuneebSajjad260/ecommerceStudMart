@@ -7,16 +7,16 @@ import {
   userTypeEnum,
 } from '../../constants/constants';
 
-export const WishlistItems = createAsyncThunk(
+export const DeleteWishlist = createAsyncThunk(
   'wishlistItems/WishlistItems',
   async (data, thunkAPI) => {
     try {
       let payload = {
         data,
       };
-console.log("urll--", Base_Url + endPoints.wishlistItems + Consumer_Params,'data--',data)
-      const response = await axios.get(
-        Base_Url + endPoints.wishlistItems + Consumer_Params,
+console.log("urll--", Base_Url + endPoints.deleteWishlist + Consumer_Params,'data--',data)
+      const response = await axios.delete(
+        Base_Url + endPoints.deleteWishlist + Consumer_Params,
         {  params: data, // Pass the data as query parameters
           headers: {
             'Content-Type': 'application/json',

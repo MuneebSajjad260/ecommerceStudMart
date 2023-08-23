@@ -11,6 +11,7 @@ import {
   ImageBackground,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
+import { useIsFocused } from '@react-navigation/native';
 import {useNavigation} from '@react-navigation/native';
 import useAxios from '../../utils/useAxios';
 import axios from "axios";
@@ -25,19 +26,15 @@ import {components} from '../../components';
 import {theme, homeCarousel, banner, Base} from '../../constants';
 import {names} from '../../constants';
 import CustomShimmerPlaceHolder from '../../components/CustomShimmerPlaceHolder';
-import LinearGradient from "react-native-linear-gradient";
-import FashionSvg from "../../svg/categories/FashionSvg";
-import FurnitureSvg from "../../svg/categories/FurnitureSvg";
-import ElectronicsSvg from "../../svg/categories/ElectronicsSvg";
-import BooksSvg from "../../svg/categories/BooksSvg";
-import ArrowSvg from "../../svg/categories/ArrowSvg";
 import {getCategoriesListAction} from "../../services/actions/ProductAction";
 import {
   Base_Url,
   Payload_Keys,
   endPoints,
 } from "../../constants/constants";
+import { VendorCount } from '../../services/actions/VendorCount';
 import Brands from '../../components/Brands';
+
 import getThemedColors from '../../utils/themeMode';
 import {svg} from "../../svg";
 import {selectLoginUser} from "../../store/loginSlice";
@@ -46,15 +43,10 @@ import {renderProducts} from "../../utils/functions";
 import FastImage from 'react-native-fast-image';
 import {defaultBanner} from "../../constants/images";
 import {useCallback} from "react";
+import { ProductList } from '../../services/actions/ProductList';
+import { VendorList } from '../../services/actions/VendorList';
 
-// const [dataCategory,setDataCategory] =
-//   [
-//   {id: 1, name: "Fashion", image: <FashionSvg />},
-//   // {id:2, name: "Music", image: <ElectronicsSvg/>},
-//   {id: 3, name: "Mobiles", image: <FurnitureSvg />},
-//   {id: 4, name: "Books", image: <BooksSvg />},
-//   {id: 5, name: "View all", image: <ArrowSvg />},
-// ]
+
 
 const HomeOne = (props) => {
   console.log('-----I am home one ----', props);
@@ -63,31 +55,13 @@ const HomeOne = (props) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
-  const universities=[
-    {id:1,
-      name:'FAST University',
-      sellers:23
-  },
-  {id:2,
-    name:'UET University',
-    sellers:23
-},
-{id:3,
-  name:'LUMS University',
-  sellers:23
-},
-{id:4,
-  name:'NUST University',
-  sellers:23
-},
-  ]
 
-  const brands=[
-    {name:'FAST',rating:4.9},
-    {name:'UET University',rating:4.1},
-    {name:'ADIDAS',rating:4.7},
-    {name:'IRON GEAR',rating:4.9},
-  ]
+  // const brands=[
+  //   {name:'FAST',rating:4.9},
+  //   {name:'UET University',rating:4.1},
+  //   {name:'ADIDAS',rating:4.7},
+  //   {name:'IRON GEAR',rating:4.9},
+  // ]
 
   let viewLeft = {
     hide: false,
@@ -99,19 +73,59 @@ const HomeOne = (props) => {
   };
 
   const loginData = useSelector(selectUser);
-  // console.log("----loginData 11aa ----", JSON.stringify(loginData))
 
-  // const base_url = "https://woo-slowly-shiny-wombat.wpcomstaging.com/";
+  const isFocused = useIsFocused()
+  const [totalVendor,setTotalVendor]=useState()
+  const [brands, setBrands]=useState()
+  const [isPending , setIsPending]=useState(false)
+  const [isPendingUni , setIsPendingUni]=useState(false)
+  const [isPendingCat , setIsPendingCat]=useState(false)
+  const [isPendingBrand , setIsPendingBrand]=useState(false)
+  const[data, setData]=useState()
 
-  const {data, isPending, error} = useAxios(
-    "get",
-    Payload_Keys,
-    Base_Url + endPoints.ProductsList,
-  );
+  //GETTING VENDOR LIST FOR BRANDS
 
-  // const featured = data?.filter((item) => item.featured);
-  // const featured = data;
-  // const bestSellers = data?.filter((item) => item.is_bestseller || []);
+  useEffect(() => {
+    setIsPendingBrand(true)
+   dispatch(VendorList()).unwrap().then(result=>{
+    console.log("vendor list  result", result)
+    const vendorsBrand = result?.vendors?.filter(vendor => vendor.vendor_data.user_role === "brand");
+
+// Now filteredVendors contains only the vendors with user_role "brand"
+console.log("vendorsBrand---",vendorsBrand);
+setBrands(vendorsBrand)
+   
+   }).catch(err=>{
+    console.log("vendor list error---",err)
+   }).finally(() => {
+    setIsPendingBrand(false); // Set loading to false after the API call is completed (either success or error)
+  });
+  }, [dispatch]);
+
+
+  //GETTING PRODUCTS FROM API 
+  useEffect(() => {
+    setIsPending(true)
+   dispatch(ProductList()).unwrap().then(result=>{
+    console.log("product list result")
+    setData(result)
+   }).catch(err=>{
+    console.log("prod list error---",err)
+   }).finally(() => {
+    setIsPending(false); // Set loading to false after the API call is completed (either success or error)
+  });
+  }, [dispatch , isFocused]);
+
+    //GETTING VENDOR COUNT FROM API
+    useEffect(()=>{
+      dispatch(VendorCount()).unwrap().then(result=>{
+        console.log("result vendor count --",result)
+  setTotalVendor(result)
+      }).catch(err=>{
+        console.log(" error vendor count --",result)
+      })
+    },[])
+
 
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [bannerLoading, setBannerLoading] = useState(true);
@@ -136,7 +150,7 @@ const HomeOne = (props) => {
 
   //GET CATEGORIES FROM API
   useEffect(() => {
-    setLoading(true);
+    setIsPendingCat(true);
     dispatch(getCategoriesListAction())
       .unwrap()
       .then((result) => {
@@ -148,14 +162,14 @@ const HomeOne = (props) => {
         // Handle the error by displaying it using <Text> component
       })
       .finally(() => {
-        setLoading(false);
+        setIsPendingCat(false);
       });
   }, []);
 
   //GET UNIVERSITIES FROM API 
 
   useEffect(() => {
-    setLoading(true);
+    setIsPendingUni(true);
     dispatch(GetUniversities())
       .unwrap()
       .then((result) => {
@@ -167,7 +181,7 @@ const HomeOne = (props) => {
         // Handle the error by displaying it using <Text> component
       })
       .finally(() => {
-        setLoading(false);
+        setIsPendingUni(false);
       });
   }, []);
 
@@ -433,8 +447,8 @@ const HomeOne = (props) => {
   const renderCategories = () => {
     return (
       <View style={{marginBottom: 20, marginTop: 0}}>
-        {/* <CustomShimmerPlaceHolder visible={isPending} borderRadius={10} style={{width: "90%", height: 160, borderRadius: 10, alignSelf:'center'}}>
-          <View style={{width: "90%", height: isPending? 160:0, borderRadius: 10, alignSelf:'center'}}></View>
+        {/* <CustomShimmerPlaceHolder visible={isPendingCat} borderRadius={10} style={{width: "90%", height: 160, borderRadius: 10, alignSelf:'center'}}>
+          <View style={{width: "90%", height: isPendingCat? 160:0, borderRadius: 10, alignSelf:'center'}}></View>
         </CustomShimmerPlaceHolder> */}
 
         <components.ProductCategory
@@ -447,7 +461,7 @@ const HomeOne = (props) => {
             })
           }
         />
-        {category?.length > 0 ? (
+        {category?.length > 0 && !isPendingCat ? (
           <FlatList
             data={category.slice(0, 5)}
             horizontal={true}
@@ -576,17 +590,18 @@ const HomeOne = (props) => {
             navigation.navigate(names.UniversityScreen, {
               title: "All products",
              university: universityList,
+             totalVendor:totalVendor
               // product: data,
             })
           }
           visibleRight={viewRight?.hide}
         />
         
-        <CustomShimmerPlaceHolder visible={isPending} borderRadius={10} style={{width: "90%", height: 160, borderRadius: 10, alignSelf:'center'}}>
-          <View style={{width: "90%", height: isPending? 160:0, borderRadius: 10, alignSelf:'center'}}></View>
+        <CustomShimmerPlaceHolder visible={isPendingUni} borderRadius={10} style={{width: "90%", height: 160, borderRadius: 10, alignSelf:'center'}}>
+          <View style={{width: "90%", height: isPendingUni? 160:0, borderRadius: 10, alignSelf:'center'}}></View>
         </CustomShimmerPlaceHolder>
   
-        {!isPending && <FlatList
+        {!isPendingUni && <FlatList
           data={universityList?.slice(0,4)}
           horizontal={true}
           key={(Math.random() * 1000).toString()}
@@ -619,7 +634,7 @@ const HomeOne = (props) => {
               </components.ImageItem>
             
               <Text style={styles.uniName}>{item.name}</Text>
-              <Text style={styles.sellerNo}>{item?.count} <Text style={styles.sellerTxt}>seller</Text></Text>
+              <Text style={styles.sellerNo}>{item?.vendor_count} <Text style={styles.sellerTxt}>seller</Text></Text>
               {/* <View style={styles.UniBottomView}/> */}
         
               </View>
@@ -638,7 +653,7 @@ return(
   <View style={styles.contentContainer}>
       <components.ProductCategory
           title={'Student Friendly brands'}
-          containerStyle={{marginHorizontal: 20}}
+          containerStyle={{marginHorizontal: theme.MARGINS.hy20}}
           onPress={() =>
             navigation.navigate(names.BrandsScreen, {
              brands: brands,
@@ -647,7 +662,12 @@ return(
           }
           visibleRight={viewRight?.hide}
         />
-    <FlatList
+
+<CustomShimmerPlaceHolder visible={isPendingBrand} borderRadius={10} style={{width: "90%", height: 160, borderRadius: 10, alignSelf:'center'}}>
+          <View style={{width: "90%", height: isPendingBrand ? 160:0, borderRadius: 10, alignSelf:'center',marginTop:theme.MARGINS.hy20}}></View>
+        </CustomShimmerPlaceHolder>
+
+      {!isPendingBrand &&<FlatList
     data={brands?.slice(0,4)}
     horizontal={true}
     key={(Math.random() * 1000).toString()}
@@ -656,17 +676,18 @@ return(
     renderItem={({item})=>{
       return(
 <Brands data={item}         
-// onPress={() => navigation.navigate(names.Shop, {
-//           //product: test,
-//           university:true,
-//           //  title: "All products",
-//         })} 
+onPress={() => navigation.navigate(names.Shop, {
+       brandData:item,
+         brand:true,
+           title: "All products",
+        })} 
         />
+        
       )
     }}
 
     />
-
+  }
 
   </View>
 )

@@ -271,9 +271,9 @@ const ProductListItem = (item, navigation) => {
           borderRadius={8}
           indicatorBorderRadius={18}
         >
-          {item.is_sale === true && <components.Sale />}
+         
           <components.Favorite item={item} />
-          {/* <components.InCart item={item} /> */}
+      
         </components.ImageItem>
         {/* <components.Rating item={item} /> */}
         <components.ProductName item={item} style={{ fontWeight: '500' }} />

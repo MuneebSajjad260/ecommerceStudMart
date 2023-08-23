@@ -1,29 +1,29 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import axios from 'axios' ;
-import {Base_Url,Consumer_Key,Consumer_Secret} from '../../constants/constants';
+import {Base_Url} from '../../constants/constants';
 import {
   Consumer_Params,
   endPoints,
   userTypeEnum,
 } from '../../constants/constants';
 
-export const WishlistItems = createAsyncThunk(
-  'wishlistItems/WishlistItems',
+export const VendorList = createAsyncThunk(
+  'vendorCount/VendorCount',
   async (data, thunkAPI) => {
     try {
       let payload = {
         data,
       };
-console.log("urll--", Base_Url + endPoints.wishlistItems + Consumer_Params,'data--',data)
+
       const response = await axios.get(
-        Base_Url + endPoints.wishlistItems + Consumer_Params,
-        {  params: data, // Pass the data as query parameters
+        Base_Url + endPoints.vendorList + Consumer_Params,
+        {
           headers: {
             'Content-Type': 'application/json',
           },
         }
       );
-console.log("response?.data--",response?.data)
+
       return response?.data;
     } catch (error) {
       console.log('error', error);

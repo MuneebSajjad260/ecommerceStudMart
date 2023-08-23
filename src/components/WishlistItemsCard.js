@@ -6,20 +6,20 @@ import {
   useColorScheme,
   StyleSheet,
   Image,
-  Pressable
-} from 'react-native';
-import {removeFromWishlist} from '../store/wishlistSlice';
-import {removeFromWishlistHandler} from '../utils/functions';
-import React from 'react';
-import getThemedColors from '../utils/themeMode';
-import getRandomColor from "../utils/randomColor";
-import {theme} from '../constants';
-import {names} from '../constants';
-import {components} from '.';
-import Wrapper from './Wrapper';
-import {svg} from '../svg';
+  Pressable,
+} from "react-native";
+import {removeFromWishlist} from "../store/wishlistSlice";
+import {removeFromWishlistHandler} from "../utils/functions";
+import React from "react";
+import getThemedColors from "../utils/themeMode";
+import getRandomColor from '../utils/randomColor';
+import {theme} from "../constants";
+import {names} from "../constants";
+import {components} from ".";
+import Wrapper from "./Wrapper";
+import {svg} from "../svg";
 
-const WishlistItems = ({item, index, array, navigation, dispatch}) => {
+const WishlistItemsCard = ({item, index, array, navigation, dispatch,onWishlistChange}) => {
   return (
     <Pressable
       onPress={() =>
@@ -43,25 +43,12 @@ const WishlistItems = ({item, index, array, navigation, dispatch}) => {
           >
             {item.is_sale === true && <components.Sale />}
           </components.ImageItem>
-          <View style={{flex: 1}}>
+          <View style={{width:'62%'}}>
             <Text style={styles.name}>{item.name}</Text>
             <Text style={styles.price}>{`QAR ${item.price}`}</Text>
           </View>
-          <View style={{justifyContent: 'space-between'}}>
-            <TouchableOpacity
-              onPress={() =>
-                //   removeFromWishlistHandler(() =>
-                //     dispatch(removeFromWishlist(item)),
-                //   )
-                {
-                  dispatch(removeFromWishlist(item));
-                }
-              }
-            >
-              <svg.WishlistLikeSvg />
-            </TouchableOpacity>
-            {/* <components.inWishList item={item} /> */}
-          </View>
+       
+          <components.Favorite item={item} onWishlistChange={onWishlistChange} />
         </View>
       </Wrapper>
     </Pressable>
@@ -87,9 +74,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   flexDirection: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   imgCont: {
     width: 42,
@@ -97,8 +84,8 @@ const styles = StyleSheet.create({
 
     borderRadius: 20,
     backgroundColor: theme.COLORS.whiteOnly,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   productLength: {
     ...theme.FONTS.H12,
@@ -106,9 +93,9 @@ const styles = StyleSheet.create({
     color: theme.COLORS.secondryTextColor,
   },
   flexDirection: {
-    flexDirection: 'row',
+    flexDirection: "row",
   },
-  imgCont: {width: '25%', height: 80, marginRight: 14},
+  imgCont: {width: "25%", height: 80, marginRight: 14},
   name: {
     ...theme.FONTS.H5,
     color: theme.COLORS.black,
@@ -121,4 +108,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default WishlistItems;
+export default WishlistItemsCard;

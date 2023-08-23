@@ -13,36 +13,29 @@ const Favorite = ({ item }) => {
   // console.log('auth.data.id--', auth.data.id);
 
   const [favItem, setFavItem] = useState();
-  // console.log("item wishlist---",item)
-  const wishlist = useSelector((state) => state.wishlist.list);
-  const productList = useSelector((state) => state.cart.list);
-  const itemExist = (item) => {
-    return wishlist.find((i) => i.id === item.id);
-  };
+  const [wishlistData, setWishlistData] = useState({
+    success: false,
+    product_list: [],
+   
+  }); // Initialize with default structure
+  const [isItemInWishlist, setIsItemInWishlist] = useState(false); // Track item in wishlist
+ 
 
-  const productExist = (item) => {
-    return productList.find((i) => i.id === item.id);
-  };
+  //GETTING ALL ITEMS FROM WISHLIST
+  useEffect(() => {
+    dispatch(WishlistItems({ userid: 1 }))
+      .unwrap()
+      .then((result) => {
+        console.log("ALL wishlist items data--", result);
+        setWishlistData(result);
+        setIsItemInWishlist(result.product_list.some((wishlistItem) => wishlistItem.id === item.id));
+      })
+      .catch((err) => {
+        console.log("ALL wishlist items error--", err.response.data);
+      });
+  }, [dispatch]);
 
-  const removeFromWishlistHandler = (product) => {
-    // return Alert.alert(
-    //   "Alert!",
-    //   "Are you sure you want to delete from wishlist ?",
-    //   [
-    //     {
-    //       text: "Cancel",
-    //       onPress: () => console.log("Cancel Pressed"),
-    //       style: "cancel",
-    //     },
-    //     {
-    //       text: "OK",
-    //       onPress: () =>
-    dispatch(removeFromWishlist(product));
-    //     },
-    //   ]
-    // );
-  };
-
+  // CLICK ON ITEM TO ADD OR REMOVE ITEM FROM WISHLIST
   const manageWishlist = (item) => {
     console.log("item detail", item.name, "---", item.id);
     dispatch(ManageWhishlist({ userid: auth.data.id, product_id: item.id }))
@@ -50,11 +43,16 @@ const Favorite = ({ item }) => {
       .then((result) => {
         console.log("result whishlist result-", result);
         setFavItem(result);
+        setIsItemInWishlist(!isItemInWishlist); // Toggle isItemInWishlist
+         // Call the onWishlistChange callback function to trigger API call on the Wishlist screen
+         onWishlistChange();
       })
       .catch((err) => {
         console.log("error whishlist result-", err);
+       setFavItem({status: 'error'}); // Handle error
       });
   };
+
   return (
     <TouchableOpacity
       style={styles.mainCont}
@@ -70,17 +68,18 @@ const Favorite = ({ item }) => {
       }}
     >
       <svg.HeartSvg
-        // strokeColor={itemExist(item) ? theme.COLORS.appColor : theme.COLORS.secondryTextColor}
+       
         strokeColor={
-          favItem?.message == "Product added successfully"
+          favItem?.status === "loading"
             ? theme.COLORS.appColor
-            : theme.COLORS.secondryTextColor
+            : isItemInWishlist // Use isItemInWishlist to determine color
+            ? theme.COLORS.appColor
+            :  theme.COLORS.secondryTextColor
         }
-        // fillColor={
-        //   itemExist(item) ? theme.COLORS.appColor : theme.COLORS.transparent
-        // }
         fillColor={
-          favItem?.message == "Product added successfully"
+          favItem?.status === "loading"
+            ? theme.COLORS.appColor
+            : isItemInWishlist // Use isItemInWishlist to determine color
             ? theme.COLORS.appColor
             : theme.COLORS.transparent
         }

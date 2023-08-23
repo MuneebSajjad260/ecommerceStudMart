@@ -9,6 +9,7 @@ import {svg} from "../svg";
 import {theme, names} from "../constants";
 import {components} from "../components";
 import User from "../svg/User";
+import StarSvg from "../svg/StarSvg";
 import Package from "../svg/Package";
 
 const Header = ({
@@ -27,7 +28,9 @@ const Header = ({
   university,
   universityData,
   seller,
-  products
+  products,
+  brand,
+  brandData
 
 }) => {
   const navigation = useNavigation();
@@ -155,6 +158,66 @@ console.log("goback---",goBack)
     
 
     )}
+
+{brand && (
+     
+     <ImageBackground    source={{uri: brandData.vendor_data.banner}} style={{
+       width: '100%', // or 'contain' depending on your preference
+       height: '100%',
+       position:'absolute',
+       justifyContent:'center',
+       top:0,
+       zIndex:0}}>
+          <Image
+           key={Number(brandData?.vendor_id)}
+           style={{height: "50%", width: "50%",position:'absolute',alignSelf:'center'}}
+           source={{uri: brandData.vendor_data.logo_img}}
+          
+           resizeMode='contain'
+            borderRadius={20}
+         />
+<View style={{flexDirection:'row', paddingHorizontal:14,marginTop:theme.SIZES.rsHeight/3.9, alignItems:'center' ,justifyContent:'space-between'}}>
+<View style={{
+ width:166,
+ height:64,
+ backgroundColor:theme.COLORS.white,
+ borderRadius:8,
+ paddingVertical:theme.MARGINS.hy10,
+ paddingHorizontal:14
+}}>
+
+<View style={{flexDirection:'row',alignItems:'center'}}>
+<StarSvg changeSize={true}/>
+<View style={{marginLeft:theme.MARGINS.hy10}}>
+<Text style={{...theme.FONTS.H12,color:theme.COLORS.black }}>Rating & reviews</Text>
+<Text style={{...theme.FONTS.H2,color:theme.COLORS.black }}>22</Text>
+</View>
+</View>
+</View>
+<View style={{
+ width:166,
+ height:64,
+ backgroundColor:theme.COLORS.white,
+ borderRadius:8,
+ paddingVertical:theme.MARGINS.hy10,
+ paddingHorizontal:14
+}}>
+<View style={{flexDirection:'row',alignItems:'center'}}>
+<Package />
+<View style={{marginLeft:theme.MARGINS.hy10}}>
+<Text style={{...theme.FONTS.H12,color:theme.COLORS.black }}>
+ Products
+</Text>
+<Text style={{...theme.FONTS.H2,color:theme.COLORS.black }}>{brandData?.vendor_product_count}</Text>
+</View>
+</View>
+</View>
+         </View>
+   </ImageBackground>
+   
+   
+
+   )}
       {search && (
         <View
           style={{

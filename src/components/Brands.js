@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, ImageBackground, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, ImageBackground, StyleSheet, TouchableOpacity,Image} from 'react-native';
 import {theme} from '../constants';
 import DeliveryTruck from '../svg/DeliveryTruck';
 import Package from '../svg/Package';
@@ -13,20 +13,13 @@ const Brands = ({data,col,onPress}) => {
      <View
           style={[styles.bannerCont,{left:bannerLeft}]}
         >
-             <Text
-            style={{
-              ...theme.FONTS.Mulish_600SemiBold,
-              fontSize: 12,
-              // textTransform: "uppercase",
-              color: theme.COLORS.black,
-              lineHeight: 12 * 1.7,
-
-            }}
-          >
-           {data?.name}
-          </Text>
+              <Image  
+              style={styles.imgCont}
+               source={{
+          uri: data?.vendor_data?.logo_img,
+        }}/>
         </View>
-<Text style={styles.heading}>{data?.name}</Text>
+<Text style={styles.heading}>{data?.vendor_name}</Text>
 <View style={styles.flexDirection}>
 <StarSvg/>
 <Text style={styles.rating}>{data?.rating}</Text>
@@ -65,7 +58,7 @@ const styles = StyleSheet.create({
   },
   bannerCont:{
     position: "absolute",
-    top: -20,
+    top: -30,
     left:27,
      width:120,
      height:'auto',
@@ -89,6 +82,11 @@ const styles = StyleSheet.create({
   productDetailCont: {
     marginLeft: 12,
   },
+  imgCont:
+  {
+    width: 30,
+    height: 30,
+  }
 });
 
 export default Brands;

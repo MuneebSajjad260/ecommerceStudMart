@@ -27,10 +27,11 @@ const Shop = () => {
   const dispatch = useDispatch();
   const isFocused=useIsFocused()
 
-  const {title, products, categoryId,categoryData, universityData, filter} = route.params || {};
+  const {title, products, categoryId,categoryData,brandData, universityData, filter} = route.params || {};
   const {category} = route.params || false;
   const {university} = route.params || false;
   const {isFilter} = route.params || false;
+  const {brand} = route.params || false;
   console.log('filter data ----', filter);
   console.log('IsFilte ----', isFilter);
   console.log('CATEGORY DETAILS--', category, '-', categoryId,'--',categoryData);
@@ -76,31 +77,33 @@ const Shop = () => {
   const renderHeader = () => {
     return (
       <components.Header
-        border={university ? false : true}
+        border={(university || brand) ? false : true}
         title={title}
         goBack={true}
-        searchIcon={university ? false : true}
+        searchIcon={(university || brand ) ? false : true}
         university={university}
-        seller={105}
-        products={230}
+        brand={brand}
+        seller={universityData?.vendor_count}
+        products={universityData?.count}
         containerStyle={{
           backgroundColor: theme.COLORS.white,
-          height: university
+          height: (university || brand)
             ? theme.RES_HEIGHT(90, 220, 125)
             : theme.RES_HEIGHT(90, 100, 125),
         }}
         level={
-          university
+          (university || brand)
             ? theme.RES_HEIGHT(8, 100, 35)
             : theme.RES_HEIGHT(8, 12, 35)
         }
         universityData={universityData}
+        brandData={brandData}
       />
     );
   };
 
   const renderFilterAndSort = () => (
-    <View style={[styles.filterAndSort, {marginTop: university ? 45 : 12}]}>
+    <View style={[styles.filterAndSort, {marginTop: (university || brand) ? 45 : 12}]}>
       <TouchableOpacity
         style={styles.flexDirection}
         onPress={() => navigation.navigate(names.Filter, {

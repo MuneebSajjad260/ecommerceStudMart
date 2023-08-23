@@ -13,6 +13,9 @@ const endPoints = {
   getUniversities:'wp-json/wc/v3/products/tags',
   manageWhishlist:'wp-json/sm-api/v1/add-to-wishlist',
   wishlistItems:'wp-json/sm-api/v1/get-wishlist-items',
+  deleteWishlist:'wp-json/sm-api/v1/delete-all-wishlist-items',
+  vendorCount:"wp-json/sm-api/v1/approved-vendor-count",
+  vendorList:"wp-json/sm-api/v1/vendor-list"
 }
 
 const onboardingData = [

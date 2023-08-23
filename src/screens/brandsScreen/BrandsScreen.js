@@ -28,6 +28,7 @@ const BrandsScreen = ({route}) => {
   
   const {brands} = route.params || {};
   console.log("prod--", brands);
+  const sumVendorProductCount = brands.reduce((sum, vendor) => sum + vendor.vendor_product_count, 0);
   const renderHeader = () => {
     return (
       <components.Header
@@ -48,9 +49,9 @@ const BrandsScreen = ({route}) => {
       <Brands data={item} col={true}
         onPress={() => navigation.navigate(names.Shop, {
           
-            //product: test,
-            university:true,
-            //  title: "All products",
+          brandData:item,
+          brand:true,
+            title: "All products",
           })}
    />
     );
@@ -94,7 +95,7 @@ const BrandsScreen = ({route}) => {
                 <BrandSvg />
                 <View style={styles.marginLeft}>
                   <Text style={styles.imgHeading}>Brands</Text>
-                  <Text style={styles.number}>25</Text>
+                  <Text style={styles.number}>{brands.length}</Text>
                 </View>
               </View>
 
@@ -108,7 +109,7 @@ const BrandsScreen = ({route}) => {
                 <BrandProductSvg />
                 <View style={styles.marginLeft}>
                   <Text style={styles.imgHeading}>Products</Text>
-                  <Text style={styles.number}>3400</Text>
+                  <Text style={styles.number}>{sumVendorProductCount}</Text>
                 </View>
               </View>
             </View>

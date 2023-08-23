@@ -186,6 +186,7 @@ const Filter = () => {
 
   const renderButton = () => {
     return (
+      
       <components.Button
         title="apply filters"
         onPress={() => {
@@ -197,6 +198,8 @@ const Filter = () => {
           });
         }}
       />
+     
+      
     );
   };
 
@@ -205,6 +208,7 @@ const Filter = () => {
       <ScrollView contentContainerStyle={{flex: 1}}>
         {/* {renderPrice()} */}
         <View style={styles.contentContainer}>
+       
           {renderCategories()}
 
           {renderButton()}

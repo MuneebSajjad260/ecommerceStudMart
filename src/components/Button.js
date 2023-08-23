@@ -17,7 +17,7 @@ const Button = ({ title, onPress, containerStyle, style, textStyle, disable, loa
           borderRadius: 50,
           justifyContent: "center",
           alignItems: "center",
-          // backgroundColor: !disable? colors.appColor : colors.appColorLight,
+         backgroundColor: !disable? colors.appColor : colors.appColorLight,
           ...style
         }}
         onPress={onPress}

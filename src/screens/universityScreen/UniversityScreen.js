@@ -1,4 +1,4 @@
-import React, {useState,Component} from "react";
+import React, {useState,useEffect} from "react";
 import {
   View,
   Text,
@@ -20,13 +20,14 @@ import VerifiedSellerSvg from "../../svg/VerifiedSellerSvg";
 import VerifiedProdSvg from "../../svg/VerifiedProdSvg";
 
 
+
 const UniversityScreen = ({route}) => {
  
   const navigation = useNavigation();
   const [isScrolling, setIsScrolling] = useState(false);
- 
-  const {university} = route.params || {};
+  const {university,totalVendor} = route.params || {};
   console.log("prod--", university);
+  const totalProducts = university.reduce((total, item) => total + item.count, 0);
   const uniDetails = [
     {
       image: <UniIconSvg />,
@@ -37,16 +38,18 @@ const UniversityScreen = ({route}) => {
     {
       image: <VerifiedSellerSvg />,
       heading: "Verified sellers",
-      count: "1200",
+      count: totalVendor?.count,
       color: "rgba(212, 192, 236, 1)",
     },
     {
       image: <VerifiedProdSvg />,
       heading: "Verified products",
-      count: "2300",
+      count: totalProducts,
       color: "rgba(249, 227, 195, 1)",
     },
   ];
+
+
   const renderHeader = () => {
     return (
       <components.Header
@@ -89,7 +92,7 @@ const UniversityScreen = ({route}) => {
 
           <Text style={styles.uniName}>{item.name}</Text>
           <Text style={styles.sellerNo}>
-            {item?.count} <Text style={styles.sellerTxt}>seller</Text>
+            {item?.vendor_count} <Text style={styles.sellerTxt}>seller</Text>
           </Text>
         </View>
       </TouchableOpacity>

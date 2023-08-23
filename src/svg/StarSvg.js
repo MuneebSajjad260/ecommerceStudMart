@@ -4,8 +4,8 @@ import Svg, { Path } from "react-native-svg"
 function StarSvg(props) {
   return (
     <Svg
-      width={14}
-      height={13}
+      width={ props.changeSize ? 20 : 14}
+      height={ props.changeSize ? 20 : 13}
       viewBox="0 0 14 13"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
