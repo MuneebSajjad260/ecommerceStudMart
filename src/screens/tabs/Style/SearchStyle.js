@@ -8,9 +8,9 @@ const makeStyles = (apColors) => StyleSheet.create({
     backgroundColor: apColors.appBg,
   },
   container: {
-    flex: 0.1,
+    // flex: 0.1,
     flexDirection: "row",
-    height: 100,
+    height: 160,
     paddingTop: 50,
     paddingHorizontal: 20,
     alignItems: "center",
@@ -21,10 +21,10 @@ const makeStyles = (apColors) => StyleSheet.create({
   },
   inputStyle: {
     flex: 1,
-    height: 50,
+    height: 60,
     borderColor: apColors.inputBorder,
     borderRadius: 100,
-    paddingVertical: 10,
+    paddingVertical: 5,
     paddingHorizontal: 18,
     borderWidth: 1,
     color: apColors.black,
@@ -40,7 +40,7 @@ const makeStyles = (apColors) => StyleSheet.create({
   crossBtn: {
     borderWidth: 1,
     borderRadius: 100,
-    padding: 16,
+    padding: 19,
     marginLeft: 8,
     borderColor: apColors.inputBorder
   },
@@ -52,7 +52,7 @@ const makeStyles = (apColors) => StyleSheet.create({
     marginHorizontal: theme.MARGINS.hy20
   },
   itemTxt: {
-    color: apColors.inputBorder
+    color: apColors.black
 
   },
   recentSearches: {

@@ -86,6 +86,7 @@ const Search = (props) => {
           <TextInput
             placeholder="Search..."
             style={styles.input}
+            placeholderTextColor={apColors.inputBorder}
             onChangeText={handleChange}
             value={searchTerm}
           />

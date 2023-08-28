@@ -1,10 +1,10 @@
-import {View, Text, TouchableOpacity, ScrollView, StyleSheet} from "react-native";
-import React, {useState} from "react";
-import {SafeAreaView} from "react-native-safe-area-context";
-import {useDispatch, useSelector} from "react-redux";
-import {addToCart, removeFromCart} from "../../store/cartSlice";
-import {addToWishlist, removeFromWishlist} from "../../store/wishlistSlice";
-import {useNavigation, useRoute} from "@react-navigation/native";
+import { View, Text, TouchableOpacity, ScrollView, StyleSheet, Image } from "react-native";
+import React, { useState } from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart, removeFromCart } from "../../store/cartSlice";
+import { addToWishlist, removeFromWishlist } from "../../store/wishlistSlice";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import {
   flashMessage,
   productExistMessage,
@@ -14,9 +14,9 @@ import {
   renderStatusBar,
 } from "../../utils/functions";
 
-import {theme, names} from "../../constants";
-import {components} from "../../components";
-import {svg} from "../../svg";
+import { theme, names } from "../../constants";
+import { components } from "../../components";
+import { svg } from "../../svg";
 import useAxios from "../../utils/useAxios";
 import { Base_Url, Payload_Keys, endPoints } from "../../constants/constants";
 import { productByID } from "../../constants/mockData";
@@ -32,7 +32,7 @@ import { selectUser } from "../../store/userSlice";
  * @param {*} param0 
  * @returns 
  */
-const Product =  ({apColors}) => {
+const Product = ({ apColors }) => {
   const navigation = useNavigation();
   const route = useRoute();
   let viewLeft = {
@@ -43,13 +43,13 @@ const Product =  ({apColors}) => {
     hide: true,
     title: ""
   }
-  const {product} = route.params;
+  const { product } = route.params;
   // const product = productByID  // MOCK_DATA ---
   const dispatch = useDispatch();
-   console.log("---product---", product)
+  console.log("---product---", product)
 
   const auth = useSelector(selectUser)
-  console.log("auth-",auth.data)
+  console.log("---auth---", auth.data)
 
   const currentProduct = useSelector((state) => {
     return state.cart.list.find((item) => item.id === product?.id);
@@ -74,67 +74,67 @@ const Product =  ({apColors}) => {
   const [relatedIdsList, setRelatedIdsList] = useState(0);
 
 
-  const {data, isPending, error} = useAxios('get',Payload_Keys ,Base_Url+endPoints.ProductsList);
-    data?.filter(item => item.status === 'publish');
- 
-    const getRelatedProducts = async (datam) => {
+  const { data, isPending, error } = useAxios('get', Payload_Keys, Base_Url + endPoints.ProductsList);
+  data?.filter(item => item.status === 'publish');
+
+  const getRelatedProducts = async (datam) => {
     // const response = await fetch(`https://example.com/wp-json/wc/v3/products/${productId}?`);
     // const data = await response.json();
     // console.log("---relatedIds1001a data----", data)
     // console.log("---relatedIds1001aa ----", data?.related_ids)
-  if(data){
-    const relatedIds = data?.related_ids;
-    // console.log("---relatedIds1001aab----", relatedIds)
-  
-    const relatedProducts = [];
+    if (data) {
+      const relatedIds = data?.related_ids;
+      // console.log("---relatedIds1001aab----", relatedIds)
 
-    if(relatedIds.length >0){
-      //  loop related_ids and fetch their data
-      relatedIds?.map( (item, index)=>{
-        // console.log("----map item 1001aaa test-----")
-        // console.log("----map item 1001aaa-----", item)
-        // console.log("----map item 1001aaa-----", index)
-       
-       
-      
-        //  const response =  await axios.get(`${Base_Url}${endPoints.ProductsList}/${item}`).then((result)=>{
-        //         console.log("----related result 1001aabc aaa----")
-        //         console.log("----related result 1001aabc----", result)
-        //         relatedProducts.push(result);
-        //       }).catch((e)=>{
-        //         console.log("----related----")
-        //       })
-        //       console.log("----related res 1001aabccc ----", response)
-        // })
-        // for (const relatedId of relatedIds) {
-        //    await axios.get(`${Base_Url}${endPoints.ProductsList}/${relatedId}`).then((result)=>{
-        //     console.log("----related result 1001aabc----", result)
-            
-        //     relatedProducts.push(result);
-        //   }).catch((e)=>{
-        //     console.log("----related----")
-        //   })
-        //   //   // const relatedProductData = await response.json();
-          
-          })
-          // console.log("----related Products data list => 1001aab----", relatedProducts)
+      const relatedProducts = [];
+
+      if (relatedIds.length > 0) {
+        //  loop related_ids and fetch their data
+        relatedIds?.map((item, index) => {
+          // console.log("----map item 1001aaa test-----")
+          // console.log("----map item 1001aaa-----", item)
+          // console.log("----map item 1001aaa-----", index)
+
+
+
+          //  const response =  await axios.get(`${Base_Url}${endPoints.ProductsList}/${item}`).then((result)=>{
+          //         console.log("----related result 1001aabc aaa----")
+          //         console.log("----related result 1001aabc----", result)
+          //         relatedProducts.push(result);
+          //       }).catch((e)=>{
+          //         console.log("----related----")
+          //       })
+          //       console.log("----related res 1001aabccc ----", response)
+          // })
+          // for (const relatedId of relatedIds) {
+          //    await axios.get(`${Base_Url}${endPoints.ProductsList}/${relatedId}`).then((result)=>{
+          //     console.log("----related result 1001aabc----", result)
+
+          //     relatedProducts.push(result);
+          //   }).catch((e)=>{
+          //     console.log("----related----")
+          //   })
+          //   //   // const relatedProductData = await response.json();
+
+        })
+        // console.log("----related Products data list => 1001aab----", relatedProducts)
         // setRelatedIdsList(relatedProducts)
-    
+
       }
     }
-  // console.log("-----relatedProducts1001------", relatedProducts)
-  // return relatedProducts || [];
+    // console.log("-----relatedProducts1001------", relatedProducts)
+    // return relatedProducts || [];
   };
 
 
 
-//   useEffect( ()=>{
-// if(data){
-//   getRelatedProducts()
+  //   useEffect( ()=>{
+  // if(data){
+  //   getRelatedProducts()
 
-// }
+  // }
 
-//   },[data])
+  //   },[data])
 
   // const relatedProducts = await getRelatedProducts(productId);
   // const [productSize, setProductSize] = useState(
@@ -144,7 +144,7 @@ const Product =  ({apColors}) => {
   //   currentProduct ? currentProduct.color : product.colors[0],
   // );
 
-  
+
   const updateCurrentSlideIndex = (e) => {
     const contentOffsetX = e.nativeEvent.contentOffset.x;
     const currentIndex = Math.round(contentOffsetX / theme.SIZES.width);
@@ -158,12 +158,12 @@ const Product =  ({apColors}) => {
     price: product.price,
     oldPrice: product.old_price,
     image: product?.images[0]?.src,
-    vendorDetail:product.vendor_detail,
+    vendorDetail: product.vendor_detail,
     // size: productSize,
     // color: productColor,
   };
   //console.log("product--",product)
-console.log("cartItem--",cartItem)
+  console.log("cartItem--", cartItem)
   const renderButton = () => {
     return (
       <components.SecondaryButton
@@ -177,19 +177,19 @@ console.log("cartItem--",cartItem)
           //   : dispatch(addToCart(cartItem));
           // !productExist(product) && productWasAddedMessage(product);
         }}
-        containerStyle={{marginBottom: 40,}}
-        textStyle={{color: apColors.primaryBg}}
+        containerStyle={{ marginBottom: 40, }}
+        textStyle={{ color: apColors.primaryBg }}
       />
     );
   };
 
   const renderHeader = () => {
-    return <components.Header 
-     logo={false}
-     goBack={true} 
-     bag={true}
-     containerStyle={{position:"absolute",top: 10,zIndex:2, height:theme.RES_HEIGHT(90, 110, 125), width: theme.SIZES.dWidth}} 
-     level={theme.RES_HEIGHT(8, 12, 35)}
+    return <components.Header
+      logo={false}
+      goBack={true}
+      bag={true}
+      containerStyle={{ position: "absolute", top: 10, zIndex: 2, height: theme.RES_HEIGHT(90, 110, 125), width: theme.SIZES.dWidth }}
+      level={theme.RES_HEIGHT(8, 12, 35)}
     />;
   };
 
@@ -279,14 +279,14 @@ console.log("cartItem--",cartItem)
                   item === "carrot"
                     ? "#FF6262"
                     : item === "blue"
-                    ? "#63C7FF"
-                    : item === "beige"
-                    ? "#F8E7CD"
-                    : item === "purple"
-                    ? "#323858"
-                    : item === "black"
-                    ? "#111111"
-                    : "",
+                      ? "#63C7FF"
+                      : item === "beige"
+                        ? "#F8E7CD"
+                        : item === "purple"
+                          ? "#323858"
+                          : item === "black"
+                            ? "#111111"
+                            : "",
                 marginHorizontal: 7,
                 borderRadius: 34,
                 borderWidth: 4,
@@ -311,39 +311,39 @@ console.log("cartItem--",cartItem)
           showsHorizontalScrollIndicator={false}
           onMomentumScrollEnd={updateCurrentSlideIndex}
         >
-          {product?.images?.length>0?
-          product?.images?.map((item, index) => {
-            return (
-              <components.ImageItem
-                item={item}
-                key={index}
-                containerStyle={{
-                  width: theme.SIZES.width,
-                  height: 350,
-                  backgroundColor: apColors.lightBlue2,
-                }}
-                resizeMode="cover"
-                showThreeImages={true}
-              />
-            );
-          })
-          
-          : <View style={{
-            width: theme.SIZES.width,
-            height: 350,
-            backgroundColor: apColors.lightBlue2,
-          }}></View>
-        }
-          
+          {product?.images?.length > 0 ?
+            product?.images?.map((item, index) => {
+              return (
+                <components.ImageItem
+                  item={item}
+                  key={index}
+                  containerStyle={{
+                    width: theme.SIZES.width,
+                    height: 350,
+                    backgroundColor: apColors.lightBlue2,
+                  }}
+                  resizeMode="cover"
+                  showThreeImages={true}
+                />
+              );
+            })
+
+            : <View style={{
+              width: theme.SIZES.width,
+              height: 350,
+              backgroundColor: apColors.lightBlue2,
+            }}></View>
+          }
+
         </ScrollView>
         <View
           style={{
-            position:"absolute",
+            position: "absolute",
             alignItems: "center",
             justifyContent: "center",
             flexDirection: "row",
-            bottom:30,
-            alignSelf:"center"
+            bottom: 30,
+            alignSelf: "center"
           }}
         >
           {product?.images?.map((_, index) => (
@@ -356,7 +356,7 @@ console.log("cartItem--",cartItem)
                 borderRadius: 50,
                 borderWidth: 2,
                 borderColor: currentSlideIndex === index
-                ? apColors.appColor: apColors.appColorLight,
+                  ? apColors.appColor : apColors.appColorLight,
                 marginTop: 20,
                 backgroundColor:
                   currentSlideIndex === index
@@ -372,13 +372,15 @@ console.log("cartItem--",cartItem)
 
   const renderProductInfo = () => {
     return (
-      <View style={{backgroundColor:apColors.white, borderTopLeftRadius: 16,
-      borderTopRightRadius: 16, marginTop: -20, paddingTop: 20}}>
-        
-        <View style={{paddingHorizontal: 20}}>
+      <View style={{
+        backgroundColor: apColors.white, borderTopLeftRadius: 16,
+        borderTopRightRadius: 16, marginTop: -20, paddingTop: 20
+      }}>
 
-       {/* ------ University - Self Pickup------- */}
-        <View
+        <View style={{ paddingHorizontal: 20 }}>
+
+          {/* ------ University - Self Pickup------- */}
+          <View
             style={{
               flexDirection: "row",
               alignItems: "center",
@@ -390,13 +392,13 @@ console.log("cartItem--",cartItem)
               alignItems: "center",
               // justifyContent: "center",
             }}>
-            <View style={{backgroundColor:apColors.appColor, paddingHorizontal: theme.RES_WIDTH(7), paddingVertical: theme.RES_WIDTH(3), borderRadius:6, borderTopRightRadius:1}}><Text style={{color: apColors.whiteOnly, fontSize: theme.FONTS.dF_s}}>Lusail University</Text></View>
-            <View style={{width:theme.RES_WIDTH(9) }}/>
-            <View style={{backgroundColor:apColors.primaryBg2, paddingHorizontal: theme.RES_WIDTH(7), paddingVertical: theme.RES_WIDTH(3), borderRadius:6, borderTopLeftRadius:1, flexDirection:"row", alignItems:"center"}}>
-              <svg.PickupSvg/>
-              <Text style={{color: apColors.whiteOnly, fontSize:theme.FONTS.dF_s, marginLeft: theme.RES_WIDTH(8) }}>Self pickup</Text></View>
-              </View>
-                      {/* ------ Add product to wishlist ------- */}
+              <View style={{ backgroundColor: apColors.appColor, paddingHorizontal: theme.RES_WIDTH(7), paddingVertical: theme.RES_WIDTH(3), borderRadius: 6, borderTopRightRadius: 1 }}><Text style={{ color: apColors.whiteOnly, fontSize: theme.FONTS.dF_s }}>Lusail University</Text></View>
+              <View style={{ width: theme.RES_WIDTH(9) }} />
+              <View style={{ backgroundColor: apColors.primaryBg2, paddingHorizontal: theme.RES_WIDTH(7), paddingVertical: theme.RES_WIDTH(3), borderRadius: 6, borderTopLeftRadius: 1, flexDirection: "row", alignItems: "center" }}>
+                <svg.PickupSvg />
+                <Text style={{ color: apColors.whiteOnly, fontSize: theme.FONTS.dF_s, marginLeft: theme.RES_WIDTH(8) }}>Self pickup</Text></View>
+            </View>
+            {/* ------ Add product to wishlist ------- */}
 
             {/* <TouchableOpacity
             style={{
@@ -422,12 +424,12 @@ console.log("cartItem--",cartItem)
                 }
               />
             </TouchableOpacity> */}
-             <components.Favorite item={product} />
-             
-             
-              </View>
+            <components.Favorite item={product} />
 
-       {/* ------ Product Name------- */}
+
+          </View>
+
+          {/* ------ Product Name------- */}
 
           <View
             style={{
@@ -438,12 +440,12 @@ console.log("cartItem--",cartItem)
             }}
           >
             <View>
-              <Text style={{...theme.FONTS.H3, color: apColors.black, width: theme.RES_WIDTH(300)}}>
+              <Text style={{ ...theme.FONTS.H3, color: apColors.black, width: theme.RES_WIDTH(300) }}>
                 {product.name}
               </Text>
             </View>
 
-          
+
           </View>
           {/* ----product rating --- */}
           {/* <TouchableOpacity
@@ -458,7 +460,7 @@ console.log("cartItem--",cartItem)
               })
             }
           > */}
-            {/* <svg.RatingSvg rating={product.rating} />
+          {/* <svg.RatingSvg rating={product.rating} />
             <Text
               style={{
                 ...theme.FONTS.Mulish_400Regular,
@@ -468,11 +470,11 @@ console.log("cartItem--",cartItem)
                 marginLeft: 4,
               }}
             > */}
-              {/* ({product?.rating_count?.length?3:0}) */}
-              {/* ({0})
+          {/* ({product?.rating_count?.length?3:0}) */}
+          {/* ({0})
             </Text>
           </TouchableOpacity> */}
-                    {/* ----product rating end--- */}
+          {/* ----product rating end--- */}
 
           <View
             style={{
@@ -481,33 +483,33 @@ console.log("cartItem--",cartItem)
               justifyContent: "space-between",
             }}
           >
-                   {/* ------ Product Price - negotiable ------- */}
+            {/* ------ Product Price - negotiable ------- */}
 
             <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              // justifyContent: "center",
-              marginTop: theme.RES_HEIGHT(-14,-18,-22)
-            }}
-          >
-            <Text
               style={{
-                ...theme.FONTS.Mulish_600SemiBold,
-                fontSize: 20,
-                color: apColors.appColor,
-                lineHeight: 20 * 1.5,
-                // marginBottom: 20,
-                marginRight:10 
+                flexDirection: "row",
+                alignItems: "center",
+                // justifyContent: "center",
+                marginTop: theme.RES_HEIGHT(-14, -18, -22)
               }}
+            >
+              <Text
+                style={{
+                  ...theme.FONTS.Mulish_600SemiBold,
+                  fontSize: 20,
+                  color: apColors.appColor,
+                  lineHeight: 20 * 1.5,
+                  // marginBottom: 20,
+                  marginRight: 10
+                }}
               >
-              QAR {product.price}
-            </Text>
+                QAR {product.price}
+              </Text>
 
-            <View style={{backgroundColor:apColors.appColorXtraLight, padding:2, borderRadius:2}}><Text style={{color: apColors.appColor, fontSize:9}}>Negotiable</Text></View>
-              </View>
-            
-                   {/* ------ Add Product Qty------- */}
+              <View style={{ backgroundColor: apColors.appColorXtraLight, padding: 2, borderRadius: 2 }}><Text style={{ color: apColors.appColor, fontSize: 9 }}>Negotiable</Text></View>
+            </View>
+
+            {/* ------ Add Product Qty------- */}
 
             <View
               style={{
@@ -515,7 +517,7 @@ console.log("cartItem--",cartItem)
                 flexDirection: "row",
                 borderRadius: 50,
                 backgroundColor: apColors.grayXtraLight,
-                marginTop: theme.RES_HEIGHT(12, 15,18),
+                marginTop: theme.RES_HEIGHT(12, 15, 18),
               }}
             >
               <TouchableOpacity
@@ -556,51 +558,51 @@ console.log("cartItem--",cartItem)
               </TouchableOpacity>
             </View>
           </View>
-          <View style={{flexDirection:"row", marginTop: theme.RES_HEIGHT(-12, -15, -18), }}>
-            <Text style={{color: 'rgba(20, 0, 35, 0.3)', marginRight: 5}} >Category:</Text>
-            <Text numberOfLines={3} style={{ flex:0.55, color: apColors.inputLabel, }} >Accessories</Text>
+          <View style={{ flexDirection: "row", marginTop: theme.RES_HEIGHT(-12, -15, -18), }}>
+            <Text style={{ color: 'rgba(20, 0, 35, 0.3)', marginRight: 5 }} >Category:</Text>
+            <Text numberOfLines={3} style={{ flex: 0.55, color: apColors.inputLabel, }} >Accessories</Text>
           </View>
           {/* -----DIVIDER----- */}
           <View
-          style={{
-            width: "100%",
-            height: 1,
-            backgroundColor: apColors.lightBlue1,
-            marginTop: 20,
-            marginBottom: 30,
-          }}
-        />
+            style={{
+              width: "100%",
+              height: 1,
+              backgroundColor: apColors.lightBlue1,
+              marginTop: 20,
+              marginBottom: 30,
+            }}
+          />
           {/* -----Commented for now----- */}
           {/* {renderSizes()} */}
           {/* {renderColors()} */}
 
-{product?.description?
-  <>
-          <Text
-            style={{
-              ...theme.FONTS.H5,
-              color: apColors.black,
-              marginBottom: 14,
-            }}
-          >
-            Description
-          </Text>
-          <PrimaryText
-            style={{
-              ...theme.FONTS.Mulish_400Regular,
-              fontSize: 16,
-              lineHeight: 16 * 1.7,
-              // marginBottom: 20,
-            }}
-            color={apColors.gray1}
-          >
-            {product.description}
-          </PrimaryText>
-          <View style={{height:20}}/>
-          </>:
-          <></>
-}
-          
+          {product?.description ?
+            <>
+              <Text
+                style={{
+                  ...theme.FONTS.H5,
+                  color: apColors.black,
+                  marginBottom: 14,
+                }}
+              >
+                Description
+              </Text>
+              <PrimaryText
+                style={{
+                  ...theme.FONTS.Mulish_400Regular,
+                  fontSize: 16,
+                  lineHeight: 16 * 1.7,
+                  // marginBottom: 20,
+                }}
+                color={apColors.gray1}
+              >
+                {product.description}
+              </PrimaryText>
+              <View style={{ height: 20 }} />
+            </> :
+            <></>
+          }
+
           {renderButton()}
         </View>
       </View>
@@ -618,7 +620,7 @@ console.log("cartItem--",cartItem)
             alignItems: "center",
           }}
         >
-          <Text style={{...theme.FONTS.H3, color: apColors.black}}>
+          <Text style={{ ...theme.FONTS.H3, color: apColors.black }}>
             Reviews 0
           </Text>
           <TouchableOpacity
@@ -704,18 +706,19 @@ console.log("cartItem--",cartItem)
     );
   };
 
-  const renderVendorInfo = () =>{
-    return(
-     <View style={{backgroundColor: apColors.white,  
-     marginHorizontal: 16, 
-     borderWidth:1 , 
-     borderColor: apColors.inputBorder,
-     padding:13,
-     borderRadius: 8,
-     marginBottom: 20,
-     }}>
-      {/* <Wrapper> */}
-          {/* <View
+  const renderVendorInfo = () => {
+    return (
+      <View style={{
+        backgroundColor: apColors.white,
+        marginHorizontal: 16,
+        borderWidth: 1,
+        borderColor: apColors.inputBorder,
+        padding: 13,
+        borderRadius: 8,
+        marginBottom: 20,
+      }}>
+        {/* <Wrapper> */}
+        {/* <View
             style={[
               styles.flexDirection,
               {justifyContent: 'space-between', alignItems: 'center'},
@@ -726,105 +729,114 @@ console.log("cartItem--",cartItem)
           </View> */}
 
         <View
-            style={[
-              styles.flexDirection,
-              {justifyContent: 'space-between', marginTop: 16, flex:1},
-            ]}
-          >
-            <View style={[styles.flexDirection, { flex:1,}]}>
-              <View style={[styles.imageContainer, {flex:0.15}]} />
-{/* image right */}
-              {/* <View style={styles.productDetailCont}> */}
-                
-                <View style={{ flex:0.8, marginLeft: theme.RES_WIDTH(12), fontSize: theme.FONTS.dF_m }}>
-                <Text numberOfLines={1} style={styles.storeName}>Sold by <Text numberOfLines={2} style={[styles.storeName, {color: apColors.appColor}]}>{product?.vendor_detail?.vendor_name}</Text> </Text>
-                <Text style={styles.prodRating}>{'\u2022' } 4.5 {'\u2022' } 3 reviews</Text>
-                </View>
-                
-              {/* </View> */}
-            </View>
-        <View>
+          style={[
+            styles.flexDirection,
+            { justifyContent: 'space-between', marginTop: 16, flex: 1 },
+          ]}
+        >
+          <View style={[styles.flexDirection, { flex: 1, }]}>
+            {/* <View style={[styles.imageContainer, { flex: 0.15 }]} /> */}
+            {/* image right */}
+            <Image
+              style={styles.imageContainer}
+              source={{ uri: product.vendor_detail?.logo_img }}
+              // onLoadStart={() => onloading(true)}
+              // onLoadEnd={() => onloading(false)}
+              resizeMode={"contain"}
+              borderRadius={16}
+            />
+            {/* <View style={styles.productDetailCont}> */}
 
-            <View style={{borderRadius:8, borderWidth:1, paddingVertical:3, paddingHorizontal: 5, width: 100}}>
-            <Text numberOfLines={1} style={[styles.prodPrice,{ fontSize: theme.FONTS.dF_xs, color: apColors.inputLabel } ]}>{product?.vendor_detail?.university}</Text>
+            <View style={{ flex: 0.8, marginLeft: theme.RES_WIDTH(12), fontSize: theme.FONTS.dF_m }}>
+              <Text numberOfLines={1} style={styles.storeName}>Sold by <Text numberOfLines={2} style={[styles.storeName, { color: apColors.appColor }]}>{product?.vendor_detail?.vendor_name}</Text> </Text>
+              <Text style={styles.prodRating}>{'\u2022'} 4.5 {'\u2022'} 3 reviews</Text>
             </View>
+
+            {/* </View> */}
+          </View>
+          <View>
+
+            <View style={{ borderRadius: 8, borderWidth: 1, paddingVertical: 3, paddingHorizontal: 5, width: 100 }}>
+              <Text numberOfLines={1} style={[styles.prodPrice, { fontSize: theme.FONTS.dF_xs, color: apColors.inputLabel }]}>{product?.vendor_detail?.university}</Text>
+            </View>
+          </View>
+
         </View>
+
+        {/* footer view  */}
+
+
+        <View style={{ flexDirection: "row", justifyContent: "space-evenly", alignItems: "center", marginTop: theme.RES_HEIGHT(14, 14, 14) }}>
+
+          <View style={{ flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+            <svg.VerifiedTicSvg />
+            <Text style={{ marginTop: theme.RES_HEIGHT(8, 8, 8), color: theme.COLORS.black }}>Verified Seller</Text>
 
           </View>
 
-          {/* footer view  */}
+          {/* ----DIVIDER--- */}
+
+          <View style={{ flexDirection: "column", justifyContent: "center", alignItems: "center", height: 30, width: 2, backgroundColor: apColors.inputBorder }} />
+
+          <View style={{ flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+            <svg.VerifiedTicSvg />
+            <Text style={{ marginTop: theme.RES_HEIGHT(8, 8, 8), color: theme.COLORS.black }}>15 Products</Text>
+
+          </View>
+        </View>
 
 
-<View style={{flexDirection:"row", justifyContent:"space-evenly", alignItems:"center", marginTop: theme.RES_HEIGHT(14,14,14)}}>
-
-<View style={{flexDirection:"column", justifyContent:"center", alignItems:"center"}}>
-  <svg.VerifiedTicSvg/>
-<Text style={{marginTop: theme.RES_HEIGHT(8,8,8),color:theme.COLORS.black}}>Verified Seller</Text>
-  
-  </View>
-
-{/* ----DIVIDER--- */}
-
-<View style={{flexDirection:"column", justifyContent:"center", alignItems:"center", height: 30, width:2, backgroundColor: apColors.inputBorder}}/>
-
-  <View style={{flexDirection:"column", justifyContent:"center", alignItems:"center"}}>
-  <svg.VerifiedTicSvg/>
-  <Text style={{marginTop: theme.RES_HEIGHT(8,8,8),color:theme.COLORS.black}}>15 Products</Text>
-
-</View>
-</View>
-
-          
         {/* </Wrapper> */}
 
-     </View>
+      </View>
     )
   }
 
   const renderFooter = () => {
     return (
-      <View style={{flexDirection:"row", 
-      backgroundColor: apColors.white, 
-      height: theme.RES_HEIGHT(80, 100, 128),
-      alignItems:"center",
-      justifyContent:"space-evenly",
-      paddingHorizontal: theme.RES_WIDTH(20),
-      elevation:5,
-      shadowColor: '#000',
-      shadowOffset: { width: 0, height: 2 },
-      shadowOpacity: 0.5,
-      shadowRadius: 2,
+      <View style={{
+        flexDirection: "row",
+        backgroundColor: apColors.white,
+        height: theme.RES_HEIGHT(80, 100, 128),
+        alignItems: "center",
+        justifyContent: "space-evenly",
+        paddingHorizontal: theme.RES_WIDTH(20),
+        elevation: 5,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.5,
+        shadowRadius: 2,
       }}>
-     
-      {/* <View style={[{flexDirection:"row"}, {marginTop: theme.MARGINS.hy20}]}> */}
-            <View style={{width: theme.RES_WIDTH(165)}}>
-              <components.SecondaryButton
-                title={"Add to cart"}
-                onPress={() => {
-                  productExist(product)
-            ? productExistMessage()
-            : dispatch(addToCart(cartItem));
-          !productExist(product) && productWasAddedMessage(product);
-                }}
-              />
-            </View>
 
-            <View style={[{width: theme.RES_WIDTH(165)}, {marginLeft: 18}]}>
-              <components.Button
-                title="Buy now"
-                onPress={() => {
-                  productExist(product)
-                  ? productExistMessage()
-                  : dispatch(addToCart(cartItem));
-                // !productExist(product) && productWasAddedMessage(product);
-                productExist(product) ? null :
-                navigation.navigate(names.Checkout) 
-                  
-               
-                }}
-              />
-            </View>
-          {/* </View> */}
+        {/* <View style={[{flexDirection:"row"}, {marginTop: theme.MARGINS.hy20}]}> */}
+        <View style={{ width: theme.RES_WIDTH(165) }}>
+          <components.SecondaryButton
+            title={"Add to cart"}
+            onPress={() => {
+              productExist(product)
+                ? productExistMessage()
+                : dispatch(addToCart(cartItem));
+              !productExist(product) && productWasAddedMessage(product);
+            }}
+          />
+        </View>
+
+        <View style={[{ width: theme.RES_WIDTH(165) }, { marginLeft: 18 }]}>
+          <components.Button
+            title="Buy now"
+            onPress={() => {
+              productExist(product)
+                ? productExistMessage()
+                : dispatch(addToCart(cartItem));
+              // !productExist(product) && productWasAddedMessage(product);
+              productExist(product) ? null :
+                navigation.navigate(names.Checkout)
+
+
+            }}
+          />
+        </View>
+        {/* </View> */}
       </View>
     )
   }
@@ -842,7 +854,7 @@ console.log("cartItem--",cartItem)
         {renderProductInfo()}
         {renderVendorInfo()}
         {/* {renderReviews()} */}
-        {data &&  renderProducts(data, navigation, isPending, viewLeft, viewRight)}
+        {data && renderProducts(data, navigation, isPending, viewLeft, viewRight)}
       </ScrollView>
     );
   };
@@ -855,12 +867,12 @@ console.log("cartItem--",cartItem)
   // }
 
   return (
-    <View style={{flex: 1, backgroundColor: apColors.white}}>
+    <View style={{ flex: 1, backgroundColor: apColors.white }}>
       {renderStatusBar()}
       {renderHeader()}
       {renderContent()}
       {renderFooter()}
-      
+
     </View>
   );
 };
