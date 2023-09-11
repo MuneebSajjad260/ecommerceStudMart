@@ -116,7 +116,7 @@ const Login = ({ apColors }) => {
   const getProfileAPI = (result) => {
 
     dispatch(GetProfileAction(result)).unwrap().then((response) => {
-
+console.log("result login ---",result)
     }).catch((error) => {
       console.log("----Login screen API Catch----", error)
       setIsLoading(false)

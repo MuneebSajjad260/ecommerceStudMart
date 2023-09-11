@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.COLORS.whiteOnly,
   },
   contentContainer: {
-    marginBottom: theme.MARGINS.hy20,
+    marginBottom: theme.MARGINS.hy10,
   },
   row: {
     flex: 1,

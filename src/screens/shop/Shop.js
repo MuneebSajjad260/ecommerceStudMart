@@ -6,93 +6,138 @@ import {
   ImageBackground,
   Image,
   ScrollView,
-} from "react-native";
+} from 'react-native';
 
-import styles from "./Styles/ShopStyle";
-import React, {useState, useEffect} from 'react';
-import {useDispatch} from 'react-redux';
-import {SafeAreaView} from "react-native-safe-area-context";
-import {useIsFocused, useNavigation, useRoute} from "@react-navigation/native";
-import {ProductListItem, renderStatusBar} from "../../utils/functions";
-import {ProductsOfCategory} from '../../services/actions/ProductsOfCategory';
-
-import {components} from "../../components";
-import {theme, names} from "../../constants";
-import {svg} from "../../svg";
-import {ProductList} from "../../services/actions/ProductList";
+import styles from './Styles/ShopStyle';
+import React, {useState, useEffect} from "react";
+import {useDispatch} from "react-redux";
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {useIsFocused, useNavigation, useRoute} from '@react-navigation/native';
+import {ProductListItem, renderStatusBar} from '../../utils/functions';
+import {ProductsOfCategory} from "../../services/actions/ProductsOfCategory";
+import {BrandProduct} from "../../services/actions/BrandProduct";
+import {components} from '../../components';
+import {theme, names} from '../../constants';
+import {svg} from '../../svg';
+import {ProductList} from '../../services/actions/ProductList';
 
 const Shop = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const dispatch = useDispatch();
-  const isFocused=useIsFocused()
+  const isFocused = useIsFocused();
 
-  const {title, products, categoryId,categoryData,brandData, universityData, filter} = route.params || {};
+  const {
+    title,
+    products,
+    categoryId,
+    categoryData,
+    brandData,
+    universityData,
+    filter,
+  } = route.params || {};
   const {category} = route.params || false;
   const {university} = route.params || false;
   const {isFilter} = route.params || false;
   const {brand} = route.params || false;
-  console.log('filter data ----', filter);
-  console.log('IsFilte ----', isFilter);
-  console.log('CATEGORY DETAILS--', category, '-', categoryId,'--',categoryData);
-  console.log('universityData--', universityData);
-
+  
+  console.log("filter data ----", filter);
+  console.log("IsFilte ----", isFilter);
+  console.log(
+    "CATEGORY DETAILS--",
+    category,
+    "-",
+    categoryId,
+    "--",
+    categoryData,
+  );
+  console.log("universityData--", universityData);
+  console.log("brandData.vendor_id--", brandData?.vendor_id, "--", brand);
   //STATES
-  const  [productsList, setProductsList] = useState();
+  const [productsList, setProductsList] = useState();
+  const [brandProd, setBrandProd] = useState()
   //CALLING PRODUCTS OF CATEGORY API
 
   useEffect(() => {
-    console.log("helllll")
+    console.log('helllll');
     var id;
     if (university) {
       id = `tag=${universityData?.id}`;
+    }
+      else if (brand){
+        id = `vendor_id=${brandData?.vendor_id}`;
+      
     } else if (isFilter) {
       const catId = filter.category.map((item) => item.id);
-      const filterCatIds = catId.join(",");
+      const filterCatIds = catId.join(',');
       const uniId = filter.university.map((item) => item.id);
-      const filterUniIds = uniId.join(",");
-      const price = filter.priceFilter[0]
-      console.log("price---",price)
-      id = `category=${filterCatIds}&tag=${filterUniIds}&min_price=${filter?.priceFilter.length > 0 ? filter?.priceFilter[0]?.low : 0}&max_price=${ filter?.priceFilter.length > 0 ? filter?.priceFilter[0]?.high : 1000}`;
-      console.log("ids---", id);
+      const filterUniIds = uniId.join(',');
+      const price = filter.priceFilter[0];
+      console.log('price---', price);
+      id = `category=${filterCatIds}&tag=${filterUniIds}&min_price=${
+        filter?.priceFilter.length > 0 ? filter?.priceFilter[0]?.low : 0
+      }&max_price=${
+        filter?.priceFilter.length > 0 ? filter?.priceFilter[0]?.high : 1000
+      }`;
+      console.log('ids---', id);
     } else if (category) {
       id = `category=${categoryId}`;
     } else {
     }
 
-    console.log("idd---", id);
+    console.log('idd---', id);
     dispatch(ProductList(id))
       .unwrap()
       .then((result) => {
-        console.log('all products in each category--', result,'-length-',result.length);
-        setProductsList(result);;
+        console.log(
+          "all products in each category--",
+          result,
+          "-length-",
+          result.length,
+        );
+        setProductsList(result);
       })
       .catch((err) => {
-        console.log('err in products of category--', err);
+        console.log("err in products of category--", err);
       });
-  }, [dispatch,category || university || isFilter,isFocused]);
+  }, [dispatch, category || university || isFilter, isFocused,brand]);
 
-  console.log("---Products--- ", products);
+  //GETTING BRAND products
+  // useEffect(() => {
+  //   dispatch(BrandProduct(brandData?.vendor_id))
+  //     .unwrap()
+  //     .then((result) => {
+  //       console.log("brand prod result -- ", result);
+
+  //       console.log("brand prod result 2 -- ", result?.vendors_product);
+
+  //       setBrandProd(result?.vendors_product);
+  //     })
+  //     .catch((err) => {
+  //       console.log(" brand product error ---", err.response?.data);
+  //     });
+  // }, [dispatch, brand, brandData]);
 
   const renderHeader = () => {
     return (
       <components.Header
-        border={(university || brand) ? false : true}
+        border={university || brand ? false : true}
         title={title}
         goBack={true}
-        searchIcon={(university || brand ) ? false : true}
+        searchIcon={university || brand ? false : true}
         university={university}
         brand={brand}
         seller={universityData?.vendor_count}
         products={universityData?.count}
         containerStyle={{
           backgroundColor: theme.COLORS.white,
-          height: (university || brand)
-            ? theme.RES_HEIGHT(90, 220, 125)
-            : theme.RES_HEIGHT(90, 100, 125),
+          height:
+            university || brand
+              ? theme.RES_HEIGHT(90, 220, 125)
+              : theme.RES_HEIGHT(90, 100, 125),
         }}
         level={
-          (university || brand)
+          university || brand
             ? theme.RES_HEIGHT(8, 100, 35)
             : theme.RES_HEIGHT(8, 12, 35)
         }
@@ -103,15 +148,20 @@ const Shop = () => {
   };
 
   const renderFilterAndSort = () => (
-    <View style={[styles.filterAndSort, {marginTop: (university || brand) ? 45 : 12}]}>
+    <View
+      style={[styles.filterAndSort, {marginTop: university || brand ? 45 : 12}]}
+    >
       <TouchableOpacity
         style={styles.flexDirection}
-        onPress={() => navigation.navigate(names.Filter, {
-          title: title,
-          productId:category ? categoryId : null,
-          categoryData:categoryData,
-          universityData:universityData
-        })}
+        onPress={() =>
+          navigation.navigate(names.Filter, {
+            title: title,
+            productId: category ? categoryId : null,
+            categoryData: categoryData,
+            universityData: universityData,
+            price:filter?.priceFilter
+          })
+        }
       >
         <svg.SettingsSvg />
       </TouchableOpacity>
@@ -237,14 +287,16 @@ const Shop = () => {
 
   const renderProductsList = () => (
     <FlatList
-      data={category || university || isFilter ? productsList : products}
+      data={
+        category || university || isFilter ||  brand ? productsList : products
+      }
       showsVerticalScrollIndicator={false}
       contentContainerStyle={[
         styles.prodList,
-        {paddingBottom: university ? theme.MARGINS.hy20 : 200},
+        {paddingBottom: (university || brand) ? theme.MARGINS.hy20 : 200},
       ]}
       numColumns={2}
-      columnWrapperStyle={{justifyContent: "space-between"}}
+      columnWrapperStyle={{justifyContent: 'space-between'}}
       keyExtractor={(item) => item.id}
       renderItem={({item}) => ProductListItem(item, navigation)}
     />
@@ -369,7 +421,7 @@ const Shop = () => {
 
   return (
     <View style={styles.mainContainer}>
-      {university ? (
+      {(university || brand) ? (
         <ScrollView showsVerticalScrollIndicator={false}>
           {renderHeader()}
           {renderFilterAndSort()}

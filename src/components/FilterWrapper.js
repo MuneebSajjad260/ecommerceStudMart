@@ -4,8 +4,16 @@ import { theme } from "../constants";
 import Wrapper from "./Wrapper";
 
 const FilterWrapper = ({ category, university, price, renderPrice, applyFilters,priceFilter,categoryData,universityData }) => {
-  const [filterData, setFilterData] = useState({ category: categoryData ? [categoryData] : [], university: universityData ? [universityData] : [] }); // Separate arrays for category and university
+ 
+  console.log("categoryData---",categoryData)
+  // const [filterData, setFilterData] = useState({ category: categoryData ? categoryData : [], university: universityData ? universityData : [] }); // Separate arrays for category and university
 
+  const [filterData, setFilterData] = useState({
+    category: categoryData ? (Array.isArray(categoryData) ? categoryData : [categoryData]) : [],
+    university: universityData ? (Array.isArray(universityData) ? universityData : [universityData]) : [],
+  });
+
+  console.log("filter data---",filterData)
   useEffect(() => {
     applyFilters(filterData);
   }, [filterData]);

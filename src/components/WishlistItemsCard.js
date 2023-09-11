@@ -20,6 +20,7 @@ import Wrapper from "./Wrapper";
 import {svg} from "../svg";
 
 const WishlistItemsCard = ({item, index, array, navigation, dispatch,onWishlistChange}) => {
+  console.log("wsihkist itesm-,",item)
   return (
     <Pressable
       onPress={() =>
@@ -41,9 +42,9 @@ const WishlistItemsCard = ({item, index, array, navigation, dispatch,onWishlistC
             borderRadius={8}
             containerStyle={styles.imgCont}
           >
-            {item.is_sale === true && <components.Sale />}
+            
           </components.ImageItem>
-          <View style={{width:'62%'}}>
+          <View style={{width:'58%'}}>
             <Text style={styles.name}>{item.name}</Text>
             <Text style={styles.price}>{`QAR ${item.price}`}</Text>
           </View>
@@ -72,6 +73,7 @@ const styles = StyleSheet.create({
     ...theme.FONTS.H14,
     color: theme.COLORS.black,
     flex: 1,
+  
   },
   flexDirection: {
     flexDirection: "row",

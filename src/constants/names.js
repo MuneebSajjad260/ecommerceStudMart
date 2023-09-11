@@ -35,7 +35,8 @@ const names = {
   Category: "Categories",
   UniversityScreen: "University",
   BrandsScreen: "Brands",
-  ShopFilter:'ShopFilter'
+  ShopFilter:'ShopFilter',
+  DiscountCodeScreen:'DiscountCodeScreen'
 };
 
 const tabNames = {

@@ -118,7 +118,7 @@ console.log("goback---",goBack)
           />
 <View style={{flexDirection:'row', paddingHorizontal:14,marginTop:theme.SIZES.rsHeight/3.9, alignItems:'center' ,justifyContent:'space-between'}}>
 <View style={{
-  width:166,
+  width:theme.SIZES.rsWidth/2.3,
   height:64,
   backgroundColor:theme.COLORS.white,
   borderRadius:8,
@@ -135,7 +135,7 @@ console.log("goback---",goBack)
 </View>
 </View>
 <View style={{
-  width:166,
+   width:theme.SIZES.rsWidth/2.3,
   height:64,
   backgroundColor:theme.COLORS.white,
   borderRadius:8,
@@ -178,7 +178,7 @@ console.log("goback---",goBack)
          />
 <View style={{flexDirection:'row', paddingHorizontal:14,marginTop:theme.SIZES.rsHeight/3.9, alignItems:'center' ,justifyContent:'space-between'}}>
 <View style={{
- width:166,
+ width:theme.SIZES.rsWidth/2.3,
  height:64,
  backgroundColor:theme.COLORS.white,
  borderRadius:8,
@@ -195,7 +195,7 @@ console.log("goback---",goBack)
 </View>
 </View>
 <View style={{
- width:166,
+width:theme.SIZES.rsWidth/2.3,
  height:64,
  backgroundColor:theme.COLORS.white,
  borderRadius:8,
@@ -260,7 +260,7 @@ console.log("goback---",goBack)
         right: 0,
         // paddingRight: 0,
         marginRight:20,
-        bottom:10,
+        bottom:theme.MARGINS.hy20,
      //   padding:14,
         //  alignItems:"center",
         //  justifyContent:"center"

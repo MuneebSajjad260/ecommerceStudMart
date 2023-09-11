@@ -34,7 +34,7 @@ import {
 } from "../../constants/constants";
 import { VendorCount } from '../../services/actions/VendorCount';
 import Brands from '../../components/Brands';
-
+import { BrandDiscount } from '../../services/actions/BrandDiscount';
 import getThemedColors from '../../utils/themeMode';
 import {svg} from "../../svg";
 import {selectLoginUser} from "../../store/loginSlice";
@@ -45,6 +45,7 @@ import {defaultBanner} from "../../constants/images";
 import {useCallback} from "react";
 import { ProductList } from '../../services/actions/ProductList';
 import { VendorList } from '../../services/actions/VendorList';
+import DiscountCodes from '../../components/DiscountCodes';
 
 
 
@@ -81,8 +82,16 @@ const HomeOne = (props) => {
   const [isPendingUni , setIsPendingUni]=useState(false)
   const [isPendingCat , setIsPendingCat]=useState(false)
   const [isPendingBrand , setIsPendingBrand]=useState(false)
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+  const [bannerLoading, setBannerLoading] = useState(true);
+  const [featuredLoading, setFeaturedLoading] = useState(true);
+  const [category, setCategory] = useState();
+  const [universityList, setUniversityList] = useState();
+  const [loading, setLoading] = useState(false);
   const[data, setData]=useState()
-
+  const [refreshing, setRefreshing] = useState(false);
+  const[isPendingDiscount,setIsPendingDiscount] = useState(false)
+const[brandDiscount,setBrandDiscount] = useState()
   //GETTING VENDOR LIST FOR BRANDS
 
   useEffect(() => {
@@ -105,16 +114,22 @@ setBrands(vendorsBrand)
 
   //GETTING PRODUCTS FROM API 
   useEffect(() => {
-    setIsPending(true)
-   dispatch(ProductList()).unwrap().then(result=>{
-    console.log("product list result")
-    setData(result)
-   }).catch(err=>{
-    console.log("prod list error---",err)
-   }).finally(() => {
-    setIsPending(false); // Set loading to false after the API call is completed (either success or error)
-  });
-  }, [dispatch , isFocused]);
+    setIsPending(true);
+    
+    dispatch(ProductList())
+      .unwrap()
+      .then((result) => {
+        console.log("product list result", result);
+        setData(result);
+      })
+      .catch((err) => {
+        console.log("prod list error---", err);
+        // Handle the error appropriately, e.g., display an error message to the user
+      })
+      .finally(() => {
+        setIsPending(false); // Set loading to false after the API call is completed (either success or error)
+      });
+  }, [dispatch, isFocused]);
 
     //GETTING VENDOR COUNT FROM API
     useEffect(()=>{
@@ -127,19 +142,13 @@ setBrands(vendorsBrand)
     },[])
 
 
-  const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
-  const [bannerLoading, setBannerLoading] = useState(true);
-  const [featuredLoading, setFeaturedLoading] = useState(true);
-  const [category, setCategory] = useState();
-  const [universityList, setUniversityList] = useState();
-  const [loading, setLoading] = useState(false);
+
   const updateCurrentSlideIndex = (e) => {
     const contentOffsetX = e.nativeEvent.contentOffset.x;
     const currentIndex = Math.round(contentOffsetX / theme.SIZES.width);
     setCurrentSlideIndex(currentIndex);
   };
 
-  const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -185,34 +194,23 @@ setBrands(vendorsBrand)
       });
   }, []);
 
-  const test1 = () => {
-    let config = {
-      method: "get",
-      maxBodyLength: Infinity,
-      url: "https://pakprintwishes.com:3001/api/v2/user/getParentCategory",
-      headers: {},
-    };
+  //GET BRAND DISCOUNTS
 
-    axios
-      .request(config)
-      .then((response) => {
-        // console.log("---TEST1---",JSON.stringify(response.data));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  useEffect(()=>{
+    setIsPendingDiscount(true);
+    dispatch(BrandDiscount()).unwrap().then(result=>{
+      console.log("brand discount result--",result)
+      setBrandDiscount(result)
+    }).catch((err) => {
+      console.log('err brand discount--', err);
+   
+    })
+    .finally(() => {
+      setIsPendingDiscount(false);
+    });
+  },[dispatch])
 
-  const renderHeader = () => {
-    return (
-      <components.Header
-        logo={true}
-        burgerMenu={true}
-        bag={true}
-        search={true}
-      />
-    );
-  };
+
 
   const renderHeaderHome = () => {
     return (
@@ -238,40 +236,14 @@ setBrands(vendorsBrand)
     );
   };
 
-  const renderFilters = () => {
-    return (
-      <View>
-        {!isPending && (
-          <FlatList
-            data={data}
-            horizontal={true}
-            key={(Math.random() * 1000).toString()} // set number of columns
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{paddingLeft: 20, marginVertical: 16}}
-            renderItem={({item}) => (
-              <TouchableOpacity
-                style={styles.filterView}
-                onPress={() =>
-                  navigation.navigate(names.Product, {
-                    product: item,
-                  })
-                }
-              >
-                <components.ProductName item={item} />
-              </TouchableOpacity>
-            )}
-          />
-        )}
-      </View>
-    );
-  };
+ 
 
   const renderCarousel = useCallback(() => {
     return (
       <View
         style={{
           position: "absolute",
-         top: 160,
+         top: 130,
           overflow: "hidden",
           marginHorizontal: 16,
           borderRadius: 16,
@@ -446,14 +418,14 @@ setBrands(vendorsBrand)
 
   const renderCategories = () => {
     return (
-      <View style={{marginBottom: 20, marginTop: 0}}>
+      <View style={{marginBottom: theme.MARGINS.hy10}}>
         {/* <CustomShimmerPlaceHolder visible={isPendingCat} borderRadius={10} style={{width: "90%", height: 160, borderRadius: 10, alignSelf:'center'}}>
           <View style={{width: "90%", height: isPendingCat? 160:0, borderRadius: 10, alignSelf:'center'}}></View>
         </CustomShimmerPlaceHolder> */}
 
         <components.ProductCategory
           title="Shop from categories"
-          containerStyle={{marginHorizontal: 20}}
+          containerStyle={{marginHorizontal: theme.MARGINS.hy20}}
           onPress={() =>
             navigation.navigate(names.Category, {
               title: "Categories",
@@ -468,7 +440,7 @@ setBrands(vendorsBrand)
             key={(Math.random() * 1000).toString()} // set number of columns
             showsHorizontalScrollIndicator={false}
             style={{alignSelf: 'center'}}
-            contentContainerStyle={{padding: 16}}
+            contentContainerStyle={{paddingHorizontal: 16,paddingTop:theme.MARGINS.hy10}}
             renderItem={({item}) => (
               <TouchableOpacity
                 style={{margin: 4}}
@@ -585,7 +557,7 @@ setBrands(vendorsBrand)
         
         <components.ProductCategory
           title={'Universities'}
-          containerStyle={{marginHorizontal: 20, marginBottom: 14}}
+          containerStyle={{marginHorizontal: theme.MARGINS.hy20, marginBottom: theme.MARGINS.hy10}}
           onPress={() =>
             navigation.navigate(names.UniversityScreen, {
               title: "All products",
@@ -693,6 +665,43 @@ onPress={() => navigation.navigate(names.Shop, {
 )
   }
   
+  const discountCodes =()=>{
+    return (
+      <View style={styles.contentContainer}>
+        
+        <components.ProductCategory
+          title={'Discount Codes'}
+          containerStyle={{marginHorizontal: theme.MARGINS.hy20, marginBottom: theme.MARGINS.hy10}}
+          onPress={() =>
+            navigation.navigate(names.DiscountCodeScreen, {
+              brands:brandDiscount,
+               // product: data,
+             })
+          }
+          visibleRight={viewRight?.hide}
+        />
+        
+        <CustomShimmerPlaceHolder visible={isPendingDiscount} borderRadius={10} style={{width: "90%", height: 160, borderRadius: 10, alignSelf:'center'}}>
+          <View style={{width: "90%", height: isPendingDiscount? 160:0, borderRadius: 10, alignSelf:'center'}}></View>
+        </CustomShimmerPlaceHolder>
+  
+        {!isPendingDiscount && <FlatList
+          data={brandDiscount?.discount_brands?.slice(0,4)}
+          horizontal={true}
+          key={(Math.random() * 1000).toString()}
+          // scrollEnabled={false}              // set number of columns 
+          // columnWrapperStyle={styles.row}
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{paddingLeft: 13}}
+          renderItem={({item}) => (
+       <DiscountCodes data={item}/>
+          )}
+        />}
+  
+      </View>
+    );
+  }
  
   const renderContent = () => {
     return (
@@ -717,7 +726,7 @@ onPress={() => navigation.navigate(names.Shop, {
     );
   };
 
-  const spaceY = () => <View style={{height: 150, width: 100}} />;
+  const spaceY = () => <View style={{height: 110, width: 100}} />;
 
   const Item = () => (
     <>
@@ -731,6 +740,7 @@ onPress={() => navigation.navigate(names.Shop, {
       {renderProducts(data, navigation, isPending, viewLeft, viewRight)}
       {renderUniversities()}
       {renderBrands()}
+      {discountCodes()}
       {/* {data && renderFeatured()} */}
     </>
   );

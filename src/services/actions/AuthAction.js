@@ -12,7 +12,7 @@ export const LoginAction = createAsyncThunk('auth/login', async (data, thunkAPI)
         // console.log("----login 333333 a------", data);
         const response = await axios.post(loginUrl, data, {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/x-www-form-urlencoded'
             }
         })
 

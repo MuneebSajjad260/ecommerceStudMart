@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import {renderStatusBar} from "../../utils/functions";
 import {components} from "../../components";
-import styles from "./Styles/BrandsScreenStyle";
+import styles from "./Styles/DiscountCodeScreenStyle";
 import {ProductListItem} from "../../utils/functions";
 import {useNavigation, useRoute} from "@react-navigation/native";
 import {names} from "../../constants";
@@ -21,18 +21,28 @@ import VerifiedProdSvg from "../../svg/VerifiedProdSvg";
 import BrandSvg from "../../svg/BrandSvg";
 import BrandProductSvg from "../../svg/BrandProductSvg";
 import Brands from "../../components/Brands";
+import BrandImgSvg from "../../svg/brandImgSvg";
+import DiscountSvg from "../../svg/DiscountSvg";
 
-const BrandsScreen = ({route}) => {
+const DiscountCodeScreen = ({route}) => {
   const navigation = useNavigation();
   const [isScrolling, setIsScrolling] = useState(false);
+
   
+
   const {brands} = route.params || {};
   console.log("prod--", brands);
-  const sumVendorProductCount = brands?.reduce((sum, vendor) => sum + vendor.vendor_product_count, 0);
+  const totalDiscount = brands?.discount_brands.reduce((sum, brand) => {
+    // Convert brand_discount_count to a number before adding
+    const count = parseInt(brand.brand_discount_count, 10);
+    return sum + count;
+  }, 0)
+
+  console.log("total dis--",totalDiscount)
   const renderHeader = () => {
     return (
       <components.Header
-        title="Brands"
+        title="Discounts"
         goBack={true}
         border={false}
         containerStyle={{
@@ -45,8 +55,11 @@ const BrandsScreen = ({route}) => {
   };
 
   const ProductListItem = (item) => {
+    
     return (
-      <Brands data={item} col={true}
+      
+   
+      <Brands discount={true} data={item} col={true}
         onPress={() => navigation.navigate(names.Shop, {
           
           brandData:item,
@@ -61,9 +74,9 @@ const BrandsScreen = ({route}) => {
       <View style={styles.contentContainer}>
         <Text
           style={styles.uniLength}
-        >{`${brands?.length} brands`}</Text>
+        >{`${brands?.discount_brands.length} brands`}</Text>
         <FlatList
-          data={brands}
+          data={brands?.discount_brands}
           contentContainerStyle={{flexGrow: 1}}
           numColumns={2}
           columnWrapperStyle={styles.wrapperStyle}
@@ -78,43 +91,30 @@ const BrandsScreen = ({route}) => {
     return (
   
       <ImageBackground
-        source={require("../../assets/uniBg.png")}
+        source={require("../../assets/brandDiscount.png")}
         style={styles.firstImg}
       >
         <View style={styles.subHeadCont}>
-        <Text style={styles.subHeadTxt}>Trusted by many now on your GO. </Text>
+        <Text style={styles.subHeadTxt}>Explore Exclusive Discounts
+from Trusted Brands! </Text>
         </View>
-        <View style={styles.img2Cont}>
-          <ImageBackground
-            source={require("../../assets/brandScreen.png")}
-            resizeMode="contain" // Use 'contain' to fit the image within the available space
-            style={styles.brandImg}
-          >
-            <View style={styles.brandContent}>
-              <View style={styles.brandContentAllign}>
-                <BrandSvg />
-                <View style={styles.marginLeft}>
-                  <Text style={styles.imgHeading}>Brands</Text>
-                  <Text style={styles.number}>{brands?.length}</Text>
-                </View>
-              </View>
 
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  marginTop: theme.MARGINS.hy20,
-                }}
-              >
-                <BrandProductSvg />
-                <View style={styles.marginLeft}>
-                  <Text style={styles.imgHeading}>Products</Text>
-                  <Text style={styles.number}>{sumVendorProductCount}</Text>
-                </View>
-              </View>
-            </View>
-          </ImageBackground>
+<View style={styles.brandAndDiscConts}>
+        <View style={styles.brandCont}> 
+
+        <BrandImgSvg/>
+        <Text style={styles.innerTxt}>{`${brands?.discount_brands.length} Brands`}</Text>
+
         </View>
+
+        <View style={styles.discCont}> 
+
+ <DiscountSvg/>
+        <Text style={styles.innerTxt}>{`${totalDiscount}  Discounts`}</Text>
+
+</View>
+</View>
+       
       </ImageBackground>
     );
   };
@@ -152,4 +152,4 @@ const BrandsScreen = ({route}) => {
   );
 };
 
-export default BrandsScreen;
+export default DiscountCodeScreen;

@@ -81,11 +81,11 @@ const renderProducts = (data, navigation, isPending, viewLeft, viewRight) => {
   data = data?.filter(item => item.status === 'publish');
   // console.log("----item status------", data)
   return (
-    <View style={{ marginBottom: 40 }}>
+    <View style={{ marginBottom: theme.MARGINS.hy10 }}>
 
       <components.ProductCategory
         title={viewLeft.title}
-        containerStyle={{ marginHorizontal: 20, marginBottom: 14 }}
+        containerStyle={{ marginHorizontal: theme.MARGINS.hy20, marginBottom: theme.MARGINS.hy10 }}
         onPress={() =>
           navigation.navigate(names.Shop, {
             title: "All products",

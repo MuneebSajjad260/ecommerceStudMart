@@ -31,13 +31,15 @@ const Filter = () => {
   const [universityList, setUniversityList] = useState();
   const [loading, setLoading] = useState(false);
   const [low, setLow] = useState(0);
-  const [high, setHigh] = useState(1000);
+  const [high, setHigh] = useState(10000);
   const [min, setMin] = useState(0);
-  const [max, setMax] = useState(1000);
+  const [max, setMax] = useState(10000);
   const [filter, setFilter] = useState();
   const [priceFilter, setPriceFilter] = useState([]);
   console.log("productId----",productId,'--',categoryData)
+ console.log("filter----",filter?.category)
 
+ 
   //GET CATEGORIES FROM API
   useEffect(() => {
     setLoading(true);
@@ -78,6 +80,7 @@ const Filter = () => {
     handlePrice();
   }, [low, high]);
 
+  
   // const categories = [
   //   {id: 1, name: "Fashion"},
   //   {id: 2, name: "Accessories"},
@@ -91,11 +94,11 @@ const Filter = () => {
   //   {id: 3, name: " Northwestern University"},
   // ];
 
-  const price = [
-    {id: 1, name: 'QAR 0.00 - QAR 359.00'},
-    {id: 2, name: 'QAR 359.00 - QAR 450.00'},
-    {id: 3, name: 'QAR 359.00 - QAR 450.00'},
-  ];
+  // const price = [
+  //   {id: 1, name: 'QAR 0.00 - QAR 359.00'},
+  //   {id: 2, name: 'QAR 359.00 - QAR 450.00'},
+  //   {id: 3, name: 'QAR 359.00 - QAR 450.00'},
+  // ];
 
   const renderHeader = () => {
     return (
@@ -136,7 +139,10 @@ const Filter = () => {
     handlePriceFilter(range, low, high);
   };
 
-  //APPLY FILTERS
+
+ 
+
+  // //APPLY FILTERS
   const applyFilters = (selectedFilters) => {
     console.log("parent dilterdata---", selectedFilters);
     // const updatedFilterData = {...selectedFilters, priceFilter};
@@ -174,7 +180,7 @@ const Filter = () => {
       <FilterWrapper
         category={category}
         university={universityList}
-        price={price}
+        // price={price}
         renderPrice={renderPrice()}
         applyFilters={applyFilters} // Pass the function here
         priceFilter={priceFilter}
@@ -194,7 +200,9 @@ const Filter = () => {
             // products: data,
              title: 'All Products',
             filter: filter,
-            isFilter : true
+            isFilter : true,
+            categoryData:filter.category,
+            universityData:filter.university,
           });
         }}
       />

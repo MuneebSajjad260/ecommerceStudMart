@@ -233,6 +233,11 @@ const StackNavigator = () => {
           component={screens.ShopFilter}
           options={{headerShown: false}}
         />
+         <Stack.Screen
+          name={names.DiscountCodeScreen}
+          component={screens.DiscountCodeScreen}
+          options={{headerShown: false}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

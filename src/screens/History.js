@@ -57,7 +57,7 @@ const History = () => {
 
   //CALLING LIST OF ORDERS API
   useEffect(() => {
-    dispatch(ListOrder(auth.data.id))
+    dispatch(ListOrder(auth?.data?.id))
       .unwrap()
       .then((result) => {
         console.log('result of list order api -', result);
@@ -159,10 +159,10 @@ const History = () => {
           onPress={() => {
             console.log(
               'meta check--',
-              item?.meta_data[3].value == 1 ? 'ship' : 'self',
+              item?.meta_data[3]?.value == 1 ? 'ship' : 'self',
             );
             navigation.navigate(names.OrderSummary, {
-              deliveryMethod: item?.meta_data[3].value == 1 ? 'ship' : 'self',
+              deliveryMethod: item?.meta_data[3]?.value == 1 ? 'ship' : 'self',
               orderId: item?.id,
             });
           }}

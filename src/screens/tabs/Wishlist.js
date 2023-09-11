@@ -23,12 +23,13 @@ import {clearWishlist} from "../../store/wishlistSlice";
 import WishlistItemsCard from "../../components/WishlistItemsCard";
 import {DeleteWishlist} from "../../services/actions/DeleteWishlist";
 import {WishlistItems} from "../../services/actions/WishlistItems";
+import { selectUser } from "../../store/userSlice";
 
 const Wishlist = () => {
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
   const navigation = useNavigation();
-
+  const auth = useSelector(selectUser);
   const [wishlistData, setWishlistData] = useState(); // Initialize with default structure
   const [deleteData , setDeleteData]=useState(false)
   // const list = useSelector((state) => state.wishlist.list);
@@ -36,7 +37,7 @@ const Wishlist = () => {
 
   //GETTING ALL ITEMS FROM WISHLIST
   const fetchWishlistData = () => {
-    dispatch(WishlistItems({userid: 1}))
+    dispatch(WishlistItems({userid: auth?.data?.id}))
       .unwrap()
       .then((result) => {
         console.log('ALL wishlist items data--', result);
@@ -55,7 +56,7 @@ const Wishlist = () => {
 
   //CLEAR WISHLIST
   const clearAllItemsHandler = () => {
-    dispatch(DeleteWishlist({userid: 1}))
+    dispatch(DeleteWishlist({userid: auth?.data?.id}))
       .unwrap()
       .then((result) => {
         console.log("delete wishlist data--", result);

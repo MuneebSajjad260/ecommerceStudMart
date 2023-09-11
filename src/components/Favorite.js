@@ -23,7 +23,7 @@ const Favorite = ({ item }) => {
 
   //GETTING ALL ITEMS FROM WISHLIST
   useEffect(() => {
-    dispatch(WishlistItems({ userid: 1 }))
+    dispatch(WishlistItems({ userid: auth?.data?.id }))
       .unwrap()
       .then((result) => {
         console.log("ALL wishlist items data--", result);

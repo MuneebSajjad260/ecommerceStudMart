@@ -4,7 +4,8 @@ import {theme} from '../constants';
 import DeliveryTruck from '../svg/DeliveryTruck';
 import Package from '../svg/Package';
 import StarSvg from '../svg/StarSvg'
-const Brands = ({data,col,onPress}) => {
+const Brands = ({data,col,onPress,discount}) => {
+  
     const mainContWidth = col ? theme.SIZES.width : 172;
     const bannerLeft = col ? theme.SIZES.width /15 : mainContWidth * 0.15;
   return (
@@ -19,11 +20,21 @@ const Brands = ({data,col,onPress}) => {
           uri: data?.vendor_data?.logo_img,
         }}/>
         </View>
-<Text style={styles.heading}>{data?.vendor_name}</Text>
+<Text style={styles.heading}>{ discount ? data?.brand_title : data?.vendor_name}</Text>
+{discount 
+
+? 
+<View style={styles.flexDirection}>
+<Text style={styles.discountNo}>{data?.brand_discount_count} <Text style={styles?.discountTxt}>discounts</Text></Text>
+</View>
+: 
+
 <View style={styles.flexDirection}>
 <StarSvg/>
 <Text style={styles.rating}>{data?.rating}</Text>
 </View>
+}
+
   </TouchableOpacity>
 
   );
@@ -38,6 +49,7 @@ const styles = StyleSheet.create({
     paddingHorizontal:14,
     
      paddingTop:34,
+     marginBottom:theme.MARGINS.hy20,
     paddingBottom:theme.MARGINS.hy10,
     borderWidth:1,
     borderRadius:16,
@@ -74,6 +86,12 @@ const styles = StyleSheet.create({
     color: theme.COLORS.black,
     marginLeft:theme.MARGINS.hy5
   },
+  discountNo:{
+    ...theme.FONTS.Mulish_600SemiBold,
+    fontSize:theme.FONTS.dF_sm,
+    color: theme.COLORS.black,
+  
+  },
   time: {
     justifyContent: "flex-start",
     ...theme.FONTS.H14,
@@ -86,6 +104,12 @@ const styles = StyleSheet.create({
   {
     width: 30,
     height: 30,
+  },
+  discountTxt:{
+    ...theme.FONTS.Mulish_600SemiBold,
+    fontSize:theme.FONTS.dF_sm,
+    color:theme.COLORS.secondryTextColor,
+   // marginLeft:theme.MARGINS.hy5
   }
 });
 
