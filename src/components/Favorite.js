@@ -1,16 +1,17 @@
-import { TouchableOpacity, Alert, StyleSheet } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
-import { addToWishlist, removeFromWishlist } from "../store/wishlistSlice";
-import React, { useState, useEffect } from "react";
-import { ManageWhishlist } from "../services/actions/ManageWhishlist";
-import { svg } from "../svg";
-import { theme } from "../constants";
-import { selectUser } from "../store/userSlice";
+import {TouchableOpacity, Alert, StyleSheet} from "react-native";
+import {useDispatch, useSelector} from "react-redux";
+import {addToWishlist, removeFromWishlist} from "../store/wishlistSlice";
+import React, {useState, useEffect} from "react";
+import {ManageWhishlist} from "../services/actions/ManageWhishlist";
+import {WishlistItems} from '../services/actions/WishlistItems';
+import {svg} from "../svg";
+import {theme} from "../constants";
+import {selectUser} from "../store/userSlice";
 
-const Favorite = ({ item }) => {
+const Favorite = ({item,onWishlistChange}) => {
   const dispatch = useDispatch();
   const auth = useSelector(selectUser);
-  // console.log('auth.data.id--', auth.data.id);
+  // console.log('auth?.data?.id--', auth?.data?.id);
 
   const [favItem, setFavItem] = useState();
   const [wishlistData, setWishlistData] = useState({
@@ -38,7 +39,8 @@ const Favorite = ({ item }) => {
   // CLICK ON ITEM TO ADD OR REMOVE ITEM FROM WISHLIST
   const manageWishlist = (item) => {
     console.log("item detail", item.name, "---", item.id);
-    dispatch(ManageWhishlist({ userid: auth.data.id, product_id: item.id }))
+    setFavItem({status: 'loading'}); // Optimistic UI update
+    dispatch(ManageWhishlist({userid: auth?.data?.id, product_id: item?.id}))
       .unwrap()
       .then((result) => {
         console.log("result whishlist result-", result);
