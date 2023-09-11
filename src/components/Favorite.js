@@ -11,7 +11,7 @@ import {selectUser} from "../store/userSlice";
 const Favorite = ({item,onWishlistChange}) => {
   const dispatch = useDispatch();
   const auth = useSelector(selectUser);
-  // console.log('auth?.data?.id--', auth?.data?.id);
+  //// console.log('auth?.data?.id--', auth?.data?.id);
 
   const [favItem, setFavItem] = useState();
   const [wishlistData, setWishlistData] = useState({
