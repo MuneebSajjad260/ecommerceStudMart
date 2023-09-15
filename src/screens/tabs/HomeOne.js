@@ -55,16 +55,16 @@ const HomeOne = (props) => {
   console.log('-----I am home one ----', props);
   const colors = getThemedColors(useColorScheme());
 
+
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
+  const loginData = useSelector(state => state.login?.data);
+  const token = loginData?.token;
 
-  // const brands=[
-  //   {name:'FAST',rating:4.9},
-  //   {name:'UET University',rating:4.1},
-  //   {name:'ADIDAS',rating:4.7},
-  //   {name:'IRON GEAR',rating:4.9},
-  // ]
+  console.log("loginData-",loginData,"-----",token)
+
+ 
 
   let viewLeft = {
     hide: false,

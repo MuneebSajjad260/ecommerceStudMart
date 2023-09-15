@@ -17,6 +17,7 @@ import makeStyles from './Styles/LoginStyle'
 import { GetProfileAction } from "../../services/actions/ProfileAction";
 import { svg } from "../../svg";
 import BottomSheetWrapper from "../../components/BottomSheetWrapper";
+import { setScreen } from "../../store/tabSlice";
 
 const screenWidth = Dimensions.get('screen').width
 console.log("----screenWidth---22", screenWidth)
@@ -215,7 +216,11 @@ console.log("result login ---",result)
         <components.SecondaryButton
           title="Continue as a guest"
           containerStyle={{ marginBottom: theme.MARGINS.hy20, backgroundColor: apColors.white }}
-          onPress={() => navigation.navigate(names.TabNavigator)}
+          onPress={() => {
+            dispatch(setScreen('Home'))
+            navigation.navigate(names.TabNavigator)
+          }
+          }
         />
 
         {renderFooter()}
