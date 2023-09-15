@@ -40,6 +40,8 @@ import Wrapper from '../../components/Wrapper';
 import {components} from '../../components';
 import ImageItem from '../../components/ImageItem';
 import {theme, names} from '../../constants';
+import { ShippingZone } from "../../services/actions/ShippingZone";
+import { useEffect } from "react";
 
 const Checkout = () => {
   const navigation = useNavigation();
@@ -69,7 +71,7 @@ const Checkout = () => {
   const auth = useSelector(selectUser)
   // console.log("auth-",auth.data)
   // console.log("auth-",auth.data.billing)
-  console.log("prod---",products)
+  console.log("prod---",products[0].vendorDetail)
   console.log("vendordetail---",products[0].vendorDetail)
   const total = useSelector((state) => state.cart.total);
   const [up, setUp] = useState(false);
@@ -84,8 +86,26 @@ const Checkout = () => {
   const [building, setBuilding] = useState({value: "", error: ""});
   const [street, setStreet] = useState({value: "", error: ""});
   const [placeOrder,setPlaceOrder]=useState();
+  const [shippingZone ,  setShipZone ] = useState()
+  const [pickupZone , setPickupZone]  = useState()
   //LOADING STATE 
   const [loadingPlaceOrder, setLoadingPlaceOrder] = useState(false);
+
+  useEffect(()=>{
+
+dispatch(ShippingZone(3)).unwrap().then(result=>{
+  console.log("result shipping zone--" , result)
+  const ship = result.find(item => item.id === 7);
+  const pickup =result.find(item => item.id === 4);
+
+  console.log("pickup--",pickup,'-',pickup?.method_id)
+  setShipZone(ship)
+  setPickupZone(pickup)
+}).catch(err=>{
+  console.log(' error shipping zone --', err)
+})
+
+  },[dispatch])
 
   const renderHeader = () => {
     return <components.Header title="Checkout" goBack={true} border={true} 
@@ -135,7 +155,7 @@ const Checkout = () => {
           </View>
         </View>
 <View style={styles.prodPriceCont}>
-        <Text style={styles.prodPrice}>{`QAR ${item?.price}`}</Text>
+        <Text style={styles.prodPrice}>{`QAR ${Number(item?.price) + Number(shippingZone?.settings?.cost?.value)}`}</Text>
         </View>
       </View>
     );
@@ -176,7 +196,7 @@ const Checkout = () => {
                     style={styles.itemNo}
                   >{`(${products.length} Item)`}</Text>
                 </View>
-                <Text style={styles.orderSummary}>{`QAR ${total}`}</Text>
+                <Text style={styles.orderSummary}>{`QAR ${total + Number(shippingZone?.settings?.cost?.value)}`}</Text>
               </View>
               <View style={styles.priceContALLign}>
                 <Text style={styles.orderSummary}>Discount:</Text>
@@ -236,7 +256,7 @@ const Checkout = () => {
             </TouchableOpacity>
 
             {/* SELF PICKUP */}
-            {pickup ? (
+            {products[0]?.vendorDetail?.enable_self_pickup ? (
               <TouchableOpacity
                 style={[
                   styles.deliveryTab,
@@ -274,7 +294,7 @@ const Checkout = () => {
             <View style={styles.shippingChargesCont}>
               <Info />
               <Text style={styles.shippingChargesText}>
-                Shipping charges will be QAR 50
+                Shipping charges will be QAR {shippingZone?.settings?.cost?.value}
               </Text>
             </View>
           ) : null}
@@ -390,6 +410,7 @@ const Checkout = () => {
   const checkoutFooter = () => {
     return (
       <PriceFooter
+      shipping={Number(shippingZone?.settings?.cost?.value)}
       loading={loadingPlaceOrder}
         price={total}
         btnName={"Checkout"}
@@ -472,9 +493,9 @@ const Checkout = () => {
       // ],
       shipping_lines: [
         {
-          method_id: "flat_rate",
-          method_title: "Flat Rate",
-          total: total.toString(),
+          method_id: pickupZone?.method_id,
+          method_title:pickupZone?.title,
+          total: '0',
         },
       ],
       meta_data: [
@@ -493,7 +514,9 @@ const Checkout = () => {
         {
           key: "_delivery_method",
           value: false
-        }]
+        },
+     
+      ]
     };
     setLoadingPlaceOrder(true); // Set loading to true before making the API call
     dispatch(PlaceOrderAction(payload))
@@ -529,6 +552,8 @@ const Checkout = () => {
         zone: zone.value,
         building: building.value,
         street: street.value,
+        shippingZone: shippingZone,
+        totalPrice:Number(shippingZone?.settings?.cost?.value)
       },
     });
   };

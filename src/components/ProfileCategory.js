@@ -14,10 +14,6 @@ const ProfileCategory = ({
   return (
     <TouchableOpacity
       style={{
-        borderTopWidth: 1,
-        borderTopColor: theme.COLORS.lightBlue1,
-        paddingHorizontal: 20,
-        paddingVertical: 10,
         ...containerStyle,
         justifyContent: "space-between",
         alignItems: "center",
@@ -31,10 +27,7 @@ const ProfileCategory = ({
           height: 50,
           alignItems: "center",
           justifyContent: "center",
-          borderWidth: 1,
-          borderColor: theme.COLORS.lightBlue1,
-          borderRadius: 25,
-          marginRight: 14,
+          marginRight: 10,
         }}
       >
         {icon}
@@ -48,7 +41,7 @@ const ProfileCategory = ({
       >
         {title}
       </Text>
-      {categoryNavigation && <svg.ProfileNavigation />}
+      {/* {categoryNavigation && <svg.ProfileNavigation />} */}
     </TouchableOpacity>
   );
 };

@@ -213,11 +213,11 @@ const StackNavigator = () => {
           component={screens.PaymentScreen}
           options={{ headerShown: false }}
         />
-        <Stack.Screen
+        {/* <Stack.Screen
           name={names.Category}
           component={screens.Category}
           options={{ headerShown: false }}
-        />
+        /> */}
         <Stack.Screen
           name={names.UniversityScreen}
           component={screens.UniversityScreen}
@@ -236,6 +236,11 @@ const StackNavigator = () => {
          <Stack.Screen
           name={names.DiscountCodeScreen}
           component={screens.DiscountCodeScreen}
+          options={{headerShown: false}}
+        />
+         <Stack.Screen
+          name={names.Wishlist}
+          component={screens.Wishlist}
           options={{headerShown: false}}
         />
       </Stack.Navigator>

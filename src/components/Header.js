@@ -54,33 +54,41 @@ console.log("goback---",goBack)
         ...containerStyle,
         borderBottomWidth: border ? 1 : 0,
         borderBottomColor: theme.COLORS.lightBlue1,
+       
         // backgroundColor:"red",
         // paddingBottom: level,
         // marginBottom: level,
       }}
     >
       {goBack && (
+        
         <View
+        style={{
+         position: "absolute",
+          left: 0,
+          bottom: level,
+          alignItems: "center",
+          // backgroundColor:"pink",
+          // marginTop: level,
+          marginLeft:20,
+          zIndex:1,
+          backgroundColor: "rgba(255, 255, 255, 1)",
+          borderRadius: 50,
+        }}
+      >
+        <TouchableOpacity
           style={{
-           position: "absolute",
-            left: 0,
-            bottom: level,
-            alignItems: "center",
-            // backgroundColor:"pink",
-            // marginTop: level,
-            zIndex:1
+            paddingLeft:20,
+            paddingRight:8,
+            paddingBottom:10,
+            paddingTop:18
           }}
+          onPress={() => navigation.goBack()}
         >
-          <TouchableOpacity
-            style={{
-              paddingHorizontal: 20,
-              paddingVertical: 12,
-            }}
-            onPress={() => navigation.goBack()}
-          >
-            <svg.GoBackSvg />
-          </TouchableOpacity>
-        </View>
+          <svg.GoBackSvg />
+        </TouchableOpacity>
+      </View>
+      
       )}
       {title && (
         <Text

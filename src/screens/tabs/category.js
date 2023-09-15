@@ -16,7 +16,7 @@ import {
   Payload_Keys,
   endPoints,
 } from '../../constants/constants';
-
+import { useSelector } from "react-redux";
 import styles from "./Style/categoryStyle";
 import CategoryItem from "../../components/CategoryItem";
 import {renderStatusBar} from "../../utils/functions";
@@ -28,9 +28,12 @@ import AccessoriesSvg from "../../svg/AccessoriesSvg";
 import SportsSvg from "../../svg/SportsSvg";
 import CosmeticSvg from "../../svg/CosmeticSvg";
 import {theme} from "../../constants";
+import { selectCategorySlice } from "../../store/categorySlice";
 
 const Category = ({route}) => {
-  const {category} = route.params;
+  //const {category} = route.params || {} ;
+
+  const category = useSelector(selectCategorySlice)
   console.log('category--', category);
   const navigation = useNavigation();
   const {data, isPending, error} = useAxios(
@@ -61,7 +64,7 @@ const Category = ({route}) => {
   // };
   const renderHeader = () => {
     return (
-      <components.Header title='Categories' goBack={true} border={true}  
+      <components.Header title='Categories' goBack={false} border={true}  
        containerStyle={{backgroundColor: theme.COLORS.white, height:theme.RES_HEIGHT(90, 100, 125)}} 
        level={theme.RES_HEIGHT(8, 12, 35)}
       />

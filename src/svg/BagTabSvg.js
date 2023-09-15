@@ -1,19 +1,33 @@
-import * as React from "react";
-import Svg, {Circle, Path} from "react-native-svg";
+import * as React from "react"
+import Svg, { G, Path, Defs, ClipPath } from "react-native-svg"
 
-const BagTabSvg = ({currentScreen}) => (
-  <Svg width={40} height={40} fill="none">
-    <Circle
-      cx={20}
-      cy={20}
-      r={20}
-      fill={currentScreen === "Order" ? "#DBE3F5" : "#fff"}
-    />
-    <Path
-      d="m28.774 28.729-1.276-14.046A.752.752 0 0 0 26.75 14H24.5v-1.5a4.475 4.475 0 0 0-1.314-3.186A4.475 4.475 0 0 0 20 8a4.505 4.505 0 0 0-4.5 4.5V14h-2.25a.749.749 0 0 0-.748.682l-1.276 14.046a3.007 3.007 0 0 0 .772 2.295 3.005 3.005 0 0 0 2.216.977h11.572c.842 0 1.649-.355 2.216-.977a3.013 3.013 0 0 0 .773-2.294ZM17 12.5c0-1.655 1.345-3 3-3a2.988 2.988 0 0 1 3 3V14h-6v-1.5Zm9.893 17.512a1.489 1.489 0 0 1-1.108.488H14.214c-.426 0-.82-.174-1.107-.489a1.48 1.48 0 0 1-.385-1.148L13.934 15.5h1.564v2.25a.75.75 0 0 0 1.5 0V15.5h6v2.25a.75.75 0 0 0 1.5 0V15.5h1.565l1.215 13.365c.039.425-.098.833-.386 1.148Z"
-      fill={currentScreen === "Order" ? "#111" : "#626262"}
-    />
-  </Svg>
-);
+function BagTabSvg({currentScreen}) {
+  return (
+    <Svg
+      width={24}
+      height={25}
+      viewBox="0 0 24 25"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    
+    >
+      <G
+        clipPath="url(#clip0_2751_39244)"
+        stroke={currentScreen === 'Order' ? '#00CACD' : "#200E32"}
+        strokeOpacity={currentScreen === 'Order' ? 1 : 0.4}
+        strokeWidth={2}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <Path d="M9 22.5a1 1 0 100-2 1 1 0 000 2zM20 22.5a1 1 0 100-2 1 1 0 000 2zM1 1.5h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6.5H6" />
+      </G>
+      <Defs>
+        <ClipPath id="clip0_2751_39244">
+          <Path fill="#fff" transform="translate(0 .5)" d="M0 0H24V24H0z" />
+        </ClipPath>
+      </Defs>
+    </Svg>
+  )
+}
 
-export default BagTabSvg;
+export default BagTabSvg

@@ -1,26 +1,32 @@
-import * as React from "react";
-import Svg, {Circle, G, Path, Defs, ClipPath} from "react-native-svg";
+import * as React from "react"
+import Svg, { G, Circle, Path } from "react-native-svg"
 
-const ProfileTabSvg = ({currentScreen}) => (
-  <Svg width={40} height={40} fill="none" xmlns="http://www.w3.org/2000/svg">
-    <Circle
-      cx={20}
-      cy={20}
-      r={20}
-      fill={currentScreen === "Profile" ? "#DBE3F5" : "#fff"}
-    />
-    <G clipPath="url(#a)">
-      <Path
-        d="M28.485 11.515A11.922 11.922 0 0 0 20 8a11.921 11.921 0 0 0-8.485 3.515A11.921 11.921 0 0 0 8 20c0 3.205 1.248 6.219 3.515 8.485A11.921 11.921 0 0 0 20 32c3.205 0 6.219-1.248 8.485-3.515A11.921 11.921 0 0 0 32 20c0-3.205-1.248-6.219-3.515-8.485Zm-14.47 17.222A6.059 6.059 0 0 1 20 23.716a6.059 6.059 0 0 1 5.984 5.02A10.534 10.534 0 0 1 20 30.595c-2.219 0-4.28-.687-5.984-1.857Zm2.17-10.243A3.82 3.82 0 0 1 20 14.678a3.82 3.82 0 0 1 3.816 3.816A3.82 3.82 0 0 1 20 22.309a3.82 3.82 0 0 1-3.816-3.815Zm11.017 9.268a7.474 7.474 0 0 0-2.184-3.52 7.476 7.476 0 0 0-2.173-1.372 5.221 5.221 0 0 0 2.377-4.376A5.228 5.228 0 0 0 20 13.272a5.228 5.228 0 0 0-5.222 5.222c0 1.83.947 3.444 2.377 4.376a7.478 7.478 0 0 0-2.173 1.372 7.476 7.476 0 0 0-2.184 3.52A10.567 10.567 0 0 1 9.406 20C9.406 14.159 14.16 9.406 20 9.406c5.841 0 10.594 4.753 10.594 10.594 0 3.063-1.307 5.826-3.392 7.762Z"
-        fill={currentScreen === "Profile" ? "#111" : "#626262"}
-      />
-    </G>
-    <Defs>
-      <ClipPath id="a">
-        <Path fill="#fff" transform="translate(8 8)" d="M0 0h24v24H0z" />
-      </ClipPath>
-    </Defs>
-  </Svg>
-);
+function ProfileTabSvg({currentScreen}) {
+  return (
+    <Svg
+      width={21}
+      height={25}
+      viewBox="0 0 21 25"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
 
-export default ProfileTabSvg;
+    >
+      <G
+        stroke={currentScreen === 'Profile' ? '#00CACD' : "#200E32"}
+        strokeWidth={2}
+        strokeOpacity={currentScreen === 'Profile' ? 1 : 0.4}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <Circle cx={10.508} cy={6.99234} r={5.57437} />
+        <Path
+          fillRule="evenodd"
+          clipRule="evenodd"
+          d="M1.666 20.32a2.584 2.584 0 01.256-1.133c.534-1.067 2.04-1.633 3.29-1.89.9-.192 1.814-.32 2.733-.384 1.702-.15 3.414-.15 5.115 0 .92.064 1.833.193 2.734.384 1.25.257 2.755.77 3.29 1.89.341.72.341 1.555 0 2.275-.535 1.121-2.04 1.634-3.29 1.88-.9.2-1.814.332-2.734.395a30.137 30.137 0 01-4.164.064c-.32 0-.63 0-.95-.064a17.995 17.995 0 01-2.724-.395c-1.26-.246-2.755-.759-3.3-1.88a2.66 2.66 0 01-.256-1.142z"
+        />
+      </G>
+    </Svg>
+  )
+}
+
+export default ProfileTabSvg

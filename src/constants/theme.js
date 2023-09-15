@@ -39,7 +39,7 @@ const COLORS = {
   lightRed: 'rgba(255, 36, 73, 0.1)',
   darkRed: '#FF5F5F',
   counterGrey: 'rgba(20, 0, 35, 0.08)',
-
+error:'#E03249',
   // ---------------
   black: "#111111",
   white: "#FFFFFF",
@@ -148,7 +148,7 @@ export const themedColors = {
     backBtn: '#FFF',
     replyBg: '#FFF',
     grayXtraLight: "rgba(20, 0, 35, 0.08)",
-
+    error:'#E03249',
     textDark: "rgba(20, 0, 35, 1)",
     gray2: "rgba(122, 122, 122, 1)",
     border: "#E0E0E0",

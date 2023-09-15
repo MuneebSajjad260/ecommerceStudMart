@@ -371,6 +371,18 @@ const productExistMessage = () => {
   );
 };
 
+const vendorExistMessage = () => {
+  return Alert.alert(
+    "Alert!",
+    "You can only add products from the same Sellar to the cart at a time",
+    [
+      {
+        text: "Ok",
+      },
+    ],
+  );
+};
+
 const addedToCartMessage = (item) => {
   showMessage({
     message: "Success",
@@ -409,6 +421,7 @@ export {
   renderStatusBarLight,
   removeFromWishlistHandler,
   productExistMessage,
+  vendorExistMessage,
   addedToCartMessage,
   promocodeWasCopiedMessage,
   productWasAddedMessage,

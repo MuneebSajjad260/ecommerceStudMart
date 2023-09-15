@@ -32,19 +32,23 @@ const names = {
   TabNavigator: "TabNavigator",
   OrderSummary: "OrderSummary",
   Payment: "Payment",
-  Category: "Categories",
+  //Category: "Categories",
   UniversityScreen: "University",
   BrandsScreen: "Brands",
   ShopFilter:'ShopFilter',
-  DiscountCodeScreen:'DiscountCodeScreen'
+  DiscountCodeScreen:'DiscountCodeScreen',
+  Wishlist: "Wishlist",
+
 };
 
 const tabNames = {
   Home: "Home",
+  Category:"Categories",
   Search: "Search",
   Order: "Order",
-  Wishlist: "Wishlist",
+  // Wishlist: "Wishlist",
   Profile: "Profile",
+  
 };
 
 export {names, tabNames};

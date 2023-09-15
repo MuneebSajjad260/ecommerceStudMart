@@ -1,10 +1,17 @@
-import { View, Text, TouchableOpacity, ScrollView, StyleSheet, Image } from "react-native";
-import React, { useState } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { useDispatch, useSelector } from "react-redux";
-import { addToCart, removeFromCart } from "../../store/cartSlice";
-import { addToWishlist, removeFromWishlist } from "../../store/wishlistSlice";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+  StyleSheet,
+  Image,
+} from "react-native";
+import React, {useState , useEffect}  from "react";
+import {SafeAreaView} from "react-native-safe-area-context";
+import {useDispatch, useSelector} from "react-redux";
+import {addToCart, removeFromCart} from "../../store/cartSlice";
+import {addToWishlist, removeFromWishlist} from "../../store/wishlistSlice";
+import {useNavigation, useRoute} from "@react-navigation/native";
 import {
   flashMessage,
   productExistMessage,
@@ -12,44 +19,47 @@ import {
   removeFromWishlistHandler,
   renderProducts,
   renderStatusBar,
-} from "../../utils/functions";
+  vendorExistMessage,
+} from '../../utils/functions';
 
-import { theme, names } from "../../constants";
-import { components } from "../../components";
-import { svg } from "../../svg";
-import useAxios from "../../utils/useAxios";
-import { Base_Url, Payload_Keys, endPoints } from "../../constants/constants";
-import { productByID } from "../../constants/mockData";
-import Wrapper from "../../components/Wrapper";
-import styles from "./Styles/ProductStyles"
-import PrimaryText from "../../components/PrimaryText";
-import { useEffect } from "react";
-import axios from "axios";
-import { selectUser } from "../../store/userSlice";
+import {theme, names} from "../../constants";
+import {components} from "../../components";
+import {svg} from "../../svg";
+import useAxios from '../../utils/useAxios';
+import {Base_Url, Payload_Keys, endPoints} from "../../constants/constants";
+import {productByID} from "../../constants/mockData";
+import Wrapper from '../../components/Wrapper';
+import styles from './Styles/ProductStyles';;
+import PrimaryText from '../../components/PrimaryText';
+
+import axios from 'axios';
+import { BrandProduct } from "../../services/actions/BrandProduct";
+import {selectUser} from "../../store/userSlice";
 
 /**
  *  Product details
- * @param {*} param0 
- * @returns 
+ * @param {*} param0
+ * @returns
  */
-const Product = ({ apColors }) => {
+const Product = ({apColors}) => {
   const navigation = useNavigation();
   const route = useRoute();
   let viewLeft = {
     hide: false,
-    title: "Related products"
-  }
+    title: 'Related products',
+  };;
   let viewRight = {
     hide: true,
-    title: ""
-  }
-  const { product } = route.params;
+    title: '',
+  };;
+  const {product} = route.params;
+  const [vendorProd ,setVendorProd] = useState()
   // const product = productByID  // MOCK_DATA ---
   const dispatch = useDispatch();
-  console.log("---product---", product)
+  console.log('---product---', product);;
 
-  const auth = useSelector(selectUser)
-  console.log("---auth---", auth.data)
+  const auth = useSelector(selectUser);;
+  console.log('---auth---', auth.data);;
 
   const currentProduct = useSelector((state) => {
     return state.cart.list.find((item) => item.id === product?.id);
@@ -57,6 +67,24 @@ const Product = ({ apColors }) => {
   const wishlist = useSelector((state) => state.wishlist.list);
 
   const productList = useSelector((state) => state.cart.list);
+
+  console.log('product list---', productList);
+
+  // GETTING Vendor products
+  useEffect(() => {
+    dispatch(BrandProduct(product?.vendor_detail?.vendor_id))
+      .unwrap()
+      .then((result) => {
+        console.log("brand prod result -- ", result);
+
+        console.log("brand prod result 2 -- ", result?.vendors_product);
+
+        setVendorProd(result?.product_count);
+      })
+      .catch((err) => {
+        console.log(" brand product error ---", err.response?.data);
+      });
+  }, [dispatch ,product?.vendor_detail?.vendor_id]);
 
   const itemExist = (product) => {
     return wishlist.find((i) => i.id === product.id);
@@ -66,6 +94,13 @@ const Product = ({ apColors }) => {
     return productList.find((i) => i.id === product.id);
   };
 
+  const vendorExist =  (product) => {
+    return (
+      productList[0]?.vendorDetail?.vendor_id ===
+      product?.vendor_detail?.vendor_id
+    );
+  };;
+
   const itemQuantity = () => {
     return productList.find((i) => i.id === product.id)?.quantity;
   };
@@ -73,9 +108,12 @@ const Product = ({ apColors }) => {
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [relatedIdsList, setRelatedIdsList] = useState(0);
 
-
-  const { data, isPending, error } = useAxios('get', Payload_Keys, Base_Url + endPoints.ProductsList);
-  data?.filter(item => item.status === 'publish');
+  const {data, isPending, error} = useAxios(
+    "get",
+    Payload_Keys,
+    Base_Url + endPoints.ProductsList,
+  );
+  data?.filter((item) => item.status === "publish");
 
   const getRelatedProducts = async (datam) => {
     // const response = await fetch(`https://example.com/wp-json/wc/v3/products/${productId}?`);
@@ -94,9 +132,6 @@ const Product = ({ apColors }) => {
           // console.log("----map item 1001aaa test-----")
           // console.log("----map item 1001aaa-----", item)
           // console.log("----map item 1001aaa-----", index)
-
-
-
           //  const response =  await axios.get(`${Base_Url}${endPoints.ProductsList}/${item}`).then((result)=>{
           //         console.log("----related result 1001aabc aaa----")
           //         console.log("----related result 1001aabc----", result)
@@ -109,24 +144,19 @@ const Product = ({ apColors }) => {
           // for (const relatedId of relatedIds) {
           //    await axios.get(`${Base_Url}${endPoints.ProductsList}/${relatedId}`).then((result)=>{
           //     console.log("----related result 1001aabc----", result)
-
           //     relatedProducts.push(result);
           //   }).catch((e)=>{
           //     console.log("----related----")
           //   })
           //   //   // const relatedProductData = await response.json();
-
-        })
+        });;
         // console.log("----related Products data list => 1001aab----", relatedProducts)
         // setRelatedIdsList(relatedProducts)
-
       }
     }
     // console.log("-----relatedProducts1001------", relatedProducts)
     // return relatedProducts || [];
   };
-
-
 
   //   useEffect( ()=>{
   // if(data){
@@ -143,7 +173,6 @@ const Product = ({ apColors }) => {
   // const [productColor, setProductColor] = useState(
   //   currentProduct ? currentProduct.color : product.colors[0],
   // );
-
 
   const updateCurrentSlideIndex = (e) => {
     const contentOffsetX = e.nativeEvent.contentOffset.x;
@@ -163,34 +192,41 @@ const Product = ({ apColors }) => {
     // color: productColor,
   };
   //console.log("product--",product)
-  console.log("cartItem--", cartItem)
+  console.log('cartItem--', cartItem);;
   const renderButton = () => {
     return (
       <components.SecondaryButton
         title="% Negotiate Price"
         onPress={() => {
-
-          flashMessage("COMMING SOON", "")
+          flashMessage('COMMING SOON', '');;
           // productExist(product)
 
           //   ? productExistMessage()
           //   : dispatch(addToCart(cartItem));
           // !productExist(product) && productWasAddedMessage(product);
         }}
-        containerStyle={{ marginBottom: 40, }}
-        textStyle={{ color: apColors.primaryBg }}
+        containerStyle={{marginBottom: 40}}
+        textStyle={{color: apColors.primaryBg}}
       />
     );
   };
 
   const renderHeader = () => {
-    return <components.Header
-      logo={false}
-      goBack={true}
-      bag={true}
-      containerStyle={{ position: "absolute", top: 10, zIndex: 2, height: theme.RES_HEIGHT(90, 110, 125), width: theme.SIZES.dWidth }}
-      level={theme.RES_HEIGHT(8, 12, 35)}
-    />;
+    return (
+      <components.Header
+        logo={false}
+        goBack={true}
+        bag={true}
+        containerStyle={{
+          position: "absolute",
+          top: 10,
+          zIndex: 2,
+          height: theme.RES_HEIGHT(90, 110, 125),
+          width: theme.SIZES.dWidth,
+        }}
+        level={theme.RES_HEIGHT(8, 12, 35)}
+      />
+    );
   };
 
   const renderSizes = () => {
@@ -208,8 +244,8 @@ const Product = ({ apColors }) => {
         </Text>
         <View
           style={{
-            flexDirection: "row",
-            alignItems: "center",
+            flexDirection: 'row',
+            alignItems: 'center',
             marginBottom: 25,
           }}
         >
@@ -222,8 +258,8 @@ const Product = ({ apColors }) => {
                 marginRight: 7,
                 borderWidth: 1,
                 borderColor: apColors.lightBlue1,
-                justifyContent: "center",
-                alignItems: "center",
+                justifyContent: 'center',
+                alignItems: 'center',
                 borderRadius: 50,
                 backgroundColor:
                   productSize === item
@@ -236,7 +272,7 @@ const Product = ({ apColors }) => {
                 style={{
                   ...theme.FONTS.Mulish_600SemiBold,
                   fontSize: 12,
-                  textTransform: "uppercase",
+                  textTransform: 'uppercase',
                   color: apColors.black,
                 }}
               >
@@ -253,8 +289,8 @@ const Product = ({ apColors }) => {
     return (
       <View
         style={{
-          flexDirection: "row",
-          alignItems: "center",
+          flexDirection: 'row',
+          alignItems: 'center',
           marginBottom: 30,
         }}
       >
@@ -276,17 +312,17 @@ const Product = ({ apColors }) => {
                 width: 30,
                 height: 30,
                 backgroundColor:
-                  item === "carrot"
-                    ? "#FF6262"
-                    : item === "blue"
-                      ? "#63C7FF"
-                      : item === "beige"
-                        ? "#F8E7CD"
-                        : item === "purple"
-                          ? "#323858"
-                          : item === "black"
-                            ? "#111111"
-                            : "",
+                  item === 'carrot'
+                    ? '#FF6262'
+                    : item === 'blue'
+                    ? "#63C7FF"
+                    : item === "beige"
+                    ? "#F8E7CD"
+                    : item === "purple"
+                    ? "#323858"
+                    : item === "black"
+                    ? "#111111"
+                    : "",
                 marginHorizontal: 7,
                 borderRadius: 34,
                 borderWidth: 4,
@@ -304,14 +340,14 @@ const Product = ({ apColors }) => {
 
   const renderCarousel = () => {
     return (
-      <View >
+      <View>
         <ScrollView
           horizontal={true}
           pagingEnabled={true}
           showsHorizontalScrollIndicator={false}
           onMomentumScrollEnd={updateCurrentSlideIndex}
         >
-          {product?.images?.length > 0 ?
+          {product?.images?.length > 0 ? (
             product?.images?.map((item, index) => {
               return (
                 <components.ImageItem
@@ -327,23 +363,24 @@ const Product = ({ apColors }) => {
                 />
               );
             })
-
-            : <View style={{
-              width: theme.SIZES.width,
-              height: 350,
-              backgroundColor: apColors.lightBlue2,
-            }}></View>
-          }
-
+          ) : (
+            <View
+              style={{
+                width: theme.SIZES.width,
+                height: 350,
+                backgroundColor: apColors.lightBlue2,
+              }}
+            ></View>
+          )}
         </ScrollView>
         <View
           style={{
-            position: "absolute",
-            alignItems: "center",
-            justifyContent: "center",
-            flexDirection: "row",
+            position: 'absolute',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexDirection: 'row',
             bottom: 30,
-            alignSelf: "center"
+            alignSelf: 'center',
           }}
         >
           {product?.images?.map((_, index) => (
@@ -355,13 +392,13 @@ const Product = ({ apColors }) => {
                 marginHorizontal: 5,
                 borderRadius: 50,
                 borderWidth: 2,
-                borderColor: currentSlideIndex === index
-                  ? apColors.appColor : apColors.appColorLight,
+                borderColor:
+                  currentSlideIndex === index
+                    ? apColors.appColor
+                    : apColors.appColorLight,
                 marginTop: 20,
                 backgroundColor:
-                  currentSlideIndex === index
-                    ? apColors.white
-                    : apColors.white,
+                  currentSlideIndex === index ? apColors.white : apColors.white,
               }}
             />
           ))}
@@ -372,31 +409,76 @@ const Product = ({ apColors }) => {
 
   const renderProductInfo = () => {
     return (
-      <View style={{
-        backgroundColor: apColors.white, borderTopLeftRadius: 16,
-        borderTopRightRadius: 16, marginTop: -20, paddingTop: 20
-      }}>
-
-        <View style={{ paddingHorizontal: 20 }}>
-
+      <View
+        style={{
+          backgroundColor: apColors.white,
+          borderTopLeftRadius: 16,
+          borderTopRightRadius: 16,
+          marginTop: -20,
+          paddingTop: 20,
+        }}
+      >
+        <View style={{paddingHorizontal: 20}}>
           {/* ------ University - Self Pickup------- */}
           <View
             style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
             }}
           >
-            <View style={{
-              flexDirection: "row",
-              alignItems: "center",
-              // justifyContent: "center",
-            }}>
-              <View style={{ backgroundColor: apColors.appColor, paddingHorizontal: theme.RES_WIDTH(7), paddingVertical: theme.RES_WIDTH(3), borderRadius: 6, borderTopRightRadius: 1 }}><Text style={{ color: apColors.whiteOnly, fontSize: theme.FONTS.dF_s }}>Lusail University</Text></View>
-              <View style={{ width: theme.RES_WIDTH(9) }} />
-              <View style={{ backgroundColor: apColors.primaryBg2, paddingHorizontal: theme.RES_WIDTH(7), paddingVertical: theme.RES_WIDTH(3), borderRadius: 6, borderTopLeftRadius: 1, flexDirection: "row", alignItems: "center" }}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                // justifyContent: "center",
+              }}
+            >
+              <View
+                style={{
+                  backgroundColor: apColors.appColor,
+                  paddingHorizontal: theme.RES_WIDTH(7),
+                  paddingVertical: theme.RES_WIDTH(3),
+                  borderRadius: 6,
+                  borderTopRightRadius: 1,
+                }}
+              >
+                <Text
+                  style={{
+                    color: apColors.whiteOnly,
+                    fontSize: theme.FONTS.dF_s,
+                  }}
+                >
+                  {product?.vendor_detail?.university}
+                </Text>
+              </View>
+              <View style={{width: theme.RES_WIDTH(9)}} />
+              { product?.vendor_detail?.enable_self_pickup ?
+              <View
+                style={{
+                  backgroundColor: apColors.primaryBg2,
+                  paddingHorizontal: theme.RES_WIDTH(7),
+                  paddingVertical: theme.RES_WIDTH(3),
+                  borderRadius: 6,
+                  borderTopLeftRadius: 1,
+                  flexDirection: "row",
+                  alignItems: "center",
+                }}
+              >
                 <svg.PickupSvg />
-                <Text style={{ color: apColors.whiteOnly, fontSize: theme.FONTS.dF_s, marginLeft: theme.RES_WIDTH(8) }}>Self pickup</Text></View>
+                <Text
+                  style={{
+                    color: apColors.whiteOnly,
+                    fontSize: theme.FONTS.dF_s,
+                    marginLeft: theme.RES_WIDTH(8),
+                  }}
+                >
+                  Self pickup
+                </Text>
+              </View>
+              :
+              null
+  }
             </View>
             {/* ------ Add product to wishlist ------- */}
 
@@ -406,7 +488,7 @@ const Product = ({ apColors }) => {
             }}
               onPress={() => {
                 itemExist(product)
-                  ? 
+                  ?
                 //  removeFromWishlistHandler(() =>
                       dispatch(removeFromWishlist(product))
                   // )
@@ -425,27 +507,29 @@ const Product = ({ apColors }) => {
               />
             </TouchableOpacity> */}
             <components.Favorite item={product} />
-
-
           </View>
 
           {/* ------ Product Name------- */}
 
           <View
             style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
-              marginTop: theme.RES_HEIGHT(15, 15, 22)
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              marginTop: theme.RES_HEIGHT(15, 15, 22),
             }}
           >
             <View>
-              <Text style={{ ...theme.FONTS.H3, color: apColors.black, width: theme.RES_WIDTH(300) }}>
+              <Text
+                style={{
+                  ...theme.FONTS.H3,
+                  color: apColors.black,
+                  width: theme.RES_WIDTH(300),
+                }}
+              >
                 {product.name}
               </Text>
             </View>
-
-
           </View>
           {/* ----product rating --- */}
           {/* <TouchableOpacity
@@ -478,19 +562,19 @@ const Product = ({ apColors }) => {
 
           <View
             style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
             }}
           >
             {/* ------ Product Price - negotiable ------- */}
 
             <View
               style={{
-                flexDirection: "row",
-                alignItems: "center",
+                flexDirection: 'row',
+                alignItems: 'center',
                 // justifyContent: "center",
-                marginTop: theme.RES_HEIGHT(-14, -18, -22)
+                marginTop: theme.RES_HEIGHT(-14, -18, -22),
               }}
             >
               <Text
@@ -500,21 +584,31 @@ const Product = ({ apColors }) => {
                   color: apColors.appColor,
                   lineHeight: 20 * 1.5,
                   // marginBottom: 20,
-                  marginRight: 10
+                  marginRight: 10,
                 }}
               >
                 QAR {product.price}
               </Text>
 
-              <View style={{ backgroundColor: apColors.appColorXtraLight, padding: 2, borderRadius: 2 }}><Text style={{ color: apColors.appColor, fontSize: 9 }}>Negotiable</Text></View>
+              <View
+                style={{
+                  backgroundColor: apColors.appColorXtraLight,
+                  padding: 2,
+                  borderRadius: 2,
+                }}
+              >
+                <Text style={{color: apColors.appColor, fontSize: 9}}>
+                  Negotiable
+                </Text>
+              </View>
             </View>
 
             {/* ------ Add Product Qty------- */}
 
             <View
               style={{
-                alignItems: "center",
-                flexDirection: "row",
+                alignItems: 'center',
+                flexDirection: 'row',
                 borderRadius: 50,
                 backgroundColor: apColors.grayXtraLight,
                 marginTop: theme.RES_HEIGHT(12, 15, 18),
@@ -525,8 +619,8 @@ const Product = ({ apColors }) => {
                 style={{
                   width: 30,
                   height: 30,
-                  alignItems: "center",
-                  justifyContent: "center",
+                  alignItems: 'center',
+                  justifyContent: 'center',
                   paddingHorizontal: 25,
                   paddingVertical: 22,
                 }}
@@ -548,8 +642,8 @@ const Product = ({ apColors }) => {
                 style={{
                   width: 30,
                   height: 30,
-                  alignItems: "center",
-                  justifyContent: "center",
+                  alignItems: 'center',
+                  justifyContent: 'center',
                   paddingHorizontal: 25,
                   paddingVertical: 22,
                 }}
@@ -558,14 +652,26 @@ const Product = ({ apColors }) => {
               </TouchableOpacity>
             </View>
           </View>
-          <View style={{ flexDirection: "row", marginTop: theme.RES_HEIGHT(-12, -15, -18), }}>
-            <Text style={{ color: 'rgba(20, 0, 35, 0.3)', marginRight: 5 }} >Category:</Text>
-            <Text numberOfLines={3} style={{ flex: 0.55, color: apColors.inputLabel, }} >Accessories</Text>
+          <View
+            style={{
+              flexDirection: "row",
+              marginTop: theme.RES_HEIGHT(-12, -15, -18),
+            }}
+          >
+            <Text style={{color: "rgba(20, 0, 35, 0.3)", marginRight: 5}}>
+              Category:
+            </Text>
+            <Text
+              numberOfLines={3}
+              style={{flex: 0.55, color: apColors.inputLabel}}
+            >
+              Accessories
+            </Text>
           </View>
           {/* -----DIVIDER----- */}
           <View
             style={{
-              width: "100%",
+              width: '100%',
               height: 1,
               backgroundColor: apColors.lightBlue1,
               marginTop: 20,
@@ -576,7 +682,7 @@ const Product = ({ apColors }) => {
           {/* {renderSizes()} */}
           {/* {renderColors()} */}
 
-          {product?.description ?
+          {product?.description ? (
             <>
               <Text
                 style={{
@@ -598,10 +704,11 @@ const Product = ({ apColors }) => {
               >
                 {product.description}
               </PrimaryText>
-              <View style={{ height: 20 }} />
-            </> :
+              <View style={{height: 20}} />
+            </>
+          ) : (
             <></>
-          }
+          )}
 
           {renderButton()}
         </View>
@@ -615,12 +722,12 @@ const Product = ({ apColors }) => {
         <View
           style={{
             paddingHorizontal: 20,
-            justifyContent: "space-between",
-            flexDirection: "row",
-            alignItems: "center",
+            justifyContent: 'space-between',
+            flexDirection: 'row',
+            alignItems: 'center',
           }}
         >
-          <Text style={{ ...theme.FONTS.H3, color: apColors.black }}>
+          <Text style={{...theme.FONTS.H3, color: apColors.black}}>
             Reviews 0
           </Text>
           <TouchableOpacity
@@ -708,15 +815,17 @@ const Product = ({ apColors }) => {
 
   const renderVendorInfo = () => {
     return (
-      <View style={{
-        backgroundColor: apColors.white,
-        marginHorizontal: 16,
-        borderWidth: 1,
-        borderColor: apColors.inputBorder,
-        padding: 13,
-        borderRadius: 8,
-        marginBottom: 20,
-      }}>
+      <View
+        style={{
+          backgroundColor: apColors.white,
+          marginHorizontal: 16,
+          borderWidth: 1,
+          borderColor: apColors.inputBorder,
+          padding: 13,
+          borderRadius: 8,
+          marginBottom: 20,
+        }}
+      >
         {/* <Wrapper> */}
         {/* <View
             style={[
@@ -725,103 +834,211 @@ const Product = ({ apColors }) => {
             ]}
           >
             <Text style={styles.heading}>Order summary</Text>
-           
+
           </View> */}
 
         <View
           style={[
             styles.flexDirection,
-            { justifyContent: 'space-between', marginTop: 16, flex: 1 },
+            {justifyContent: "space-between", marginTop: 16, flex: 1},
           ]}
         >
-          <View style={[styles.flexDirection, { flex: 1, }]}>
+          <View style={[styles.flexDirection, {flex: 1}]}>
             {/* <View style={[styles.imageContainer, { flex: 0.15 }]} /> */}
             {/* image right */}
             <Image
               style={styles.imageContainer}
-              source={{ uri: product.vendor_detail?.logo_img }}
+              source={{uri: product.vendor_detail?.logo_img}}
               // onLoadStart={() => onloading(true)}
               // onLoadEnd={() => onloading(false)}
-              resizeMode={"contain"}
+              resizeMode={'contain'}
               borderRadius={16}
             />
             {/* <View style={styles.productDetailCont}> */}
 
-            <View style={{ flex: 0.8, marginLeft: theme.RES_WIDTH(12), fontSize: theme.FONTS.dF_m }}>
-              <Text numberOfLines={1} style={styles.storeName}>Sold by <Text numberOfLines={2} style={[styles.storeName, { color: apColors.appColor }]}>{product?.vendor_detail?.vendor_name}</Text> </Text>
-              <Text style={styles.prodRating}>{'\u2022'} 4.5 {'\u2022'} 3 reviews</Text>
+            <View
+              style={{
+                flex: 0.8,
+                marginLeft: theme.RES_WIDTH(12),
+                fontSize: theme.FONTS.dF_m,
+              }}
+            >
+              <Text numberOfLines={1} style={styles.storeName}>
+                Sold by{" "}
+                <Text
+                  numberOfLines={2}
+                  style={[styles.storeName, {color: apColors.appColor}]}
+                >
+                  {product?.vendor_detail?.vendor_name}
+                </Text>{" "}
+              </Text>
+              <Text style={styles.prodRating}>
+                {"\u2022"} 4.5 {"\u2022"} 3 reviews
+              </Text>
             </View>
 
             {/* </View> */}
           </View>
           <View>
-
-            <View style={{ borderRadius: 8, borderWidth: 1, paddingVertical: 3, paddingHorizontal: 5, width: 100 }}>
-              <Text numberOfLines={1} style={[styles.prodPrice, { fontSize: theme.FONTS.dF_xs, color: apColors.inputLabel }]}>{product?.vendor_detail?.university}</Text>
+            <View
+              style={{
+                borderRadius: 8,
+                borderWidth: 1,
+                paddingVertical: 3,
+                paddingHorizontal: 5,
+                width: 100,
+              }}
+            >
+              <Text
+                numberOfLines={1}
+                style={[
+                  styles.prodPrice,
+                  {fontSize: theme.FONTS.dF_xs, color: apColors.inputLabel},
+                ]}
+              >
+                {product?.vendor_detail?.university}
+              </Text>
             </View>
           </View>
-
         </View>
 
         {/* footer view  */}
 
-
-        <View style={{ flexDirection: "row", justifyContent: "space-evenly", alignItems: "center", marginTop: theme.RES_HEIGHT(14, 14, 14) }}>
-
-          <View style={{ flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-evenly",
+            alignItems: "center",
+            marginTop: theme.RES_HEIGHT(14, 14, 14),
+          }}
+        >
+          <View
+            style={{
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             <svg.VerifiedTicSvg />
-            <Text style={{ marginTop: theme.RES_HEIGHT(8, 8, 8), color: theme.COLORS.black }}>Verified Seller</Text>
-
+            <Text
+              style={{
+                marginTop: theme.RES_HEIGHT(8, 8, 8),
+                color: theme.COLORS.black,
+              }}
+            >
+              Verified Seller
+            </Text>
           </View>
 
           {/* ----DIVIDER--- */}
 
-          <View style={{ flexDirection: "column", justifyContent: "center", alignItems: "center", height: 30, width: 2, backgroundColor: apColors.inputBorder }} />
+          <View
+            style={{
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              height: 30,
+              width: 2,
+              backgroundColor: apColors.inputBorder,
+            }}
+          />
 
-          <View style={{ flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+          <View
+            style={{
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
             <svg.VerifiedTicSvg />
-            <Text style={{ marginTop: theme.RES_HEIGHT(8, 8, 8), color: theme.COLORS.black }}>15 Products</Text>
-
+            <Text
+              style={{
+                marginTop: theme.RES_HEIGHT(8, 8, 8),
+                color: theme.COLORS.black,
+              }}
+            >
+              {vendorProd} Products
+            </Text>
           </View>
         </View>
 
-
         {/* </Wrapper> */}
-
       </View>
-    )
-  }
+    );;
+  };;
 
   const renderFooter = () => {
     return (
-      <View style={{
-        flexDirection: "row",
-        backgroundColor: apColors.white,
-        height: theme.RES_HEIGHT(80, 100, 128),
-        alignItems: "center",
-        justifyContent: "space-evenly",
-        paddingHorizontal: theme.RES_WIDTH(20),
-        elevation: 5,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.5,
-        shadowRadius: 2,
-      }}>
-
+      <View
+        style={{
+          flexDirection: "row",
+          backgroundColor: apColors.white,
+          height: theme.RES_HEIGHT(80, 100, 128),
+          alignItems: "center",
+          justifyContent: "space-evenly",
+          paddingHorizontal: theme.RES_WIDTH(20),
+          elevation: 5,
+          shadowColor: "#000",
+          shadowOffset: {width: 0, height: 2},
+          shadowOpacity: 0.5,
+          shadowRadius: 2,
+        }}
+      >
         {/* <View style={[{flexDirection:"row"}, {marginTop: theme.MARGINS.hy20}]}> */}
-        <View style={{ width: theme.RES_WIDTH(165) }}>
+        <View style={{width: theme.RES_WIDTH(165)}}>
           <components.SecondaryButton
-            title={"Add to cart"}
+            title={'Add to cart'}
+
+       
             onPress={() => {
-              productExist(product)
-                ? productExistMessage()
-                : dispatch(addToCart(cartItem));
-              !productExist(product) && productWasAddedMessage(product);
+              const productExists = productExist(product);
+
+              if (!productList.length) {
+                // If the cart is empty, add the product
+                dispatch(addToCart(cartItem));
+                productWasAddedMessage(product);
+              } else if (productExists) {
+                // If the product already exists in the cart
+                productExistMessage();
+              } else {
+                // Check if the product is from the same vendor
+                const productHasSameVendor =
+                  productList[0]?.vendorDetail?.vendor_id ===
+                  product?.vendor_detail?.vendor_id;
+          
+                if (productHasSameVendor) {
+                  // If the product is from the same vendor, add it to the cart
+                  dispatch(addToCart(cartItem));
+                  productWasAddedMessage(product);
+                } else {
+                  // If the product is from a different vendor
+                  vendorExistMessage();
+                }
+              }
             }}
+
+            // onPress={() => {
+            
+            //   const productExists = productExist(product);
+            //   const productHasSameVendor =
+            //   productList.length < 0 ||
+            //     productList[0]?.vendorDetail?.vendor_id ===
+            //     product?.vendor_detail?.vendor_id ;
+            //   if (productExists) {
+            //    productExistMessage();
+            //   } 
+            //   else if(!productHasSameVendor){
+            //     vendorExistMessage();
+            //   }
+            //    else {
+            //     dispatch(addToCart(cartItem));
+            //     productWasAddedMessage(product);
+            //   }
+            // }}
           />
         </View>
 
-        <View style={[{ width: theme.RES_WIDTH(165) }, { marginLeft: 18 }]}>
+        <View style={[{width: theme.RES_WIDTH(165)}, {marginLeft: 18}]}>
           <components.Button
             title="Buy now"
             onPress={() => {
@@ -829,17 +1046,16 @@ const Product = ({ apColors }) => {
                 ? productExistMessage()
                 : dispatch(addToCart(cartItem));
               // !productExist(product) && productWasAddedMessage(product);
-              productExist(product) ? null :
-                navigation.navigate(names.Checkout)
-
-
+              productExist(product)
+                ? null
+                : navigation.navigate(names.Checkout);
             }}
           />
         </View>
         {/* </View> */}
       </View>
-    )
-  }
+    );;
+  };;
   const renderContent = () => {
     return (
       <ScrollView
@@ -854,11 +1070,11 @@ const Product = ({ apColors }) => {
         {renderProductInfo()}
         {renderVendorInfo()}
         {/* {renderReviews()} */}
-        {data && renderProducts(data, navigation, isPending, viewLeft, viewRight)}
+        {data &&
+          renderProducts(data, navigation, isPending, viewLeft, viewRight)}
       </ScrollView>
     );
   };
-
 
   // if(product=== null){
   //   return(
@@ -867,18 +1083,16 @@ const Product = ({ apColors }) => {
   // }
 
   return (
-    <View style={{ flex: 1, backgroundColor: apColors.white }}>
+    <View style={{flex: 1, backgroundColor: apColors.white}}>
       {renderStatusBar()}
       {renderHeader()}
       {renderContent()}
       {renderFooter()}
-
     </View>
   );
 };
 
 export default Product;
-
 
 // const styles  = StyleSheet.create({
 //   row: {

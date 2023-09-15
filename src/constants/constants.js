@@ -18,6 +18,7 @@ const endPoints = {
   vendorList:"wp-json/sm-api/v1/vendor-list",
   brandProduct:"wp-json/sm-api/v1/vendor-products",
   brandDiscount:'wp-json/sm-api/v1/brands-discounts',
+  shippingZone:"wp-json/wc/v3/shipping/zones",
 }
 
 const onboardingData = [

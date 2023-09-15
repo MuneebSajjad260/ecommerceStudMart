@@ -45,7 +45,7 @@ const PaymentScreen = ({route}) => {
 
   const {deliveryMethod, inputData} = route.params;
   console.log('delivery method--', deliveryMethod);
-  console.log('input data a---', inputData);;
+  console.log('shippingzone0---', inputData?.shippingZone?.method_id ,'-', inputData?.shippingZone?.method_title ,'- ',inputData?. totalPrice);
 
   const renderHeader = () => {
     return <components.Header title="Payment" goBack={true} border={true} />;
@@ -69,7 +69,7 @@ const PaymentScreen = ({route}) => {
       billing: {
         first_name: inputData.firstName,
         last_name: inputData.lastName,
-        address_1: '',
+        address_1: inputData.firstName,
         address_2: '',
         email: inputData.email,
         phone: inputData.phone,
@@ -77,7 +77,7 @@ const PaymentScreen = ({route}) => {
       shipping: {
         first_name: inputData.firstName,
         last_name: inputData.lastName,
-        address_1: '',
+        address_1: inputData.firstName,
         address_2: '',
         city: '',
         state: '',
@@ -99,9 +99,9 @@ const PaymentScreen = ({route}) => {
       // ],
       shipping_lines: [
         {
-          method_id: 'flat_rate',
-          method_title: 'Flat Rate',
-          total: "110",
+          method_id: inputData?.shippingZone?.method_id,
+          method_title: inputData?.shippingZone?.title,
+          total: inputData?.totalPrice.toString(),
         },
       ],
       meta_data: [
@@ -120,6 +120,10 @@ const PaymentScreen = ({route}) => {
         {
           key: '_delivery_method',
           value: true,
+        },
+        {
+          key: '_calling',
+          value: inputData.phone,
         },
       ],
     };

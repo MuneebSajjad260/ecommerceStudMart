@@ -1,9 +1,10 @@
 import {View, Text, ImageBackground} from "react-native";
 import {SafeAreaView} from "react-native-safe-area-context";
-import React from "react";
+import React,{useEffect} from "react";
 import {useNavigation} from "@react-navigation/native";
 // import FastImage from 'react-native-fast-image'
 
+import { useSelector } from "react-redux";
 import {renderStatusBarLight} from "../utils/functions";
 import {components} from "../components";
 import {theme, names} from "../constants";
@@ -12,6 +13,17 @@ import LogoFrameSvg from "../svg/LogoFrameSvg";
 
 const GetStarted = () => {
   const navigation = useNavigation();
+
+  const loginData = useSelector(state => state.login?.data);
+  const token = loginData?.token;
+
+  console.log("loginData-",loginData,"-----",token)
+  useEffect(()=>{
+if (token){
+  navigation.navigate(names.TabNavigator)
+}
+
+  },[token])
 
   const renderContent = () => {
     return (

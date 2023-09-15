@@ -19,11 +19,12 @@ import axios from "axios";
 import {renderStatusBar, renderStatusBarLight} from '../../utils/functions';
 import {useSelector, useDispatch} from 'react-redux';
 
+import { setScreen } from '../../store/tabSlice';
 import styles from './Style/HomeOneStyle';
 import { GetUniversities } from '../../services/actions/GetUniversities';
 import getRandomColor from "../../utils/randomColor";
 import {components} from '../../components';
-import {theme, homeCarousel, banner, Base} from '../../constants';
+import {theme, homeCarousel, banner, Base, tabNames} from '../../constants';
 import {names} from '../../constants';
 import CustomShimmerPlaceHolder from '../../components/CustomShimmerPlaceHolder';
 import {getCategoriesListAction} from "../../services/actions/ProductAction";
@@ -46,6 +47,7 @@ import {useCallback} from "react";
 import { ProductList } from '../../services/actions/ProductList';
 import { VendorList } from '../../services/actions/VendorList';
 import DiscountCodes from '../../components/DiscountCodes';
+import { setCategorySlice } from '../../store/categorySlice';
 
 
 
@@ -73,7 +75,7 @@ const HomeOne = (props) => {
     title: 'View all',
   };
 
-  const loginData = useSelector(selectUser);
+
 
   const isFocused = useIsFocused()
   const [totalVendor,setTotalVendor]=useState()
@@ -165,6 +167,7 @@ setBrands(vendorsBrand)
       .then((result) => {
         console.log("result of category -", result);
         setCategory(result);
+     dispatch(setCategorySlice(result))
       })
       .catch((err) => {
         console.log('err category--', err);
@@ -427,7 +430,9 @@ setBrands(vendorsBrand)
           title="Shop from categories"
           containerStyle={{marginHorizontal: theme.MARGINS.hy20}}
           onPress={() =>
-            navigation.navigate(names.Category, {
+            
+            dispatch(setScreen("Categories")) &&
+          navigation.navigate(names.TabNavigator, {
               title: "Categories",
               category: category,
             })

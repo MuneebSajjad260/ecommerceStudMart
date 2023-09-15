@@ -29,6 +29,10 @@ export const LoginAction = createAsyncThunk('auth/login', async (data, thunkAPI)
     }
 })
 
+export const logout =createAsyncThunk('auth/logout',async()=>{
+    //dispatch an action to reset user state to null or empty
+    });
+
 export const SignupAction = createAsyncThunk('auth/signup', async (data, thunkAPI) => {
     try {
         console.log("----signup 333333 a------", data);

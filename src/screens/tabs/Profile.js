@@ -6,33 +6,70 @@ import {
   Image,
   ActivityIndicator,
 } from "react-native";
-import React, {useState} from "react";
+
+import BottomSheet, {
+  BottomSheetBackdrop,
+  useBottomSheetDynamicSnapPoints,
+  BottomSheetView,
+} from "@gorhom/bottom-sheet";
+import {GestureHandlerRootView} from "react-native-gesture-handler";
+
+import React, {useState,useRef,useCallback,useMemo} from "react";
 import {useNavigation} from "@react-navigation/native";
 import Modal from "react-native-modal";
 import {renderStatusBar} from "../../utils/functions";
 import { StackActions } from '@react-navigation/native';
-
+import styles from "./Style/ProfileStyle";
 import {components} from "../../components";
 import {theme, names, tabNames} from "../../constants";
 import {svg} from "../../svg";
 import { useDispatch, useSelector } from "react-redux";
 import { selectUser, setUser } from "../../store/userSlice";
 import { setScreen } from "../../store/tabSlice";
+import Wrapper from "../../components/Wrapper";
+import OrderHistorySvg from "../../svg/OrderHistorySvg";
+import OfferSvg from "../../svg/OfferSvg";
+import Heart1Svg from "../../svg/Heart1Svg";
+import LockSvg from "../../svg/LockSvg";
+import SecuredSvg from "../../svg/SecuredSvg";
+import DocumentSvg from "../../svg/DocumentSvg";
+import ContactSvg from "../../svg/ContactSvg";
+import LogOutSvg from "../../svg/LogOutSvg";
+import {logout} from '../../services/actions/AuthAction'
+import {resetUser} from '../../store/loginSlice'
+import Logout from "../../svg/Logout";
+import Button from "../../components/Button";
 
 const Profile = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   // const loginData = useSelector(selectUser);
+
+  const bottomSheetRef = useRef(null);
+  const snapPoints = useMemo(() => ["42%"], []);
+
+  const renderBackdropBottomSheet = useCallback(
+    (props) => (
+      <BottomSheetBackdrop
+        {...props}
+        BackdropPressBehavior="close"
+        disappearsOnIndex={-1}
+        appearsOnIndex={0}
+      />
+    ),
+    [],
+  );
   const [showModal, setShowModal] = useState(false);
   const [avatarLoading, setAvatarLoading] = useState(true);
 
   const renderHeader = () => {
     return (
       <components.Header
-        title="Profile"
-        burgerMenu={true}
-        bag={true}
+        title={'Profile'}
+        goBack={false}
         border={true}
+        containerStyle={{backgroundColor: theme.COLORS.white, height:theme.RES_HEIGHT(90, 110, 125)}} 
+        level={theme.RES_HEIGHT(8, 12, 35)}
       />
     );
   };
@@ -40,15 +77,12 @@ const Profile = () => {
   const renderContent = () => {
     return (
       <ScrollView
-        contentContainerStyle={{
-          alignItems: "center",
-          paddingBottom: 20,
-        }}
+        contentContainerStyle={styles.scrollCont}
         showsVerticalScrollIndicator={false}
       >
-        <components.Line containerStyle={{marginTop: 23, marginBottom: 20}} />
+        <View style={styles.allignItem}>
         <TouchableOpacity
-          style={{width: 126, height: 126, marginBottom: 20}}
+          style={{width: 126, height: 126, marginBottom: 20, }}
           onPress={() => navigation.navigate(names.EditProfile)}
         >
           {avatarLoading && (
@@ -103,34 +137,81 @@ const Profile = () => {
         >
           kristinwatson@mail.com
         </Text>
-        <View style={{width: "100%"}}>
+
+        </View>
+        <Wrapper style={{flex:1 , marginHorizontal:14}}>
+       
           <components.ProfileCategory
             title="Order history"
-            icon={<svg.CalendarSvg />}
+            icon={<OrderHistorySvg/>}
             onPress={() => navigation.navigate(names.History)}
           />
+
+<View style={styles.divider}/>
+        
           <components.ProfileCategory
-            title="Payment method"
-            icon={<svg.CreditCardSvg />}
+            title="My Offers"
+            icon={<OfferSvg/>}
             onPress={() => navigation.navigate(names.Method)}
           />
+          
+          <View style={styles.divider}/>
+
           <components.ProfileCategory
-            title="My address"
-            icon={<svg.MapPinSvg />}
+            title="Wishlist"
+            icon={<Heart1Svg/>}
+            categoryNavigation={false}
+            onPress={() =>  navigation.navigate(names.Wishlist)}
+          />
+      
+        </Wrapper>
+        <Wrapper style={{flex:1 , marginHorizontal:14 , marginTop:theme.MARGINS.hy20}}>
+       
+          <components.ProfileCategory
+            title="Change Password"
+            icon={<LockSvg/>}
+            onPress={() => navigation.navigate(names.History)}
+          />
+          <View style={styles.divider}/>
+
+          <components.ProfileCategory
+            title="Privacy & Policy"
+            icon={<SecuredSvg />}
+            onPress={() => navigation.navigate(names.Method)}
+          />
+          <View style={styles.divider}/>
+          <components.ProfileCategory
+            title="Terms & conditions"
+            icon={<DocumentSvg />}
             onPress={() => navigation.navigate(names.Address)}
           />
-          <components.ProfileCategory
-            title="My promocodes"
-            icon={<svg.GiftSvg />}
-            onPress={() => navigation.navigate(names.Discount)}
-          />
-          <components.ProfileCategory
-            title="Sign out"
-            icon={<svg.LogOutSvg />}
-            categoryNavigation={false}
-            onPress={() => setShowModal(true)}
-          />
-        </View>
+        
+      
+        </Wrapper>
+
+        <Wrapper style={{flex:1 , marginHorizontal:14 , marginTop:theme.MARGINS.hy20}}>
+       
+       <components.ProfileCategory
+         title="Contact us"
+         icon={<ContactSvg/>}
+         onPress={() => navigation.navigate(names.History)}
+       />
+      
+     </Wrapper>
+
+     <TouchableOpacity style={styles.logoutCont}
+     
+     onPress={()=>{
+      bottomSheetRef.current?.snapToIndex(0);
+     }}
+     > 
+     <LogOutSvg/>
+      <Text style={styles.logout}>
+        Logout
+      </Text>
+     </TouchableOpacity>
+
+
       </ScrollView>
     );
   };
@@ -236,6 +317,44 @@ const Profile = () => {
       {renderHeader()}
       {renderContent()}
       {renderModal()}
+
+      <BottomSheet
+        ref={bottomSheetRef}
+        snapPoints={snapPoints}
+        backdropComponent={renderBackdropBottomSheet}
+        index={-1}
+        enablePanDownToClose={true}
+        enabledInnerScrolling={true}
+      >
+        <BottomSheetView style={styles.bsCont}>
+          <Logout />
+        
+          <Text style={styles.bsDescTxt}>Are you sure you want to logout?</Text>
+
+          <View style={[styles.flexDirection, {marginTop: theme.MARGINS.hy20}]}>
+            <View style={{width: "40%"}}>
+              <components.SecondaryButton
+                title={'Cancel'}
+                 onPress={()=>{
+                  bottomSheetRef.current?.close();
+                 }}
+              />
+            </View>
+
+            <View style={[{width: "40%"}, {marginLeft: 18}]}>
+              <Button
+                title="Log out"
+                onPress={() => {
+                  dispatch(logout())
+                  dispatch(resetUser())
+                  navigation.navigate(names.GetStarted)
+                }}
+              />
+            </View>
+          </View>
+        </BottomSheetView>
+      </BottomSheet>
+
     </View>
   );
 };

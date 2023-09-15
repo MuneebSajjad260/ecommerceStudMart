@@ -4,11 +4,13 @@ import { persistReducer, persistStore } from "redux-persist";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { encryptTransform } from 'redux-persist-transform-encrypt';
 
+
 import cartReducer from "./cartSlice";
 import wishlistReducer from "./wishlistSlice";
 import tabReducer from "./tabSlice";
-// import loginReducer from "./loginSlice";
+ import loginReducer from "./loginSlice";
 import userDetailReducer from "./userSlice";
+import categoryReducer from "./categorySlice";
 
 // const reduxEncryptor = encryptTransform({
 //   // secretKey: reverseString(Config.ENC_SECRET),
@@ -28,8 +30,8 @@ const reduxEncryptor = encryptTransform({
 const persistConfig = {
   key: "root",
   storage: AsyncStorage,
-  whitelist: ["cart", "wishlist", "user_details"],
-  blacklist: ["tab"],
+  whitelist: ['cart', 'wishlist', 'user_details','login'],
+  blacklist: ['tab'],
   transforms: [reduxEncryptor], //Comment this line if encryptor not needed.
 };
 
@@ -37,8 +39,10 @@ const reducers = combineReducers({
     cart: cartReducer,
     wishlist: wishlistReducer,
     tab: tabReducer,
-    // login: loginReducer,
+     login: loginReducer,
     user_details: userDetailReducer,
+    categoryDetail:categoryReducer,
+  
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);

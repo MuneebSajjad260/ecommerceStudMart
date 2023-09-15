@@ -4,13 +4,13 @@ import React from "react";
 import { theme } from "../constants";
 import Button from "./Button";
 
-const PriceFooter = ({ btnName , price,disable,onPress ,loading}) => {
+const PriceFooter = ({ btnName , price,disable,onPress ,loading, shipping}) => {
 
   return (
     <View style={styles.shadow}>
         <View style={styles.allignPriceCont}>
   <Text style={styles.headings}>Total</Text>
-  <Text style={styles.headings}>{`QAR ${price}`}</Text>
+  <Text style={styles.headings}> {shipping ?  `QAR ${price +  shipping }` : `QAR ${price}`  }</Text>
   </View>
 
 
