@@ -347,7 +347,12 @@ const Profile = () => {
                 onPress={() => {
                   dispatch(logout())
                   dispatch(resetUser())
-                  navigation.navigate(names.GetStarted)
+                 // navigation.navigate(names.GetStarted)
+                  navigation.reset({
+                    index: 3,
+                    routes: [{name: names.Login}],
+                  });
+
                 }}
               />
             </View>

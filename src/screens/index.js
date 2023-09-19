@@ -39,6 +39,8 @@ import UniversityScreen from "./universityScreen/UniversityScreen";
 import BrandsScreen from "./brandsScreen/BrandsScreen";
 import ShopFilter from "./shop/ShopFilter";
 import DiscountCodeScreen from "./discountCodeScreen/DiscountCodeScreen";
+import TotalDiscountCodeScreen from "./totalDiscountScreen/TotalDiscountScreen";
+import DiscountDetail from "./discountDetail/DiscountDetail";
 // import Payment from "./checkout/Payment";
 
 const screens = {
@@ -82,7 +84,10 @@ const screens = {
   UniversityScreen,
   BrandsScreen,
   ShopFilter,
-  DiscountCodeScreen
+  DiscountCodeScreen,
+  TotalDiscountCodeScreen,
+  DiscountDetail,
+
   // Payment,
 };
 

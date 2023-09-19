@@ -20,7 +20,16 @@ const GetStarted = () => {
   console.log("loginData-",loginData,"-----",token)
   useEffect(()=>{
 if (token){
-  navigation.navigate(names.TabNavigator)
+
+    navigation.reset({
+                    index: 1,
+                    routes: [
+                      {
+                        name: names.TabNavigator,
+                      },
+                    ],
+                  });
+ // navigation.navigate(names.TabNavigator)
 }
 
   },[token])

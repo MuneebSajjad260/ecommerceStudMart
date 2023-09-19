@@ -15,11 +15,6 @@ import {ProductListItem} from "../../utils/functions";
 import {useNavigation, useRoute} from "@react-navigation/native";
 import {names} from "../../constants";
 import {theme} from "../../constants";
-import UniIconSvg from "../../svg/UniIconSvg";
-import VerifiedSellerSvg from "../../svg/VerifiedSellerSvg";
-import VerifiedProdSvg from "../../svg/VerifiedProdSvg";
-import BrandSvg from "../../svg/BrandSvg";
-import BrandProductSvg from "../../svg/BrandProductSvg";
 import Brands from "../../components/Brands";
 import BrandImgSvg from "../../svg/brandImgSvg";
 import DiscountSvg from "../../svg/DiscountSvg";
@@ -60,10 +55,10 @@ const DiscountCodeScreen = ({route}) => {
       
    
       <Brands discount={true} data={item} col={true}
-        onPress={() => navigation.navigate(names.Shop, {
+        onPress={() => navigation.navigate(names.totalDiscount, {
           
-          brandData:item,
-          brand:true,
+          discountData:item,
+          discount:true,
             title: "All products",
           })}
    />

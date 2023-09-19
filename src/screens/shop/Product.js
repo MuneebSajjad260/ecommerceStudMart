@@ -54,9 +54,10 @@ const Product = ({apColors}) => {
   };;
   const {product} = route.params;
   const [vendorProd ,setVendorProd] = useState()
+  const[averageRating , setAverageRating]= useState()
   // const product = productByID  // MOCK_DATA ---
   const dispatch = useDispatch();
-  console.log('---product---', product);;
+  console.log('---product---', product?.vendor_detail?.reviews);
 
   const auth = useSelector(selectUser);;
   console.log('---auth---', auth.data);;
@@ -85,6 +86,23 @@ const Product = ({apColors}) => {
         console.log(" brand product error ---", err.response?.data);
       });
   }, [dispatch ,product?.vendor_detail?.vendor_id]);
+
+ // Calculate the average rating
+  useEffect(() => {
+   
+    let sumOfRatings = 0;
+
+    for (let i = 0; i < product?.vendor_detail?.reviews?.length; i++) {
+      const rating = parseInt(product?.vendor_detail?.reviews[i]?.order_rating, 10);
+      sumOfRatings += rating;
+    }
+
+    const avg = sumOfRatings / product?.vendor_detail?.reviews?.length;
+console.log("avg--",avg)
+    // Update the state with the average rating
+    setAverageRating(avg);
+  }, []);
+
 
   const itemExist = (product) => {
     return wishlist.find((i) => i.id === product.id);
@@ -872,9 +890,15 @@ const Product = ({apColors}) => {
                   {product?.vendor_detail?.vendor_name}
                 </Text>{" "}
               </Text>
+              { product?.vendor_detail?.reviews ?
               <Text style={styles.prodRating}>
-                {"\u2022"} 4.5 {"\u2022"} 3 reviews
+                {"\u2022"} {averageRating?.toFixed(1)} {"\u2022"} {product?.vendor_detail?.reviews?.length} {product?.vendor_detail?.reviews?.length >1 ? "reviews" : "review"}
               </Text>
+
+              : 
+              <Text style={styles.prodRating}>No reviews</Text>
+
+  }
             </View>
 
             {/* </View> */}

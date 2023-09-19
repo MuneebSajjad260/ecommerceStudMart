@@ -38,6 +38,8 @@ const names = {
   ShopFilter:'ShopFilter',
   DiscountCodeScreen:'DiscountCodeScreen',
   Wishlist: "Wishlist",
+  totalDiscount:"totalDiscount",
+  discountDetail:"discountDetail",
 
 };
 

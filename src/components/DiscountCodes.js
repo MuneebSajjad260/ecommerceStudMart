@@ -2,23 +2,27 @@ import React from 'react';
 import {View, Text,StyleSheet, TouchableOpacity,Image} from 'react-native';
 import {theme} from '../constants';
 
-const DiscountCodes = ({data}) => {
+const DiscountCodes = ({data,onPress}) => {
 
    // console.log("brand data--",data)
   return (
 
  
-     <View style={styles.mainCont}>
+     <TouchableOpacity style={styles.mainCont} onPress={onPress}>
 
-<Text>
-{data?.brand_title}
-</Text>
+<View style={styles.imgMainCont}>
+<Image  
+              style={styles.imgCont}
+               source={{
+          uri: data?.brand_logo_url
+        }}/>
+</View>
 
  <View style={styles.marginLeft}>
-<Text style={styles.disVal}>{data?.brand_discount[0]?.discount_value}%</Text>
+<Text style={styles.disVal}>{data?.brand_title}</Text>
 <Text style={styles.desc}>{data?.brand_discount[0]?.discount_short_description}</Text>
 </View>
-     </View>
+     </TouchableOpacity>
 
 
   );
@@ -43,6 +47,7 @@ const styles = StyleSheet.create({
   },
  marginLeft:{
     marginLeft:theme.MARGINS.hy20,
+    width:'90%'
  },
  disVal:{
  ...theme.FONTS.H36,
@@ -53,8 +58,15 @@ const styles = StyleSheet.create({
    // marginTop:theme.MARGINS.hy5,
     ...theme.FONTS.H14,
     color:theme.COLORS.black
+ },
+ imgCont:
+  {
+    width: 30,
+    height: 30,
+  },
+ imgMainCont:{
+  
  }
- 
 });
 
 export default DiscountCodes;

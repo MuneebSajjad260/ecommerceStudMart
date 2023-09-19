@@ -30,7 +30,9 @@ const Header = ({
   seller,
   products,
   brand,
-  brandData
+  brandData,
+  discount,
+  discountData
 
 }) => {
   const navigation = useNavigation();
@@ -226,6 +228,59 @@ width:theme.SIZES.rsWidth/2.3,
    
 
    )}
+
+
+{discount && (
+     
+     <ImageBackground    source={{uri: discountData?.brand_image_url}} style={{
+       width: '100%', // or 'contain' depending on your preference
+       height: '100%',
+       position:'absolute',
+       justifyContent:'center',
+       top:0,
+       zIndex:0}}>
+          <Image
+           key={Number(discountData?.vendor_id)}
+           style={{height: "50%", width: "50%",position:'absolute',alignSelf:'center'}}
+           source={{uri: discountData?.brand_logo_url}}
+          
+           resizeMode='contain'
+            borderRadius={20}
+         />
+<View style={{marginTop:theme.SIZES.rsHeight/3.9, alignItems:'center' ,justifyContent:'space-between'}}>
+
+<View style={{
+width:theme.SIZES.rsWidth/1.1,
+ height:64,
+ backgroundColor:theme.COLORS.white,
+ borderRadius:8,
+ paddingVertical:theme.MARGINS.hy10,
+ paddingHorizontal:14,
+
+}}>
+<View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
+  <View>
+<Text style={{...theme.FONTS.H12,color:theme.COLORS.black }}>
+ Products
+</Text>
+<Text style={{...theme.FONTS.H3,color:theme.COLORS.black }}>
+{discountData?.brand_discount_count}
+</Text>
+</View>
+<View >
+<Text style={{...theme.FONTS.H2,color:theme.COLORS.appColor }}>
+%
+</Text>
+
+</View>
+</View>
+</View>
+         </View>
+   </ImageBackground>
+   
+   )}
+
+
       {search && (
         <View
           style={{

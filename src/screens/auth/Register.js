@@ -102,10 +102,10 @@ const Register = ({ apColors }) => {
 
         {/* -------STUDENT BENEFITS INFO------ */}
 
-        <View style={{ backgroundColor: "#d0d0d0", padding: 14, borderRadius: 16, marginBottom: 20, marginTop: 20 }}>
-          <Text style={{ fontSize: 16 }}>As a student, you'll enjoy exclusive benefits:</Text>
-          <Text style={{ fontSize: 12, fontWeight: '300', lineHeight: 24 }}>Brands discounts</Text>
-          <Text style={{ fontSize: 12, fontWeight: '300', lineHeight: 24 }}>Discount Vouchers</Text>
+        <View style={{ backgroundColor: 'rgba(20, 0, 35, 0.03)', padding: 14, borderRadius: 16, marginBottom: 20, marginTop: 20 }}>
+          <Text style={{ ...theme.FONTS.H5  , color: theme.COLORS.black}}>As a student, you'll enjoy exclusive benefits:</Text>
+          <Text style={{ ...theme.FONTS.H12 , color: theme.COLORS.black , marginTop:theme.MARGINS.hy5 }}>Brands discounts</Text>
+          <Text style={{ ...theme.FONTS.H12 , color: theme.COLORS.black }}>Discount Vouchers</Text>
         </View>
 
         <View style={styles.footerView}>
@@ -118,7 +118,7 @@ const Register = ({ apColors }) => {
           </View> : null}
           <components.Button
             title="Next"
-            containerStyle={{ marginBottom: theme.MARGINS.hy20 }}
+            containerStyle={{ marginVertical: theme.MARGINS.hy20 }}
             style={{ backgroundColor: (email === "" || name === "") ? apColors.appColorLight : apColors.appColor }}
             onPress={() => handleSignup()}
             disable={email === "" || name === ""}

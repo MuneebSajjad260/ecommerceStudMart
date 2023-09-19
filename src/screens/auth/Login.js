@@ -75,7 +75,18 @@ const Login = ({ apColors }) => {
 
           getProfileAPI(result)
 
-          navigation.navigate(names.TabNavigator)
+          dispatch(setScreen('Home'))
+         // navigation.navigate(names.TabNavigator)
+
+         navigation.reset({
+          index: 1,
+          routes: [
+            {
+              name: names.TabNavigator,
+            },
+          ],
+        });
+
         } else if (!result?.success) {
           let obj = {
             type: "api_error",
@@ -218,7 +229,15 @@ console.log("result login ---",result)
           containerStyle={{ marginBottom: theme.MARGINS.hy20, backgroundColor: apColors.white }}
           onPress={() => {
             dispatch(setScreen('Home'))
-            navigation.navigate(names.TabNavigator)
+            //navigation.navigate(names.TabNavigator)
+            navigation.reset({
+              index: 1,
+              routes: [
+                {
+                  name: names.TabNavigator,
+                },
+              ],
+            });
           }
           }
         />

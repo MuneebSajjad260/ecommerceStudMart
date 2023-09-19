@@ -6,6 +6,19 @@ import Package from '../svg/Package';
 import StarSvg from '../svg/StarSvg'
 const Brands = ({data,col,onPress,discount}) => {
   
+  console.log("data---", data)
+
+  let sumOfRatings = 0;
+
+  for (let i = 0; i < data?.vendor_data?.reviews?.length; i++) {
+    const rating = parseInt(data?.vendor_data?.reviews[i]?.order_rating, 10);
+    sumOfRatings += rating;
+  }
+
+  const avg = sumOfRatings / data?.vendor_data?.reviews?.length;
+
+  console.log("avg--", avg)
+
     const mainContWidth = col ? theme.SIZES.width : 172;
     const bannerLeft = col ? theme.SIZES.width /15 : mainContWidth * 0.15;
   return (
@@ -17,7 +30,7 @@ const Brands = ({data,col,onPress,discount}) => {
               <Image  
               style={styles.imgCont}
                source={{
-          uri: data?.vendor_data?.logo_img,
+          uri: discount? data?.brand_logo_url : data?.vendor_data?.logo_img,
         }}/>
         </View>
 <Text style={styles.heading}>{ discount ? data?.brand_title : data?.vendor_name}</Text>
@@ -31,7 +44,7 @@ const Brands = ({data,col,onPress,discount}) => {
 
 <View style={styles.flexDirection}>
 <StarSvg/>
-<Text style={styles.rating}>{data?.rating}</Text>
+<Text style={styles.rating}>{ data?.vendor_data?.reviews? avg.toFixed(1) : "No reviews"}</Text>
 </View>
 }
 

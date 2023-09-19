@@ -243,6 +243,18 @@ const StackNavigator = () => {
           component={screens.Wishlist}
           options={{headerShown: false}}
         />
+         <Stack.Screen
+          name={names.totalDiscount}
+          component={screens.TotalDiscountCodeScreen}
+          options={{ headerShown: false }}
+        />
+
+         <Stack.Screen
+          name={names.discountDetail}
+          component={screens.DiscountDetail}
+          options={{ headerShown: false }}
+        />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

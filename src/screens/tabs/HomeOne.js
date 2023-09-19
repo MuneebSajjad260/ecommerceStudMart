@@ -9,6 +9,8 @@ import {
   useColorScheme,
   VirtualizedList,
   ImageBackground,
+  BackHandler,
+  Platform
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import { useIsFocused } from '@react-navigation/native';
@@ -113,6 +115,8 @@ setBrands(vendorsBrand)
   });
   }, [dispatch]);
 
+
+    
 
   //GETTING PRODUCTS FROM API 
   useEffect(() => {
@@ -700,7 +704,14 @@ onPress={() => navigation.navigate(names.Shop, {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{paddingLeft: 13}}
           renderItem={({item}) => (
-       <DiscountCodes data={item}/>
+       <DiscountCodes data={item} 
+       onPress={() => navigation.navigate(names.totalDiscount, {
+          
+        discountData:item,
+        discount:true,
+          title: "All products",
+        })}
+        />
           )}
         />}
   
