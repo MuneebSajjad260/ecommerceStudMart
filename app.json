@@ -1,4 +1,5 @@
 {
   "name": "app",
-  "displayName": "STUDMART"
+  "displayName": "STUDMART",
+  "bundleId": "org.reactjs.native.example.studmart"
 }

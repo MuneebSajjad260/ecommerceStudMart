@@ -18,6 +18,7 @@ const InputField = ({
   isFocus = false,
   onChangeText,
   autoFocused,
+  value
 }) => {
   const colors = getThemedColors(useColorScheme())
 
@@ -65,6 +66,7 @@ const InputField = ({
         secureTextEntry={secureTextEntry && passwordVisible}
         placeholderTextColor={colors.lightGray}
         onChangeText={(val) => onChangeText(val)}
+        value={value}
       />
       {title && (
         <View

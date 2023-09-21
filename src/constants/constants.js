@@ -19,6 +19,8 @@ const endPoints = {
   brandProduct:"wp-json/sm-api/v1/vendor-products",
   brandDiscount:'wp-json/sm-api/v1/brands-discounts',
   shippingZone:"wp-json/wc/v3/shipping/zones",
+  profile:'/wp-json/sm-api/v1/user-profile',
+  updateProfile:'wp-json/sm-api/v1/update-user-profile'
 }
 
 const onboardingData = [

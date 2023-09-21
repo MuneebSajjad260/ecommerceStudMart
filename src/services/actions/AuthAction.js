@@ -5,7 +5,7 @@ import { setUser } from '../../store/userSlice';
 
 
 
-let loginUrl = "https://studmart.com/api/login.php";
+let loginUrl = "https://studmart.com/wp-json/sm-api/v1/login";
 
 export const LoginAction = createAsyncThunk('auth/login', async (data, thunkAPI) => {
     try {

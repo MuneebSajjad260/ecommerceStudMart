@@ -63,7 +63,7 @@ const DiscountDetail = ({route}) => {
   };
 
   const handleCopy = () => {
-    Clipboard.setString('LE150');
+    Clipboard.setString(detail?.discount_code);
   };
 
   const renderContent = () => {
@@ -90,7 +90,7 @@ const DiscountDetail = ({route}) => {
 <components.SecondaryButton
           title={
             <View style={styles.buttonContent}>
-              <Text style={styles.buttonText}>LE150</Text>
+              <Text style={styles.buttonText}>{detail?.discount_code}</Text>
               <ClipboardSvg />
             </View>
           }

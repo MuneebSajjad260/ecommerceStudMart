@@ -31,7 +31,7 @@ import Order from "./tabs/Order";
 import Profile from "./tabs/Profile";
 import Search from "./tabs/Search";
 import Wishlist from "./tabs/Wishlist";
-import EditProfile from "./EditProfile";
+import EditProfile from "./editProfile/EditProfile";
 import OrderSummary from "./orderSummary/OrderSummary";
 import PaymentScreen from "./paymentScreen/PaymentScreen";
 import Category from "./tabs/category";
