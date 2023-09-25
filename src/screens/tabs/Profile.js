@@ -40,12 +40,13 @@ import {logout} from "../../services/actions/AuthAction";
 import {resetUser} from "../../store/loginSlice";
 import Logout from '../../svg/Logout';
 import Button from '../../components/Button';
+import {useIsFocused} from '@react-navigation/native';
 
 const Profile = () => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const loginData = useSelector((state) => state.login?.data);
-
+  const isFocused = useIsFocused();
 
   const bottomSheetRef = useRef(null);
   const snapPoints = useMemo(() => ['42%'], []);
@@ -77,7 +78,7 @@ const Profile = () => {
       .catch((err) => {
         console.log("profile error-", err);
       });
-  }, [dispatch, loginData]);
+  }, [dispatch, loginData,isFocused]);
 
   const renderHeader = () => {
     return (
