@@ -34,7 +34,7 @@ logout:{
 
 //bottom shett
 
-bsCont: {flex: 1, alignItems: "center", marginTop: 10},
+bsCont: {flex: 1, alignItems: "center", marginVertical: theme.MARGINS.hy20},
 bsTitleTxt: {
   ...theme.FONTS.Font_l,
   color: theme.COLORS.black,

@@ -200,7 +200,7 @@ console.log("goback---",goBack)
 <StarSvg changeSize={true}/>
 <View style={{marginLeft:theme.MARGINS.hy10}}>
 <Text style={{...theme.FONTS.H12,color:theme.COLORS.black }}>Rating & reviews</Text>
-<Text style={{...theme.FONTS.H2,color:theme.COLORS.black }}>22</Text>
+<Text style={{...theme.FONTS.H2,color:theme.COLORS.black }}>{brandData?.vendor_data?.reviews ? brandData?.vendor_data?.reviews?.length : 0}</Text>
 </View>
 </View>
 </View>

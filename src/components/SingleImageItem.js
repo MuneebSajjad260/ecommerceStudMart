@@ -35,7 +35,7 @@ const SingleImageItem = ({
             justifyContent: "center",
             alignItems: "center",
             backgroundColor: "#EBF2FC",
-            borderRadius: indicatorBorderRadius,
+            borderRadius: 126 / 2,
           }}
         />
       )}

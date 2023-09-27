@@ -20,6 +20,8 @@ import {components} from '../../components';
 import {theme, names} from '../../constants';
 import {svg} from '../../svg';
 import {ProductList} from '../../services/actions/ProductList';
+import CustomShimmerPlaceHolder from '../../components/CustomShimmerPlaceHolder';
+
 
 const Shop = () => {
   const navigation = useNavigation();
@@ -40,6 +42,8 @@ const Shop = () => {
   const {university} = route.params || false;
   const {isFilter} = route.params || false;
   const {brand} = route.params || false;
+
+  const [isPending , setIsPending]=useState(false)
   
   console.log("filter data ----", filter);
   console.log("IsFilte ----", isFilter);
@@ -52,7 +56,7 @@ const Shop = () => {
     categoryData,
   );
   console.log("universityData--", universityData);
-  console.log("brandData.vendor_id--", brandData?.vendor_id, "--", brand);
+  console.log("brandData.vendor_id--", brandData, "--", brand);
   //STATES
   const [productsList, setProductsList] = useState();
   const [brandProd, setBrandProd] = useState()
@@ -86,6 +90,7 @@ const Shop = () => {
     }
 
     console.log('idd---', id);
+    setIsPending(true);
     dispatch(ProductList(id))
       .unwrap()
       .then((result) => {
@@ -99,6 +104,9 @@ const Shop = () => {
       })
       .catch((err) => {
         console.log("err in products of category--", err);
+      })
+      .finally(() => {
+        setIsPending(false);
       });
   }, [dispatch, category || university || isFilter, isFocused,brand]);
 
@@ -285,8 +293,25 @@ const Shop = () => {
   //   />
   // );
 
-  const renderProductsList = () => (
-    <FlatList
+  const renderProductsList = () => {
+
+    return (
+      <View>
+
+  <CustomShimmerPlaceHolder visible={isPending} borderRadius={10} style={{ width: "90%", height: 160, borderRadius: 10, alignSelf: 'center' , paddingBottom:theme.MARGINS.hy20}}>
+    <View style={{ width: "90%", height: isPending ? 160 : 0, borderRadius: 10, alignSelf: 'center' ,  }}></View>
+  </CustomShimmerPlaceHolder> 
+
+  <CustomShimmerPlaceHolder visible={isPending} borderRadius={10} style={{ width: "90%", height: 160, borderRadius: 10, alignSelf: 'center' , paddingBottom:theme.MARGINS.hy20}}>
+    <View style={{ width: "90%", height: isPending ? 160 : 0, borderRadius: 10, alignSelf: 'center'}}></View>
+  </CustomShimmerPlaceHolder> 
+
+  <CustomShimmerPlaceHolder visible={isPending} borderRadius={10} style={{ width: "90%", height: 160, borderRadius: 10, alignSelf: 'center' }}>
+    <View style={{ width: "90%", height: isPending ? 160 : 0, borderRadius: 10, alignSelf: 'center' }}></View>
+  </CustomShimmerPlaceHolder> 
+
+  
+   {!isPending &&  <FlatList
       data={
         category || university || isFilter ||  brand ? productsList : products
       }
@@ -298,9 +323,12 @@ const Shop = () => {
       numColumns={2}
       columnWrapperStyle={{justifyContent: 'space-between'}}
       keyExtractor={(item) => item.id}
-      renderItem={({item}) => ProductListItem(item, navigation)}
+      renderItem={({item}) => ProductListItem(item, navigation,isPending)}
     />
-  );
+  }
+
+  </View>
+   ) };
 
   // const ProductItem = (item) => {
   //   // console.log("-----ProductItem-----", item)

@@ -4,13 +4,13 @@ import React from "react";
 import { theme } from "../constants";
 import Button from "./Button";
 
-const PriceFooter = ({ btnName , price,disable,onPress ,loading, shipping}) => {
-
+const PriceFooter = ({ btnName , price,disable,onPress ,loading, shipping , deliveryMethod}) => {
+ console.log("deliveryMethod--",deliveryMethod)
   return (
     <View style={styles.shadow}>
         <View style={styles.allignPriceCont}>
   <Text style={styles.headings}>Total</Text>
-  <Text style={styles.headings}> {shipping ?  `QAR ${price +  shipping }` : `QAR ${price}`  }</Text>
+  <Text style={styles.headings}> { deliveryMethod == 'ship' ? shipping ?  `QAR ${price + shipping }` : `QAR ${price}`  : `QAR ${price}`  }</Text>
   </View>
 
 

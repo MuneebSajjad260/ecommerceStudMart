@@ -17,10 +17,13 @@ const styles = StyleSheet.create({
   card: {
     //width: "100%",
    // height: 100,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginBottom: 20,
+  //  flexDirection: "row",
+  //  alignItems: "center",
+   // justifyContent: "space-between",
+    marginBottom: theme.MARGINS.hy20,
+   // paddingRight:theme.MARGINS.hy20,
+   
+
   },
   flexDirection: {
     flexDirection: "row",

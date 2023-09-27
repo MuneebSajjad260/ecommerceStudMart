@@ -111,10 +111,10 @@ const Order = () => {
                 <View
                   style={[
                     styles.flexDirection,
-                    {justifyContent: 'space-between'},
+                    {justifyContent: 'space-between' , alignItems:'center'},
                   ]}
                 >
-                  <View style={[styles.flexDirection, {alignItems: "center"}]}>
+                  {/* <View style={[styles.flexDirection, {alignItems: "center"}]}> */}
                     <View style={styles.imageContainer}>
                       <components.ImageItem
                 item={item}
@@ -124,7 +124,7 @@ const Order = () => {
               />
                       
                       </View> 
-                    <View style={[styles.productDetailCont, {width: "74%"}]}>
+                    <View style={[styles.productDetailCont, {flex:1}]}>
                       <View style={styles.prodCont}>
                         <View style={styles.lowerAllign}>
                           <Text style={styles.prodName}>{item?.name}</Text>
@@ -166,7 +166,7 @@ const Order = () => {
                         </View>
                       </View>
                     </View>
-                  </View>
+                  {/* </View> */}
                 </View>
               </View>
             </Wrapper>

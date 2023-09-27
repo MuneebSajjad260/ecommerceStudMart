@@ -126,7 +126,8 @@ discCont:
 },
 innerTxt:{
     marginLeft:theme.MARGINS.hy5,
-    ...theme.FONTS.H14
+    ...theme.FONTS.H14,
+    color:theme.COLORS.black
 }
 });
 

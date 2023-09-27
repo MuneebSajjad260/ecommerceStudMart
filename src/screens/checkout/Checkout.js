@@ -155,7 +155,7 @@ dispatch(ShippingZone(3)).unwrap().then(result=>{
           </View>
         </View>
 <View style={styles.prodPriceCont}>
-        <Text style={styles.prodPrice}>{`QAR ${Number(item?.price) + Number(shippingZone?.settings?.cost?.value)}`}</Text>
+        <Text style={styles.prodPrice}>{ `QAR ${Number(item?.price)}`}</Text>
         </View>
       </View>
     );
@@ -196,7 +196,7 @@ dispatch(ShippingZone(3)).unwrap().then(result=>{
                     style={styles.itemNo}
                   >{`(${products.length} Item)`}</Text>
                 </View>
-                <Text style={styles.orderSummary}>{`QAR ${total + Number(shippingZone?.settings?.cost?.value)}`}</Text>
+                <Text style={styles.orderSummary}>{deliveryMethod == "ship" ? `QAR ${total + Number(shippingZone?.settings?.cost?.value)}` : `QAR ${total}`   }</Text>
               </View>
               <View style={styles.priceContALLign}>
                 <Text style={styles.orderSummary}>Discount:</Text>
@@ -412,6 +412,7 @@ dispatch(ShippingZone(3)).unwrap().then(result=>{
       <PriceFooter
       shipping={Number(shippingZone?.settings?.cost?.value)}
       loading={loadingPlaceOrder}
+      deliveryMethod={deliveryMethod}
         price={total}
         btnName={"Checkout"}
         disable={

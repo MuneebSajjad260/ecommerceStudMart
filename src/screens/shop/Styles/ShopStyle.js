@@ -30,7 +30,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 6,
     marginTop: 8,
 
-  }
+  },
+
 });
 
 export default styles;

@@ -695,7 +695,7 @@ onPress={() => navigation.navigate(names.Shop, {
         </CustomShimmerPlaceHolder>
   
         {!isPendingDiscount && <FlatList
-          data={brandDiscount?.discount_brands?.slice(0,4)}
+          data={brandDiscount?.discount_brands?.slice(0,6)}
           horizontal={true}
           key={(Math.random() * 1000).toString()}
           // scrollEnabled={false}              // set number of columns 

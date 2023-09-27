@@ -57,7 +57,7 @@ const Product = ({apColors}) => {
   const[averageRating , setAverageRating]= useState()
   // const product = productByID  // MOCK_DATA ---
   const dispatch = useDispatch();
-  console.log('---product---', product?.vendor_detail?.reviews);
+  console.log('---product---', product);
 
   const auth = useSelector(selectUser);;
   console.log('---auth---', auth.data);;

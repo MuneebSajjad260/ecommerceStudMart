@@ -55,7 +55,7 @@ const EditProfile = ({route}) => {
   const [street , setStreet] = useState({value: profile?.user_info?.street, error: ""})
 
   const renderHeader = () => {
-    return <components.Header title="My Orders" goBack={true} border={true} 
+    return <components.Header title="Profile" goBack={true} border={true} 
     containerStyle={{backgroundColor: theme.COLORS.white, height:theme.RES_HEIGHT(90, 100, 125)}} 
     level={theme.RES_HEIGHT(8, 12, 35)}/>;
   };
@@ -84,15 +84,19 @@ const EditProfile = ({route}) => {
         >
           <components.SingleImageItem
             source={{
-              uri: 'https://dl.dropbox.com/s/tcc67qouu0bzuzc/user.png?dl=0',
+            //  uri: 'https://dl.dropbox.com/s/tcc67qouu0bzuzc/user.png?dl=0',
             }}
             borderRadius={126 / 2}
             containerStyle={styles.img}
             imageStyle={styles.imgStyle}
           />
-          <View style={styles.camCont}>
+
+          {/* HIDE FOR NOW  */}
+
+          {/* <View style={styles.camCont}>
             <svg.CameraSvg />
-          </View>
+          </View> */}
+
         </TouchableOpacity>
 
         <View

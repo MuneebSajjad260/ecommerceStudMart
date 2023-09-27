@@ -49,7 +49,7 @@ const Profile = () => {
   const isFocused = useIsFocused();
 
   const bottomSheetRef = useRef(null);
-  const snapPoints = useMemo(() => ['42%'], []);
+  const snapPoints = useMemo(() => ['45%'], []);
 
   const renderBackdropBottomSheet = useCallback(
     (props) => (
@@ -129,7 +129,7 @@ const Profile = () => {
             )}
             <Image
               source={{
-                uri: "https://dl.dropbox.com/s/tcc67qouu0bzuzc/user.png?dl=0",
+             //   uri: "https://dl.dropbox.com/s/tcc67qouu0bzuzc/user.png?dl=0",
               }}
               style={{
                 width: "100%",

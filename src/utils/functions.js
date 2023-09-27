@@ -245,7 +245,7 @@ const renderUniversities = (data, navigation, isPending, viewLeft, viewRight) =>
   );
 };
 
-const ProductListItem = (item, navigation) => {
+const ProductListItem = (item, navigation,isPending) => {
   console.log("-----ProductItem-----", item)
   return (
     <TouchableOpacity

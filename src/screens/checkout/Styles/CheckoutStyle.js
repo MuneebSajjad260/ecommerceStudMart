@@ -4,7 +4,7 @@ import {theme} from "../../../constants/theme";
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    backgroundColor: theme.COLORS.whiteOnly,
+    backgroundColor: theme.COLORS.appBg,
   },
   contentContainer: {
     marginHorizontal: theme.MARGINS.hy20,
