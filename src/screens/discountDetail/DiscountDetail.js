@@ -78,11 +78,13 @@ const DiscountDetail = ({route}) => {
           }}
           
         />
+        
         <Image
           source={{uri: discountData?.brand_image_url}}
           style={styles.bannerCont}
           resizeMode="cover"
         />
+     
 
 <Text style={styles.title}>{discountData?.brand_title}</Text>
 <Text style={styles.desc}>{detail?.discount_short_description}</Text>

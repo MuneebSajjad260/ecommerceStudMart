@@ -16,19 +16,24 @@ export const GetProfile = createAsyncThunk(
   "profile/Profile",
   async (data, thunkAPI) => {
     try {
+      console.log("data- 22- TOKEN",data?.token)
       const response = await axios.get(
-        `${ Base_Url + endPoints.profile}/${data.Id}${Consumer_Params}`,
+       
+        `${Base_Url+endPoints?.profile}/${data?.Id}${Consumer_Params}`,
         {
           headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${data.token}`,
+            Authorization: `Bearer ${data?.token}`,
           },
         },
       );
+      console.log("response?.data-",response?.data)
 
       return response?.data;
     } catch (error) {
+      console.log("error.response.data-",error.response.data)
     return thunkAPI.rejectWithValue(error.response.data);
+   
     }
   },
 );

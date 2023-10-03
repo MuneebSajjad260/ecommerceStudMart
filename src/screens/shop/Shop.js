@@ -56,6 +56,7 @@ const Shop = () => {
     categoryData,
   );
   console.log("universityData--", universityData);
+  console.log(" products-",  products);
   console.log("brandData.vendor_id--", brandData, "--", brand);
   //STATES
   const [productsList, setProductsList] = useState();
@@ -303,11 +304,11 @@ const Shop = () => {
   </CustomShimmerPlaceHolder> 
 
   <CustomShimmerPlaceHolder visible={isPending} borderRadius={10} style={{ width: "90%", height: 160, borderRadius: 10, alignSelf: 'center' , paddingBottom:theme.MARGINS.hy20}}>
-    <View style={{ width: "90%", height: isPending ? 160 : 0, borderRadius: 10, alignSelf: 'center'}}></View>
+    <View style={{ width: "90%", height: isPending ? 160 : 0, borderRadius: 10, alignSelf: 'center',marginTop: isPending ? theme.MARGINS.hy20 : 0}}></View>
   </CustomShimmerPlaceHolder> 
 
   <CustomShimmerPlaceHolder visible={isPending} borderRadius={10} style={{ width: "90%", height: 160, borderRadius: 10, alignSelf: 'center' }}>
-    <View style={{ width: "90%", height: isPending ? 160 : 0, borderRadius: 10, alignSelf: 'center' }}></View>
+    <View style={{ width: "90%", height: isPending ? 160 : 0, borderRadius: 10, alignSelf: 'center',marginTop:isPending ?  theme.MARGINS.hy20 : 0 }}></View>
   </CustomShimmerPlaceHolder> 
 
   

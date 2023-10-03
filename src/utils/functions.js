@@ -33,13 +33,15 @@ const renderStatusBarLight = () => {
 };
 
 const renderStatusBar = () => {
-  const theme = useColorScheme()
+  const themeC = useColorScheme()
 
   return (
     <StatusBar
-      barStyle={theme == 'dark' ? 'light-content' : "dark-content"}
+      barStyle={themeC == 'dark' ? 'light-content' : "dark-content"}
       translucent={true}
+      backgroundColor={themeC == 'dark' ? theme.COLORS.black : theme.COLORS.whiteOnly} 
     />
+  
   );
 };
 

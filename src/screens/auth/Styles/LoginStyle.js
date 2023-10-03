@@ -8,7 +8,7 @@ const makeStyles = (apColors) => StyleSheet.create({
     backgroundColor: apColors.appBg,
   },
   contentContainerStyle: {
-    flex: 1,
+    flexGrow: 1,
     marginHorizontal: 20,
     paddingTop: theme.SIZES.height * 0.02,
     backgroundColor: apColors.appBg,
@@ -48,12 +48,13 @@ const makeStyles = (apColors) => StyleSheet.create({
     marginRight: 3,
   },
   signupView: {
-    flex: 0.2,
+    flex: 1,
     flexDirection: "row",
     alignItems: "center",
     alignSelf: "center",
-    bottom: 20,
-    zIndex: -1
+   // bottom: 20,
+    zIndex: -1,
+    marginVertical: theme.MARGINS.hy10,
   },
   errorMsg: {
     backgroundColor: apColors.appBg,

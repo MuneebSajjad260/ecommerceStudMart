@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Dimensions, KeyboardAvoidingView } from "react-native";
+import { View, Text, TouchableOpacity, Dimensions, KeyboardAvoidingView,ScrollView } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import React, { useState, useCallback, useRef, useMemo } from "react";
 import { useDispatch } from "react-redux";
@@ -18,6 +18,7 @@ import { GetProfileAction } from "../../services/actions/ProfileAction";
 import { svg } from "../../svg";
 import BottomSheetWrapper from "../../components/BottomSheetWrapper";
 import { setScreen } from "../../store/tabSlice";
+
 
 const screenWidth = Dimensions.get('screen').width
 console.log("----screenWidth---22", screenWidth)
@@ -87,7 +88,11 @@ const Login = ({ apColors }) => {
           ],
         });
 
-        } else if (!result?.success) {
+        } 
+        
+        
+        
+        else if (!result?.success) {
           let obj = {
             type: "api_error",
             error: true,
@@ -111,14 +116,28 @@ const Login = ({ apColors }) => {
         }
         setIsLoading(false)
       }).catch((error) => {
-        // console.log("----Login screen API Catch----", error)
+        console.log("----Login screen API Catch----", error)
         setIsLoading(false)
+        
+        if (error.message == 'Rejected') {
+          let obj = {
+            type: "api_error",
+            error: true,
+            message: 'No Internet'
+          }
+          setErrorMessage(obj);
+          // sheetRef?.current?.open()
+          sheetRef.current.open()
+          // handleBottomSheet()
+        }
+        else{
         let obj = {
           type: "api_error 403",
           error: true,
           message: error?.message
         }
         setErrorMessage(obj);
+      }
         sheetRef.current.open()
         // handleBottomSheet()
       })
@@ -144,12 +163,12 @@ console.log("result login ---",result)
 
   const renderContent = () => {
     return (
-      // <KeyboardAwareScrollView
-      //   contentContainerStyle={styles.contentContainerStyle}
-      //   enableOnAndroid={true}
-      //   showsVerticalScrollIndicator={false}
-      // >
-      <View style={styles.contentContainerStyle}>
+      <KeyboardAwareScrollView
+        contentContainerStyle={styles.contentContainerStyle}
+        enableOnAndroid={true}
+        showsVerticalScrollIndicator={false}
+      >
+      {/* <View style={styles.contentContainerStyle}> */}
         <components.InputField
           title="Email"
           placeholder="someone@mail.com"
@@ -226,7 +245,7 @@ console.log("result login ---",result)
 
         <components.SecondaryButton
           title="Continue as a guest"
-          containerStyle={{ marginBottom: theme.MARGINS.hy20, backgroundColor: apColors.white }}
+          containerStyle={{ backgroundColor: apColors.white }}
           onPress={() => {
             dispatch(setScreen('Home'))
             //navigation.navigate(names.TabNavigator)
@@ -243,8 +262,8 @@ console.log("result login ---",result)
         />
 
         {renderFooter()}
-      </View>
-      // {/* </KeyboardAwareScrollView> */ }
+      {/* </View> */}
+     </KeyboardAwareScrollView> 
     );
   };
 
@@ -294,11 +313,7 @@ console.log("result login ---",result)
   const renderFooter = () => {
 
     return (
-      // <KeyboardAvoidingView
-      //   contentContainerStyle={styles.contentContainerStyle}
-      //   // enableOnAndroid={true}
-      //   showsVerticalScrollIndicator={false}
-      // >
+     
       <View style={styles.signupView}>
         <Text
           style={styles.dontHavAcc}
@@ -313,7 +328,7 @@ console.log("result login ---",result)
           </Text>
         </TouchableOpacity>
       </View>
-      // </KeyboardAvoidingView>
+    
     )
   }
 
@@ -335,7 +350,8 @@ console.log("result login ---",result)
   }
 
   return (
-    <View style={styles.mainContainer}>
+     <View style={styles.mainContainer} >
+
       {renderStatusBarLight()}
       {renderHeaderAuth('Welcome', 'Sign in to continue')}
       {renderContent()}
@@ -347,7 +363,7 @@ console.log("result login ---",result)
       >
         <SheetItem />
       </BottomSheetWrapper>
-
+   
     </View>
   );
 };

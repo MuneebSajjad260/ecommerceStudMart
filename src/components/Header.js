@@ -261,7 +261,7 @@ width:theme.SIZES.rsWidth/1.1,
 <View style={{flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
   <View>
 <Text style={{...theme.FONTS.H12,color:theme.COLORS.black }}>
- Products
+Discounts
 </Text>
 <Text style={{...theme.FONTS.H3,color:theme.COLORS.black }}>
 {discountData?.brand_discount_count}

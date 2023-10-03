@@ -18,7 +18,7 @@ const ProductName = ({ item, style }) => {
       }}
       numberOfLines={1}
     >
-      {item.name}
+      {item?.vendor_detail?.vendor_name}
     </Text>
   );
 };

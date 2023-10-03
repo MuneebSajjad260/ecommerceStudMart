@@ -77,7 +77,7 @@ const Register = ({ apColors }) => {
         showsVerticalScrollIndicator={false}
       >
         {/* <components.Line containerStyle={{marginBottom: 14}} /> */}
-
+<View>
         <components.InputField
           title="Full Name"
           placeholder=""
@@ -99,10 +99,10 @@ const Register = ({ apColors }) => {
             {errorMessage?.email}
           </Text>
         </View> : null}
-
+        </View>
         {/* -------STUDENT BENEFITS INFO------ */}
 
-        <View style={{ backgroundColor: 'rgba(20, 0, 35, 0.03)', padding: 14, borderRadius: 16, marginBottom: 20, marginTop: 20 }}>
+        <View style={{ backgroundColor: 'rgba(20, 0, 35, 0.03)', padding: 14, borderRadius: 16 }}>
           <Text style={{ ...theme.FONTS.H5  , color: theme.COLORS.black}}>As a student, you'll enjoy exclusive benefits:</Text>
           <Text style={{ ...theme.FONTS.H12 , color: theme.COLORS.black , marginTop:theme.MARGINS.hy5 }}>Brands discounts</Text>
           <Text style={{ ...theme.FONTS.H12 , color: theme.COLORS.black }}>Discount Vouchers</Text>
@@ -116,9 +116,10 @@ const Register = ({ apColors }) => {
               {errorMessage?.message}
             </Text>
           </View> : null}
+         
           <components.Button
             title="Next"
-            containerStyle={{ marginVertical: theme.MARGINS.hy20 }}
+         //   containerStyle={{ marginVertical: theme.MARGINS.hy20 }}
             style={{ backgroundColor: (email === "" || name === "") ? apColors.appColorLight : apColors.appColor }}
             onPress={() => handleSignup()}
             disable={email === "" || name === ""}
@@ -128,8 +129,9 @@ const Register = ({ apColors }) => {
             style={{
               flexDirection: "row",
               alignItems: "center",
-              marginBottom: 0,
-              alignSelf: "center"
+              marginVertical: theme.MARGINS.hy20,
+              alignSelf: "center",
+           //   flex:1
             }}
           >
             <Text

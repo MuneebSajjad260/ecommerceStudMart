@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, TouchableOpacity, FlatList, TextInput, Button } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity, FlatList, TextInput, Button,Pressable } from "react-native";
 import React, { useState, useEffect } from "react";
 import { useNavigation } from "@react-navigation/native";
 import useFetch from "../../utils/useFetch";
@@ -80,18 +80,20 @@ const Search = (props) => {
     return (
       <View style={styles.container}>
 
-        <View style={styles.inputStyle}>
+
+        <Pressable style={styles.inputStyle} onPress={() => inputRef.focus()}>
           <svg.SearchIconSvg stroke={apColors.inputBorder} />
           <View style={styles.spaceX} />
           <TextInput
+           ref={(ref) => (inputRef = ref)}
             placeholder="Search..."
             style={styles.input}
             placeholderTextColor={apColors.inputBorder}
             onChangeText={handleChange}
             value={searchTerm}
           />
-        </View>
-
+        </Pressable>
+        
         <TouchableOpacity
           onPress={() => { navigation.goBack() }}
           style={styles.crossBtn}>

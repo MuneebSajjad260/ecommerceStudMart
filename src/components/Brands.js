@@ -25,7 +25,7 @@ const Brands = ({ data, col, onPress, discount }) => {
   const imgSize = 50; // Set your desired image size here
 
   return (
-    <TouchableOpacity onPress={onPress} style={[styles.mainCont, { width: col ? theme.SIZES.width : 172, marginTop: col ? theme.MARGINS.hy20 : theme.MARGINS.hy40 }]}>
+    <TouchableOpacity onPress={onPress} style={[styles.mainCont, { width: col ? theme.SIZES.width : 172, marginTop: col ? theme.MARGINS.hy30 : theme.MARGINS.hy30 }]}>
       <View style={[styles.bannerCont, { left: bannerLeft }]}>
         <View style={styles.imgCont}>
           <Image
@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     borderColor: 'rgba(20, 0, 35, 0.1)',
     margin: 8,
+    
   },
 
   heading: {
@@ -84,7 +85,7 @@ const styles = StyleSheet.create({
     width: 120, // Set your desired width for bannerCont
     height: 60, // Set your desired height for bannerCont
     padding: theme.MARGINS.hy10,
-    backgroundColor: theme.COLORS.whiteOnly,
+   backgroundColor: theme.COLORS.whiteOnly,
     borderRadius: 6,
     alignItems: 'center',
     justifyContent: 'center',

@@ -46,7 +46,7 @@ import { useEffect } from "react";
 const Checkout = () => {
   const navigation = useNavigation();
   const bottomSheetRef = useRef(null);
-  const snapPoints = useMemo(() => ["45%"], []);
+  const snapPoints = useMemo(() => ["48%"], []);
   const dispatch = useDispatch();
   const pickup = true;
   const renderBackdropBottomSheet = useCallback(

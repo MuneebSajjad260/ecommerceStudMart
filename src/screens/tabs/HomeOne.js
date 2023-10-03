@@ -482,10 +482,20 @@ setBrands(vendorsBrand)
                       // resizeMode='contain'
                     />
                   </View>
-                  <components.ProductName
-                    item={item}
-                    style={{alignSelf: 'center', fontSize: 13, marginLeft: 12}}
-                  />
+
+                  <Text
+      style={{
+        ...theme.FONTS.Mulish_400Regular,
+        fontSize: 14,
+        color: colors.textDark,
+        lineHeight: 14 * 1.7,
+        alignSelf: 'center', fontSize: 13, marginLeft: 12
+      }}
+      numberOfLines={1}
+    >
+      {item?.name}
+    </Text>
+               
                 </View>
               </TouchableOpacity>
             )}
@@ -695,7 +705,7 @@ onPress={() => navigation.navigate(names.Shop, {
         </CustomShimmerPlaceHolder>
   
         {!isPendingDiscount && <FlatList
-          data={brandDiscount?.discount_brands?.slice(0,6)}
+          data={brandDiscount?.discount_brands?.slice(0,4)}
           horizontal={true}
           key={(Math.random() * 1000).toString()}
           // scrollEnabled={false}              // set number of columns 

@@ -6,12 +6,12 @@ const makeStyles = (apColors) => StyleSheet.create({
   mainContainer: {
     flex: 1,
     backgroundColor: apColors.appBg,
-
   },
   contentScroll: {
-    paddingHorizontal: 20,
-    paddingVertical: theme.SIZES.height * 0.06,
     flexGrow: 1,
+    marginHorizontal: 20,
+    paddingTop: theme.SIZES.height * 0.02,
+    backgroundColor: apColors.appBg,
   },
   errorText: {
     ...theme.FONTS.Mulish_400Regular,
@@ -33,9 +33,10 @@ const makeStyles = (apColors) => StyleSheet.create({
   btnNext: { marginBottom: 20, },
   footerView: {
     width: "100%",
-    position: "absolute",
-    bottom: 40,
-    alignSelf: "center"
+   // position: "absolute",
+   // bottom: 40,
+    alignSelf: "center",
+    marginTop:theme.MARGINS.hy20
   }
 });
 

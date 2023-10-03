@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Image,
   ActivityIndicator,
+  
 } from 'react-native';
 
 import BottomSheet, {
@@ -48,8 +49,10 @@ const Profile = () => {
   const loginData = useSelector((state) => state.login?.data);
   const isFocused = useIsFocused();
 
+  console.log("loginData--", loginData)
+
   const bottomSheetRef = useRef(null);
-  const snapPoints = useMemo(() => ['45%'], []);
+  const snapPoints = useMemo(() => ['48%'], []);
 
   const renderBackdropBottomSheet = useCallback(
     (props) => (
@@ -68,8 +71,8 @@ const Profile = () => {
 
   //GET PROFILE API
   useEffect(() => {
-    const data = {token: loginData?.token, Id: loginData?.userid};
-    dispatch(GetProfile(data))
+    //const data = {token: loginData?.token, Id: loginData?.userid};
+    dispatch(GetProfile({token:loginData?.token, Id: loginData?.userid}))
       .unwrap()
       .then((result) => {
         console.log(" profile result-", result);
@@ -78,7 +81,7 @@ const Profile = () => {
       .catch((err) => {
         console.log("profile error-", err);
       });
-  }, [dispatch, loginData,isFocused]);
+  }, [dispatch,loginData , isFocused]);
 
   const renderHeader = () => {
     return (
@@ -328,6 +331,7 @@ const Profile = () => {
 
   return (
     <View style={{flex: 1, backgroundColor:theme.COLORS.appBg}}>
+      {renderStatusBar()}
       {renderHeader()}
       {renderContent()}
       {renderModal()}

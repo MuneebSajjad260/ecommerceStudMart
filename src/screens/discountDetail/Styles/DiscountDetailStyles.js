@@ -41,16 +41,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   buttonText: {
-    fontSize: 18, // Adjust the font size as needed
-    marginRight: 10, // Add margin between text and SVG
+ ...theme.FONTS.H5,
+ color:theme.COLORS.black
   },
 
   termsTxt:{
-    ...theme.FONTS.H5
+    ...theme.FONTS.H5,
+    color:theme.COLORS.black
   },
   policy:{
     ...theme.FONTS.H14,
-    marginTop:theme.MARGINS.hy10
+    marginTop:theme.MARGINS.hy10,
+    color:theme.COLORS.black
+
   },
   readMore:{
     ...theme.FONTS.H14,

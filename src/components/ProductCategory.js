@@ -19,7 +19,7 @@ const ProductCategory = ({title, onPress, containerStyle, visibleRight}) => {
         ...containerStyle,
       }}
     >
-      <Text style={{...theme.FONTS.H3, color: colors.black}}>
+      <Text style={{...theme.FONTS.H3, color: theme.COLORS.black}}>
         {title}
       </Text>
       {!visibleRight ?
