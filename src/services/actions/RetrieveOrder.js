@@ -1,9 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
-// import RestApi from '../../services/RestApi';
-// import { Base_Url } from '../../constants/url';
+import instance from '../../utils/interceptor';
 import { Base_Url } from '../../constants/constants';
-// import { setUser, setUserType } from '../slices/userSlice';
+
 import { Consumer_Params, endPoints, userTypeEnum } from '../../constants/constants';
 
 export const RetrieveOrder = createAsyncThunk('retrieveOrder/RetrieveOrder', async (data, thunkAPI) => {
@@ -16,7 +15,7 @@ export const RetrieveOrder = createAsyncThunk('retrieveOrder/RetrieveOrder', asy
         console.log("----retrieve order------", data);
         console.log("----retrieve order abc------", Base_Url+endPoints.PlaceOrder+Consumer_Params);
        // console.log("url retrieve order--",`${Base_Url+endPoints.RetrieveOrder}${data}${Consumer_Params}`)
-        const response = await axios.get(`${Base_Url+endPoints.RetrieveOrder}${data}${Consumer_Params}`, {
+        const response = await instance.get(`${Base_Url+endPoints.RetrieveOrder}${data}${Consumer_Params}`, {
             headers: {
                 // 'Content-Type': 'application/x-www-form-urlencoded'
             },

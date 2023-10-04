@@ -1,9 +1,8 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import axios from 'axios';
-// import RestApi from '../../services/RestApi';
-// import { Base_Url } from '../../constants/url';
+import instance from '../../utils/interceptor';
 import {Base_Url} from '../../constants/constants';
-// import { setUser, setUserType } from '../slices/userSlice';
+
 import {
   Consumer_Params,
   endPoints,
@@ -20,18 +19,14 @@ export const ProductsOfCategory = createAsyncThunk(
         data,
       };
 
-    //   console.log("----Place order 22222 a------", data);
-    //   console.log(
-    //     '----Place order 22222 abc------',
-    //     Base_Url + endPoints.PlaceOrder + Consumer_Params,
-    //   );
-      const response = await axios.get(
+  
+      const response = await instance.get(
         `${
           Base_Url + endPoints.productsOfCategory
         }?category=${data}&consumer_key=${Consumer_Key}&consumer_secret=${Consumer_Secret}`,
         {
           headers: {
-            'Content-Type': 'application/json',
+          //  'Content-Type': 'application/json',
           },
         },
       );

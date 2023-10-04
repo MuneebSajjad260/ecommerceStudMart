@@ -1,9 +1,8 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
-// import RestApi from '../../services/RestApi';
-// import { Base_Url } from '../../constants/url';
+
 import {Base_Url} from "../../constants/constants";
-// import { setUser, setUserType } from '../slices/userSlice';
+import instance from "../../utils/interceptor";
 import {
   Consumer_Params,
   endPoints,
@@ -17,13 +16,13 @@ export const GetProfile = createAsyncThunk(
   async (data, thunkAPI) => {
     try {
       console.log("data- 22- TOKEN",data?.token)
-      const response = await axios.get(
+      const response = await instance.get(
        
         `${Base_Url+endPoints?.profile}/${data?.Id}${Consumer_Params}`,
         {
           headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${data?.token}`,
+            // 'Content-Type': 'application/json',
+            // Authorization: `Bearer ${data?.token}`,
           },
         },
       );

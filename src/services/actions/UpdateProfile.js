@@ -1,6 +1,6 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
-
+import instance from '../../utils/interceptor';
 import {Base_Url} from "../../constants/constants";
 
 import {
@@ -17,7 +17,7 @@ export const UpdateProfile = createAsyncThunk(
     try {
         console.log("data api-,",data)
         console.log("urll-", `${ Base_Url + endPoints.updateProfile}/${data.Id}${Consumer_Params}`)
-      const response = await axios.post(
+      const response = await instance.post(
         `${ Base_Url + endPoints.updateProfile}/${data.Id}${Consumer_Params}`,
         {
             first_name:data.profileData.first_name,
@@ -32,8 +32,8 @@ export const UpdateProfile = createAsyncThunk(
         },
         {
           headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${data.token}`,
+            // 'Content-Type': 'application/json',
+            // Authorization: `Bearer ${data.token}`,
           },
         },
       );

@@ -1,19 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
-// import RestApi from '../../services/RestApi';
-// import { Base_Url } from '../../constants/url';
-// import { setUser, setUserType } from '../slices/userSlice';
 import { endPoints, Consumer_Params, Base_Url } from '../../constants/constants';
-
-
-// const consumer_key = "ck_41443b9d22f6df407deaf10f9b31fb3e32e2acd1"
-// const consumer_secret = "cs_62b8d37fc83f6c806a25890192c5e20e776187bf"
-
-// let BASE_URL = "https://woo-slowly-shiny-wombat.wpcomstaging.com/"
-// let woo_payload = {
-//     consumer_key: Consumer_key,
-//     consumer_secret: Consumer_secret
-// }
+import instance from '../../utils/interceptor';
 
 export const getProductsAction = createAsyncThunk('auth/login', async (data, thunkAPI) => {
     try {
@@ -26,9 +14,7 @@ export const getProductsAction = createAsyncThunk('auth/login', async (data, thu
         
         console.log("--login response res 444444--", response);
         console.log("--login response 444444--", response?.data);
-        // await thunkAPI.dispatch(setUser(response?.data))
-        // await thunkAPI.dispatch(setUserType({type: userTypeEnum.PASSENGER}))
-
+      
         return response?.data
     } catch (error) {
         console.log("---error---")
@@ -45,9 +31,9 @@ export const getCategoriesListAction = createAsyncThunk('product/categories', as
 
         // let getAllCategoryList = "wp-json/wc/v3/products/categories"
         console.log("----Categories 333333 a------", data);
-        const response = await axios.get(Base_Url+ endPoints.GetAllCategoryList+Consumer_Params, {
+        const response = await instance.get(Base_Url+ endPoints.GetAllCategoryList+Consumer_Params, {
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
+              //  'Content-Type': 'application/json'
 
             },
             // params:woo_payload

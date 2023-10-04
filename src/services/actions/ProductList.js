@@ -1,5 +1,6 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import axios from 'axios' ;
+import instance from '../../utils/interceptor';
 import {Base_Url,Consumer_Key,Consumer_Secret} from '../../constants/constants';
 import {
   Consumer_Params,
@@ -15,13 +16,13 @@ export const ProductList = createAsyncThunk(
         data,
       };
 
-      const response = await axios.get(
+      const response = await instance.get(
         `${
             Base_Url + endPoints.ProductsList
           }?${data}&consumer_key=${Consumer_Key}&consumer_secret=${Consumer_Secret}`,
         {
           headers: {
-            'Content-Type': 'application/json',
+            // 'Content-Type': 'application/json',
           },
         }
       );

@@ -1,9 +1,8 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";;
 import axios from "axios";;
-// import RestApi from '../../services/RestApi';
-// import { Base_Url } from '../../constants/url';
+
 import {Base_Url} from "../../constants/constants";
-// import { setUser, setUserType } from '../slices/userSlice';
+import instance from "../../utils/interceptor";
 import {
   Consumer_Params,
   Consumer_Key,
@@ -23,7 +22,7 @@ export const ListOrder = createAsyncThunk(
       console.log('ListOrder-', data);
      
        console.log("url list order order--",`${Base_Url + endPoints.OrderList}?customer=${data}&consumer_key=${Consumer_Key}&consumer_secret=${Consumer_Secret}`)
-      const response = await axios.get(
+      const response = await instance.get(
         `${Base_Url + endPoints.OrderList}?customer=${data}&consumer_key=${Consumer_Key}&consumer_secret=${Consumer_Secret}`,
         {
           headers: {

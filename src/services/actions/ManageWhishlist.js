@@ -1,9 +1,7 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import axios from 'axios' ;
-// import RestApi from '../../services/RestApi';
-// import { Base_Url } from '../../constants/url';
+import instance from '../../utils/interceptor';
 import {Base_Url} from '../../constants/constants';
-// import { setUser, setUserType } from '../slices/userSlice';
 import {
   Consumer_Params,
   endPoints,
@@ -18,12 +16,12 @@ export const ManageWhishlist = createAsyncThunk(
         data,
       };
 
-      const response = await axios.post(
+      const response = await instance.post(
         Base_Url + endPoints.manageWhishlist + Consumer_Params,
         data,
         {
           headers: {
-            'Content-Type': 'application/json',
+        //    'Content-Type': 'application/json',
           },
         },
       );

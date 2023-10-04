@@ -1,6 +1,7 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import axios from 'axios' ;
 import {Base_Url,Consumer_Key,Consumer_Secret} from '../../constants/constants';
+import instance from '../../utils/interceptor';
 import {
   Consumer_Params,
   endPoints,
@@ -15,11 +16,11 @@ export const WishlistItems = createAsyncThunk(
         data,
       };
 console.log("urll--", Base_Url + endPoints.wishlistItems + Consumer_Params,'data--',data)
-      const response = await axios.get(
+      const response = await instance.get(
         Base_Url + endPoints.wishlistItems + Consumer_Params,
         {  params: data, // Pass the data as query parameters
           headers: {
-            'Content-Type': 'application/json',
+        //    'Content-Type': 'application/json',
           },
         }
       );

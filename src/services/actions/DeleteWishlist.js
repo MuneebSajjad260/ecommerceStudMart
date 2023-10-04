@@ -1,5 +1,6 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import axios from 'axios' ;
+import instance from '../../utils/interceptor';
 import {Base_Url,Consumer_Key,Consumer_Secret} from '../../constants/constants';
 import {
   Consumer_Params,
@@ -15,11 +16,11 @@ export const DeleteWishlist = createAsyncThunk(
         data,
       };
 console.log("urll--", Base_Url + endPoints.deleteWishlist + Consumer_Params,'data--',data)
-      const response = await axios.delete(
+      const response = await instance.delete(
         Base_Url + endPoints.deleteWishlist + Consumer_Params,
         {  params: data, // Pass the data as query parameters
           headers: {
-            'Content-Type': 'application/json',
+          //  'Content-Type': 'application/json',
           },
         }
       );
