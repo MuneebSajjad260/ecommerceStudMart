@@ -1,18 +1,76 @@
-import {Text} from "react-native";
-import React from "react";
-import {SafeAreaView} from "react-native-safe-area-context";
+
+import React,{useState} from "react";
+import { View,Text,Dimensions,TouchableOpacity } from "react-native";
+import { EmailValidator } from "../../utils/validation";
 import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scroll-view";
 import {useNavigation} from "@react-navigation/native";
-import {renderStatusBar} from "../../utils/functions";
-
+import {renderStatusBarLight} from "../../utils/functions";
+import makeStyles from "./Styles/ForgotStyle";
 import {components} from "../../components";
 import {theme, names} from "../../constants";
+import SignupSvg from "../../svg/SignupSvg";
+import MailSvg from "../../svg/MailSvg";
+import {svg} from '../../svg'
 
-const ForgotPass = () => {
+import ForgotLockSvg from "../../svg/ForgotLockSvg";
+
+const ForgotPass = ({ apColors }) => {
   const navigation = useNavigation();
+  const styles = makeStyles(apColors)
+  const screenWidth = Dimensions.get('screen').width
 
-  const renderHeader = () => {
-    return <components.Header title="Forgot password" goBack={true} />;
+  const [email , setEmail] = useState({value: "", error: ""})
+
+  const renderHeaderAuth = (title, subtitle, icon) => {
+    return <View style={{ alignSelf: "center" }}>
+
+{/* ///// */}
+        
+        <View
+        style={{
+         position: "absolute",
+          left: 0,
+          bottom:theme.RES_HEIGHT(2, 200, 10),
+          alignItems: "center",
+          // backgroundColor:"pink",
+          // marginTop: level,
+          marginLeft:20,
+          zIndex:1,
+          backgroundColor: "rgba(255, 255, 255, 1)",
+          borderRadius: 50,
+        }}
+      >
+        <TouchableOpacity
+          style={{
+            paddingLeft:20,
+            paddingRight:8,
+            paddingBottom:10,
+            paddingTop:18
+          }}
+          onPress={() => navigation.goBack()}
+        >
+          <svg.GoBackSvg />
+        </TouchableOpacity>
+      </View>
+      
+      {/* ///// */}
+  
+
+      <svg.WelcomeSvg width={screenWidth} />
+      <View style={{ position: "absolute", bottom: theme.MARGINS.hyMax, left: theme.MARGINS.maX_xxxs }}>
+        {icon == "signup" &&
+          <SignupSvg />
+        }
+        {icon == "mail" &&
+          <MailSvg />
+        }
+          {/* {icon == "lock" &&
+          <ForgotLockSvg />
+        } */}
+        <Text style={{ ...theme.FONTS.H36, color: theme.COLORS.whiteOnly }}>{title}</Text>
+        <Text style={{ ...theme.FONTS.H5, fontWeight: "700", color: theme.COLORS.whiteOnly, bottom: -5 }}>{subtitle}</Text>
+      </View>
+    </View>;
   };
 
   const renderContent = () => {
@@ -22,41 +80,44 @@ const ForgotPass = () => {
           paddingHorizontal: 20,
           flexGrow: 1,
           paddingVertical: 30,
+          justifyContent:'space-between'
         }}
         enableOnAndroid={true}
         showsVerticalScrollIndicator={false}
       >
-        <Text
-          style={{
-            ...theme.FONTS.Mulish_400Regular,
-            fontSize: 16,
-            color: theme.COLORS.gray1,
-            lineHeight: 16 * 1.7,
-            marginBottom: 40,
-          }}
-        >
-          Please enter your email address. You will receive a link to create a
-          new password via email.
-        </Text>
-        <components.InputField
-          title="Email"
-          placeholder="kristinwatson@mail.com"
-          containerStyle={{marginBottom: 20}}
-        />
+      
+      <View>
+          <components.InputField
+         
+            error={email.error}
+            title="Email address"
+            onChangeText={(text) => {
+              setEmail({ value: text, error: EmailValidator(text) });
+            }}
+            value={email?.value}
+          />
+             {email?.error ? <View style={styles.errorMsg}>
+          <Text
+            style={styles.errorTxt}
+          >
+            {email?.error}
+          </Text>
+        </View> : null}
+        </View>
         <components.Button
           title="send"
-          onPress={() => navigation.navigate(names.NewPass)}
+          onPress={() => navigation.navigate(names.verifyPass)}
         />
       </KeyboardAwareScrollView>
     );
   };
 
   return (
-    <SafeAreaView style={{...theme.SAFE_AREA}}>
-      {renderStatusBar()}
-      {renderHeader()}
+    <View style={styles.mainContainer} >
+      {renderStatusBarLight()}
+      {renderHeaderAuth('Forgot password', 'Enter your registered email',"mail")}
       {renderContent()}
-    </SafeAreaView>
+      </View >
   );
 };
 

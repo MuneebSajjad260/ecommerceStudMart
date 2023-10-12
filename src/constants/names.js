@@ -40,6 +40,10 @@ const names = {
   Wishlist: "Wishlist",
   totalDiscount:"totalDiscount",
   discountDetail:"discountDetail",
+  privacyPolicy:'PrivacyPolicy',
+  termsCond:'Terms&Cond',
+ changePassword:'ChangePassword',
+ verifyPass: 'VerifyPass'
 
 };
 

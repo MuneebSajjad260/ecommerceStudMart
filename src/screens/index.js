@@ -41,6 +41,10 @@ import ShopFilter from "./shop/ShopFilter";
 import DiscountCodeScreen from "./discountCodeScreen/DiscountCodeScreen";
 import TotalDiscountCodeScreen from "./totalDiscountScreen/TotalDiscountScreen";
 import DiscountDetail from "./discountDetail/DiscountDetail";
+import PrivacyPolicy from "./privacyPolicy/PrivacyPolicy";
+import TermsCond from "./termsCond/TermsCond";
+import ChangePassword from "./ChangePassword/ChangePassword";
+import VerifyPass from "./auth/VerifyPass";
 // import Payment from "./checkout/Payment";
 
 const screens = {
@@ -87,6 +91,11 @@ const screens = {
   DiscountCodeScreen,
   TotalDiscountCodeScreen,
   DiscountDetail,
+  PrivacyPolicy,
+  TermsCond,
+  ChangePassword,
+  VerifyPass
+  
 
   // Payment,
 };

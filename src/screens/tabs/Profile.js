@@ -193,20 +193,20 @@ const Profile = () => {
           <components.ProfileCategory
             title="Change Password"
             icon={<LockSvg />}
-            onPress={() => navigation.navigate(names.History)}
+            onPress={() => navigation.navigate(names.changePassword)}
           />
           <View style={styles.divider} />
 
           <components.ProfileCategory
             title="Privacy & Policy"
             icon={<SecuredSvg />}
-            onPress={() => navigation.navigate(names.Method)}
+            onPress={() => navigation.navigate(names.privacyPolicy)}
           />
           <View style={styles.divider} />
           <components.ProfileCategory
             title="Terms & conditions"
             icon={<DocumentSvg />}
-            onPress={() => navigation.navigate(names.Address)}
+            onPress={() => navigation.navigate(names.termsCond)}
           />
         </Wrapper>
 

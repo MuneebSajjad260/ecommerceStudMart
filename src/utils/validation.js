@@ -18,4 +18,13 @@ const PhoneNumberValidator = (phoneNumber) => {
   return "";
 };
 
-export {EmailValidator, PhoneNumberValidator};
+const PasswordValidator=(pass)=>{
+  const regex=/.{8,}/;
+
+  if (!regex.test(pass)) {
+    return "Password must be atleast 8 characters.";
+  }
+  return "";
+}
+
+export {EmailValidator, PhoneNumberValidator,PasswordValidator};

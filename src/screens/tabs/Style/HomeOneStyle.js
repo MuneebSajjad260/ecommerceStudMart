@@ -57,6 +57,7 @@ const styles = StyleSheet.create({
     height: 20,
     alignItems: "center",
     justifyContent: "center",
+    
   },
   uniName: {
     ...theme.FONTS.H5, 

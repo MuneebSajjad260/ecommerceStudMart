@@ -255,6 +255,29 @@ const StackNavigator = () => {
           options={{ headerShown: false }}
         />
 
+<Stack.Screen
+          name={names.privacyPolicy}
+          component={screens.PrivacyPolicy}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={names.termsCond}
+          component={screens.TermsCond}
+          options={{ headerShown: false }}
+        />
+
+      <Stack.Screen
+          name={names.changePassword}
+          component={screens.ChangePassword}
+          options={{ headerShown: false }}
+        />
+
+       <Stack.Screen
+          name={names.verifyPass}
+          component={screens.VerifyPass}
+          options={{ headerShown: false }}
+        />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

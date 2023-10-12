@@ -22,6 +22,7 @@ import {
   vendorExistMessage,
 } from '../../utils/functions';
 
+import { ProductList } from "../../services/actions/ProductList";
 import {theme, names} from "../../constants";
 import {components} from "../../components";
 import {svg} from "../../svg";
@@ -126,11 +127,33 @@ console.log("avg--",avg)
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [relatedIdsList, setRelatedIdsList] = useState(0);
 
-  const {data, isPending, error} = useAxios(
-    "get",
-    Payload_Keys,
-    Base_Url + endPoints.ProductsList,
-  );
+  // const {data, isPending, error} = useAxios(
+  //   "get",
+  //   Payload_Keys,
+  //   Base_Url + endPoints.ProductsList,
+  // );
+  const[data, setData]=useState()
+  const [isPending , setIsPending]=useState(false)
+  //GETTING PRODUCTS FROM API 
+  useEffect(() => {
+    setIsPending(true);
+    
+    dispatch(ProductList())
+      .unwrap()
+      .then((result) => {
+        console.log("product list result", result);
+        setData(result);
+      })
+      .catch((err) => {
+        console.log("prod list error---", err);
+        // Handle the error appropriately, e.g., display an error message to the user
+      })
+      .finally(() => {
+        setIsPending(false); // Set loading to false after the API call is completed (either success or error)
+      });
+  }, [dispatch]);
+
+
   data?.filter((item) => item.status === "publish");
 
   const getRelatedProducts = async (datam) => {
@@ -833,7 +856,7 @@ console.log("avg--",avg)
 
   const renderVendorInfo = () => {
     return (
-      <View
+      <TouchableOpacity
         style={{
           backgroundColor: apColors.white,
           marginHorizontal: 16,
@@ -842,7 +865,9 @@ console.log("avg--",avg)
           padding: 13,
           borderRadius: 8,
           marginBottom: 20,
+       
         }}
+      //  onPress={}
       >
         {/* <Wrapper> */}
         {/* <View
@@ -987,7 +1012,7 @@ console.log("avg--",avg)
         </View>
 
         {/* </Wrapper> */}
-      </View>
+      </TouchableOpacity>
     );;
   };;
 
