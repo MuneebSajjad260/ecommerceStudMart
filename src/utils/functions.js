@@ -118,6 +118,7 @@ const renderProducts = (data, navigation, isPending, viewLeft, viewRight) => {
             onPress={() =>
               navigation.navigate(names.Product, {
                 product: item,
+
               })
             }
           >

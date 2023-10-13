@@ -278,6 +278,12 @@ const StackNavigator = () => {
           options={{ headerShown: false }}
         />
 
+        <Stack.Screen
+          name={names.review}
+          component={screens.Review}
+          options={{ headerShown: false }}
+        />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

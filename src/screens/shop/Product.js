@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Image,
 } from "react-native";
+import { VendorList } from "../../services/actions/VendorList";
 import React, {useState , useEffect}  from "react";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {useDispatch, useSelector} from "react-redux";
@@ -60,6 +61,7 @@ const Product = ({apColors}) => {
   const dispatch = useDispatch();
   console.log('---product---', product);
 
+
   const auth = useSelector(selectUser);;
   console.log('---auth---', auth.data);;
 
@@ -87,6 +89,9 @@ const Product = ({apColors}) => {
         console.log(" brand product error ---", err.response?.data);
       });
   }, [dispatch ,product?.vendor_detail?.vendor_id]);
+
+
+
 
  // Calculate the average rating
   useEffect(() => {
@@ -152,6 +157,34 @@ console.log("avg--",avg)
         setIsPending(false); // Set loading to false after the API call is completed (either success or error)
       });
   }, [dispatch]);
+
+  const[brands, setBrands]=useState()
+
+  //GETTING PRODUCTS FROM API 
+
+    useEffect(() => {
+     
+     dispatch(VendorList()).unwrap().then(result=>{
+      console.log("vendor list  result", result)
+      const vendorsBrand = result?.vendors?.filter(vendor => vendor.vendor_data.user_role === "brand");
+  
+  // Now filteredVendors contains only the vendors with user_role "brand"
+  console.log("vendorsBrand---",vendorsBrand);
+
+  const filteredData = result.vendors.find(
+    (vendor) => vendor.vendor_id == product?.vendor_detail?.vendor_id
+  );
+  console.log("filteredData--",filteredData)
+
+  setBrands(filteredData)
+     
+     }).catch(err=>{
+      console.log("vendor list error---",err)
+     }).finally(() => {
+     
+    });
+    }, [dispatch]);
+  
 
 
   data?.filter((item) => item.status === "publish");
@@ -867,7 +900,13 @@ console.log("avg--",avg)
           marginBottom: 20,
        
         }}
-      //  onPress={}
+        onPress={()=>{
+          navigation.navigate(names.Shop,{
+            brandData:brands,
+            brand:true,
+              title: "All products",
+          })
+        }}
       >
         {/* <Wrapper> */}
         {/* <View

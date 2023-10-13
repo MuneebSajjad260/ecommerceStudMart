@@ -43,7 +43,8 @@ const names = {
   privacyPolicy:'PrivacyPolicy',
   termsCond:'Terms&Cond',
  changePassword:'ChangePassword',
- verifyPass: 'VerifyPass'
+ verifyPass: 'VerifyPass',
+ review:"Review"
 
 };
 

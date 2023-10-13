@@ -45,6 +45,7 @@ import PrivacyPolicy from "./privacyPolicy/PrivacyPolicy";
 import TermsCond from "./termsCond/TermsCond";
 import ChangePassword from "./ChangePassword/ChangePassword";
 import VerifyPass from "./auth/VerifyPass";
+import Review from "./review/Review";
 // import Payment from "./checkout/Payment";
 
 const screens = {
@@ -94,8 +95,8 @@ const screens = {
   PrivacyPolicy,
   TermsCond,
   ChangePassword,
-  VerifyPass
-  
+  VerifyPass,
+  Review
 
   // Payment,
 };

@@ -278,6 +278,11 @@ const FONTS = {
     fontSize: resFont(32),
     lineHeight: resFont(32) * 1.25,
   },
+  H48: {
+    fontFamily: "Mulish-Bold",
+    fontSize: resFont(48),
+    lineHeight: resFont(48) * 1.25,
+  },
   H36: {
     fontFamily: "Mulish-Bold",
     fontSize: resFont(36),

@@ -171,7 +171,7 @@ console.log("goback---",goBack)
 
 {brand && (
      
-     <ImageBackground    source={{uri: brandData.vendor_data.banner}} style={{
+     <ImageBackground    source={{uri: brandData.vendor_data?.banner}} style={{
        width: '100%', // or 'contain' depending on your preference
        height: '100%',
        position:'absolute',
@@ -181,7 +181,7 @@ console.log("goback---",goBack)
           <Image
            key={Number(brandData?.vendor_id)}
            style={{height: "50%", width: "50%",position:'absolute',alignSelf:'center'}}
-           source={{uri: brandData.vendor_data.logo_img}}
+           source={{uri: brandData.vendor_data?.logo_img}}
           
            resizeMode='contain'
             borderRadius={20}
@@ -196,13 +196,15 @@ console.log("goback---",goBack)
  paddingHorizontal:14
 }}>
 
-<View style={{flexDirection:'row',alignItems:'center'}}>
+<TouchableOpacity style={{flexDirection:'row',alignItems:'center'}} onPress={()=>{
+navigation.navigate(names.review)
+}} >
 <StarSvg changeSize={true}/>
 <View style={{marginLeft:theme.MARGINS.hy10}}>
 <Text style={{...theme.FONTS.H12,color:theme.COLORS.black }}>Rating & reviews</Text>
 <Text style={{...theme.FONTS.H2,color:theme.COLORS.black }}>{brandData?.vendor_data?.reviews ? brandData?.vendor_data?.reviews?.length : 0}</Text>
 </View>
-</View>
+</TouchableOpacity>
 </View>
 <View style={{
 width:theme.SIZES.rsWidth/2.3,
