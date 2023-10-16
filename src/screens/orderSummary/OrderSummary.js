@@ -17,15 +17,17 @@ import {renderStatusBar} from '../../utils/functions';
 import styles from './Styles/OrderSummaryStyle';
 import {components} from '../../components';
 import UserCheck from '../../svg/UserCheck';
-import {theme} from '../../constants';
+import {names, theme} from '../../constants';
 import CreditCard from '../../svg/CreditCard';
 import VisaSvg from '../../svg/VisaSvg';
 import Card from '../../components/OrderSummaryCard';
 import Up from "../../svg/Up";
 import Down from '../../svg/Down';
 import RatingCardSvg from "../../svg/RatingCardSvg";
+import {useNavigation} from '@react-navigation/native';
 
 const OrderSummary = ({route}) => {
+  const navigation = useNavigation();
   const dispatch = useDispatch();
   const {deliveryMethod, orderId} = route.params;
   console.log("delivery method--", deliveryMethod);
@@ -164,7 +166,12 @@ const OrderSummary = ({route}) => {
 
   const ratingCard = () => {
     return (
-      <View style={[styles.contentContainer, {marginTop: theme.MARGINS.hy10}]}>
+      <TouchableOpacity style={[styles.contentContainer, {marginTop: theme.MARGINS.hy10}]} 
+      
+      onPress={()=>{
+        navigation.navigate(names.giveReview)
+      }}
+      >
         <Wrapper style={styles.ratingCardCont}>
           <View style={[styles.flexDirection, {alignItems: 'center'}]}>
             <RatingCardSvg />
@@ -177,7 +184,7 @@ const OrderSummary = ({route}) => {
             </View>
           </View>
         </Wrapper>
-      </View>
+      </TouchableOpacity>
     );
   };
 

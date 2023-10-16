@@ -283,6 +283,11 @@ const StackNavigator = () => {
           component={screens.Review}
           options={{ headerShown: false }}
         />
+         <Stack.Screen
+          name={names.giveReview}
+          component={screens.GiveReview}
+          options={{ headerShown: false }}
+        />
 
       </Stack.Navigator>
     </NavigationContainer>

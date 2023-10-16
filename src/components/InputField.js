@@ -8,6 +8,7 @@ import getThemedColors from "../utils/themeMode";
 
 const InputField = ({
   title,
+  leaveComment,
   placeholder,
   icon,
   containerStyle,
@@ -34,7 +35,7 @@ const InputField = ({
     <View
       style={{
         paddingLeft: 30,
-        height: 50,
+        height: leaveComment ? 100 : 50,
         width: "100%",
         borderWidth: 1,
         // opacity: colorINP.opacity,

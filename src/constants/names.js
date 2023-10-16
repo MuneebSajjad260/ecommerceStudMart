@@ -44,7 +44,8 @@ const names = {
   termsCond:'Terms&Cond',
  changePassword:'ChangePassword',
  verifyPass: 'VerifyPass',
- review:"Review"
+ review:"Review",
+ giveReview:"GiveReview"
 
 };
 

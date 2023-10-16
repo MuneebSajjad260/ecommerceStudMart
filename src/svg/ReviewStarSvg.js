@@ -4,7 +4,7 @@ import Svg, { Path } from "react-native-svg"
 function ReviewStarSvg(props) {
   return (
     <Svg
-    width={20} height={20} viewBox="0 0 24 24"
+    width={props.width} height={props.height} viewBox="0 0 24 24"
       fill='yellow'
       xmlns="http://www.w3.org/2000/svg"
       {...props}

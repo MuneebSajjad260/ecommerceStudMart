@@ -4,39 +4,16 @@ import {useNavigation} from '@react-navigation/native';
 import { renderStatusBar } from "../../utils/functions";
 import {components} from '../../components';
 import {theme} from '../../constants';
-import styles from "./Styles/ReviewStyle";
+import styles from "./Styles/GiveReviewStyles";
 import { useDispatch, useSelector } from 'react-redux';
 import ReviewStarSvg from "../../svg/ReviewStarSvg";
 import Svg, { Path } from 'react-native-svg';
 import ReviewCard from "../../components/ReviewCard";
 import Button from "../../components/Button";
+import GiveReviewCard from "../../components/GiveReviewCard";
 
 
-const StarIcon = ({ filled }) => {
-  const fillColor = filled ? '#FAB247' : theme.COLORS.border;
-
-  return (
-   
-    <ReviewStarSvg fill={fillColor} width={20} height={20}/>
-  );
-};
-
-const RatingDisplay = ({ rating }) => {
-  const stars = [];
-
-  for (let i = 1; i <= 5; i++) {
-    stars.push(<StarIcon key={i} filled={rating >= i} />);
-  }
-
-  return (
-    <View style={styles.starRating}>
-      {stars}
-    </View>
-  );
-};
-
-  
-const Review = ({route}) => {
+const GiveReview = ({route}) => {
 
   const {brandData} = route.params || {};
   console.log("brandData--",brandData?.vendor_data?.vendor_rating)
@@ -55,7 +32,7 @@ console.log(`Average Order Rating: ${averageRating}`);
   const rating = averageRating; // Replace with your actual rating value
 
   const renderHeader = () => {
-    return <components.Header title={`Reviews(${ brandData?.vendor_data?.vendor_rating ? brandData?.vendor_data?.vendor_rating?.length : 0})`} goBack={true} border={true} 
+    return <components.Header title={"Give a Review"} goBack={true} border={true} 
     containerStyle={{backgroundColor: theme.COLORS.white, height:theme.RES_HEIGHT(90, 100, 125)}} 
     level={theme.RES_HEIGHT(8, 12, 35)}/>;
   };
@@ -67,25 +44,7 @@ return (
   showsVerticalScrollIndicator={false}
 >
 
-<Text style={styles.rating}>{rating ? rating.toFixed(1) : 0 }</Text>
-<View style={styles.container}>
-
-  <RatingDisplay rating={rating.toFixed(1)} />
-    </View>
-
-    <Text style={styles.avgRating}>Average Rating</Text>
-  
-    <FlatList
-  data={brandData?.vendor_data?.vendor_rating}
-  contentContainerStyle={{marginTop:theme.MARGINS.hy20}}
-  renderItem={({item})=>{
-return(
-
-    <ReviewCard data={item}/>
-
-    )
-  }}
-  />
+<GiveReviewCard/>
 
 </ScrollView>
 )
@@ -100,4 +59,4 @@ return(
   );
 };
 
-export default Review;
+export default GiveReview;
