@@ -5,17 +5,25 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     backgroundColor: theme.COLORS.appBg,
+   
+ 
   },
   scrollCont: 
   {
-      paddingVertical: theme.MARGINS.hy20,
-      paddingHorizontal : theme.MARGINS.hy10,
-    
+        paddingVertical: theme.MARGINS.hy20,
+
 },
 rating:{
     ...theme.FONTS.H48,
     color:theme.COLORS.black,
    alignSelf:'center'
+},
+avgRating:{
+  ...theme.FONTS.H12,
+  color:theme.COLORS.secondryTextColor,
+ alignSelf:'center',
+ marginTop:theme.MARGINS.hy5,
+
 },
 starCont:{
     flexDirection:'row',
@@ -25,7 +33,7 @@ starCont:{
     
 },
 container: {
-    flex: 1,
+  //  flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },

@@ -98,12 +98,12 @@ const Product = ({apColors}) => {
    
     let sumOfRatings = 0;
 
-    for (let i = 0; i < product?.vendor_detail?.reviews?.length; i++) {
-      const rating = parseInt(product?.vendor_detail?.reviews[i]?.order_rating, 10);
+    for (let i = 0; i < product?.vendor_detail?.vendor_rating?.length; i++) {
+      const rating = parseInt(product?.vendor_detail?.vendor_rating[i]?.rating, 10);
       sumOfRatings += rating;
     }
 
-    const avg = sumOfRatings / product?.vendor_detail?.reviews?.length;
+    const avg = sumOfRatings / product?.vendor_detail?.vendor_rating?.length;
 console.log("avg--",avg)
     // Update the state with the average rating
     setAverageRating(avg);
@@ -954,9 +954,9 @@ console.log("avg--",avg)
                   {product?.vendor_detail?.vendor_name}
                 </Text>{" "}
               </Text>
-              { product?.vendor_detail?.reviews ?
+              { product?.vendor_detail?.vendor_rating ?
               <Text style={styles.prodRating}>
-                {"\u2022"} {averageRating?.toFixed(1)} {"\u2022"} {product?.vendor_detail?.reviews?.length} {product?.vendor_detail?.reviews?.length >1 ? "reviews" : "review"}
+                {"\u2022"} {averageRating?.toFixed(1)} {"\u2022"} {product?.vendor_detail?.vendor_rating?.length} {product?.vendor_detail?.vendor_rating?.length >1 ? "reviews" : "review"}
               </Text>
 
               : 
