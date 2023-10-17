@@ -162,6 +162,10 @@ const styles = StyleSheet.create({
     color: theme.COLORS.black,
     marginTop: 6,
   },
+  viewReview:{
+    ...theme.FONTS.H14,
+    color:theme.COLORS.black
+  }
 });
 
 export default styles;

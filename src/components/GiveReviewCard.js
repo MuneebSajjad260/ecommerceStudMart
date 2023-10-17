@@ -167,7 +167,7 @@ containerStyle={{marginTop:theme.MARGINS.hy40}}
     wrapper: {
       borderColor: theme.COLORS.lightBlue1,
       marginBottom:theme.MARGINS.hy20,
-      marginHorizontal:theme.MARGINS.hy10,
+    //  marginHorizontal:theme.MARGINS.hy10,
       padding:theme.MARGINS.hy20
     },
     name: {

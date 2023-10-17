@@ -8,12 +8,14 @@ import styles from "./Styles/ChangePasswordStyles";
 import { useDispatch, useSelector } from 'react-redux';
 import { PasswordValidator } from "../../utils/validation";
 import Button from "../../components/Button";
+import { ChangePasswordApi } from "../../services/actions/ChangePasswordApi";
 
 const ChangePassword = ({route}) => {
   const navigation = useNavigation();
-  const {profile} = route.params || {};
   const dispatch = useDispatch()
 
+  const auth = useSelector(state=>state?.login?.data);
+  console.log("auth--",auth)
   const [currPass , setCurrPass] = useState({value: "", error: ""})
   const [newPass , setNewPass] = useState({value: "", error: ""})
   const [confirmPass , setConfirmPass] = useState({value: "", error: ""})
@@ -23,6 +25,11 @@ const ChangePassword = ({route}) => {
     containerStyle={{backgroundColor: theme.COLORS.white, height:theme.RES_HEIGHT(90, 100, 125)}} 
     level={theme.RES_HEIGHT(8, 12, 35)}/>;
   };
+
+  const handleUpdatePassword =()=>{
+    const body ={user_id:auth?.userid , old_password:currPass?.value , new_password: newPass?.value}
+    console.log("body----",body)
+  }
 
   const renderContent =()=>{
 return (
@@ -91,13 +98,13 @@ return (
 </View>
 <View>
 <components.Button
-          title="Sign in"
+          title="Update"
           containerStyle={{ marginBottom: theme.MARGINS.hy20 }}
         //  style={{ backgroundColor: (email === "" || password === "") ? apColors.appColorLight : apColors.appColor }}
            disable={ (currPass.value === "" || newPass.value === "" || confirmPass.value === "") ||  newPass.value != confirmPass.value}
         //   loading={isLoading}
           onPress={() => {
-           
+           handleUpdatePassword()
           }
           }
         />

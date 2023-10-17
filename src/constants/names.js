@@ -45,7 +45,8 @@ const names = {
  changePassword:'ChangePassword',
  verifyPass: 'VerifyPass',
  review:"Review",
- giveReview:"GiveReview"
+ giveReview:"GiveReview",
+ viewReview:"ViewReview"
 
 };
 

@@ -289,6 +289,12 @@ const StackNavigator = () => {
           options={{ headerShown: false }}
         />
 
+         <Stack.Screen
+          name={names.viewReview}
+          component={screens.ViewReview}
+          options={{ headerShown: false }}
+         />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

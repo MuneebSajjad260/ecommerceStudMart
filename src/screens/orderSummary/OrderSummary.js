@@ -10,7 +10,7 @@ import {
 import {SafeAreaView} from "react-native-safe-area-context";
 import {useDispatch} from 'react-redux';
 import moment from 'moment';
-
+import { GetSingleRating } from "../../services/actions/GetSingleRating";
 import {RetrieveOrder} from '../../services/actions/RetrieveOrder';
 import Wrapper from '../../components/Wrapper';
 import {renderStatusBar} from '../../utils/functions';
@@ -30,14 +30,32 @@ const OrderSummary = ({route}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch();
   const {deliveryMethod, orderId} = route.params;
-  console.log("delivery method--", deliveryMethod);
+  const {review} = route.params || false;
+  console.log("delivery method--", deliveryMethod,'-review-',review);
   console.log('order id --', orderId);
 
   //STATE
   const [up, setUp] = useState(false);
   const [retrieveOrder, setRetrieveOrder] = useState();
+  const [checkReview , setCheckReview] =useState()
   //Loading State
   const [loading, setLoading] = useState(false);
+
+
+  //calling api to check whether review is done or not 
+  useEffect(()=>{
+    const body ={orderId:orderId , vendorId:retrieveOrder?.vendor_detail?.vendor_id}
+  
+    console.log("body--",body)
+dispatch(GetSingleRating(body)).unwrap().then(result=>{
+  console.log("single rating result--",result?.review?.length)
+  setCheckReview(result?.review?.length > 0 ? true : false )
+}).catch(err=>{
+  console.log("single rating error--",err)
+  setCheckReview(false)
+})
+
+  },[dispatch,orderId,retrieveOrder?.vendor_detail?.vendor_id])
 
   //CALLING RETRIEVE ORDER API
   useEffect(() => {
@@ -105,12 +123,23 @@ const OrderSummary = ({route}) => {
             <Text style={styles.placedBy}>{`Placed on: ${moment(
               retrieveOrder?.date_created,
             ).format('DD MMMM, YYYY')}`}</Text>
-            {retrieveOrder?.line_items &&
+            <View>
+              { checkReview || review?
+              <TouchableOpacity onPress={()=>{navigation.navigate(names.viewReview ,{ 
+          orderId:orderId,
+          vendor_id:retrieveOrder?.vendor_detail?.vendor_id,})}} >
+            <Text style={styles.viewReview}>View Review</Text>
+            </TouchableOpacity>
+            :
+            null
+  }
+            {!retrieveOrder?.line_items &&
             retrieveOrder?.line_items.length > 1 ? (
-              <TouchableOpacity onPress={handleIconToggle}>
+              <TouchableOpacity  style={{alignItems:"flex-end"}}onPress={handleIconToggle}>
                 {up ? <Up /> : <Down />}
               </TouchableOpacity>
-            ) : null}
+             ) : null} 
+            </View>
           </View>
 
           <FlatList
@@ -169,7 +198,12 @@ const OrderSummary = ({route}) => {
       <TouchableOpacity style={[styles.contentContainer, {marginTop: theme.MARGINS.hy10}]} 
       
       onPress={()=>{
-        navigation.navigate(names.giveReview)
+        navigation.navigate(names.giveReview,{
+          orderId:orderId,
+          vendor_id:retrieveOrder?.vendor_detail?.vendor_id,
+          deliveryMethod:deliveryMethod
+
+        })
       }}
       >
         <Wrapper style={styles.ratingCardCont}>
@@ -358,7 +392,7 @@ const OrderSummary = ({route}) => {
       <ScrollView showsVerticalScrollIndicator={false}>
         {deliveryTime()}
         {productCard()}
-        {retrieveOrder?.status == "completed" ? ratingCard() : null}
+        {!checkReview && !review && retrieveOrder?.status == "completed" ? ratingCard() : null}
         {shippingDetails()}
 
         {deliveryMethod == "self" ? null : paymentDetails()}

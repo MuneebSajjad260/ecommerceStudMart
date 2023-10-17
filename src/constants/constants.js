@@ -20,7 +20,10 @@ const endPoints = {
   brandDiscount:'wp-json/sm-api/v1/brands-discounts',
   shippingZone:"wp-json/wc/v3/shipping/zones",
   profile:'wp-json/sm-api/v1/user-profile',
-  updateProfile:'wp-json/sm-api/v1/update-user-profile'
+  updateProfile:'wp-json/sm-api/v1/update-user-profile',
+  uploadVendorRating:'wp-json/sm-api/v1/upload_vendor_rating',
+  getSingleRating:'wp-json/sm-api/v1/get-order-review',
+  changePassword:'wp-json/sm-api/v1/change-password'
 }
 
 const onboardingData = [

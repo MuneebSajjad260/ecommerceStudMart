@@ -11,6 +11,7 @@ const InputField = ({
   leaveComment,
   placeholder,
   icon,
+  editable,
   containerStyle,
   secureTextEntry,
   keyboardType,
@@ -64,6 +65,7 @@ const InputField = ({
         selectionColor={colors.appColor}
         keyboardType={keyboardType}
         placeholder={placeholder}
+        editable={editable}
         secureTextEntry={secureTextEntry && passwordVisible}
         placeholderTextColor={colors.lightGray}
         onChangeText={(val) => onChangeText(val)}

@@ -47,6 +47,7 @@ import ChangePassword from "./ChangePassword/ChangePassword";
 import VerifyPass from "./auth/VerifyPass";
 import Review from "./review/Review";
 import GiveReview from "./giveReview/GiveReview";
+import ViewReview from "./viewReview/ViewReview";
 // import Payment from "./checkout/Payment";
 
 const screens = {
@@ -98,7 +99,8 @@ const screens = {
   ChangePassword,
   VerifyPass,
   Review,
-  GiveReview
+  GiveReview,
+  ViewReview
 
   // Payment,
 };
