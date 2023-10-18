@@ -23,7 +23,8 @@ const endPoints = {
   updateProfile:'wp-json/sm-api/v1/update-user-profile',
   uploadVendorRating:'wp-json/sm-api/v1/upload_vendor_rating',
   getSingleRating:'wp-json/sm-api/v1/get-order-review',
-  changePassword:'wp-json/sm-api/v1/change-password'
+  changePassword:'wp-json/sm-api/v1/change-password',
+  forgotPass:"wp-json/sm-api/v1/forget-password"
 }
 
 const onboardingData = [

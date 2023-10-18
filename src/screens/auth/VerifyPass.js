@@ -15,13 +15,13 @@ import {svg} from '../../svg'
 import { setScreen } from "../../store/tabSlice";
 import ForgotLockSvg from "../../svg/ForgotLockSvg";
 
-const VerifyPass = ({ apColors }) => {
+const VerifyPass = ({ apColors ,route}) => {
   const navigation = useNavigation();
+  const {email} = route.params || {};
   const dispatch = useDispatch()
   const styles = makeStyles(apColors)
   const screenWidth = Dimensions.get('screen').width
 
-  const [email , setEmail] = useState({value: "", error: ""})
 
   const renderHeaderAuth = (title, subtitle, icon) => {
     return <View style={{ alignSelf: "center" }}>
@@ -90,15 +90,17 @@ const VerifyPass = ({ apColors }) => {
       
       <View>
      <Text style={styles.desc}>
-     An email with a password reset link sent to <Text style={[styles.desc,{color:theme.COLORS.black}]}>maazhaider@gmail.com</Text> account. Please check the link to reset the password
+     An email with a password reset link sent to <Text style={[styles.desc,{color:theme.COLORS.black}]}>{email}</Text> account. Please check the link to reset the password
      </Text>
 
      <Text style={[styles.desc,{marginTop:theme.MARGINS.hy40}]}>
      Didn’t receive the email yet?
      </Text>
+     <TouchableOpacity onPress={()=>{navigation.navigate(names.ForgotPass)}}>
      <Text style={[styles.desc,{marginTop:theme.MARGINS.hy5, color:theme.COLORS.appColor}]}>
      Resend email
      </Text>
+     </TouchableOpacity>
      </View>
      <View>
         <components.SecondaryButton

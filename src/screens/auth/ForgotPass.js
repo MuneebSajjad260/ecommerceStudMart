@@ -11,15 +11,19 @@ import {theme, names} from "../../constants";
 import SignupSvg from "../../svg/SignupSvg";
 import MailSvg from "../../svg/MailSvg";
 import {svg} from '../../svg'
-
+import { ForgotPassApi } from "../../services/actions/ForgotPassApi";
 import ForgotLockSvg from "../../svg/ForgotLockSvg";
+import { useDispatch } from "react-redux";
 
 const ForgotPass = ({ apColors }) => {
   const navigation = useNavigation();
+  const dispatch=useDispatch()
   const styles = makeStyles(apColors)
   const screenWidth = Dimensions.get('screen').width
 
   const [email , setEmail] = useState({value: "", error: ""})
+  const [forgetRes, setForgetRes]=useState()
+  const [isPending , setIsPending]=useState(false)
 
   const renderHeaderAuth = (title, subtitle, icon) => {
     return <View style={{ alignSelf: "center" }}>
@@ -73,6 +77,24 @@ const ForgotPass = ({ apColors }) => {
     </View>;
   };
 
+  const submitSend=()=>{
+
+    setIsPending(true);
+    dispatch(ForgotPassApi({user_email:email.value})).unwrap().then(result=>{
+      console.log("forgot pass api result--",result)
+  setForgetRes(result)
+  if(result?.status == 200) {
+    navigation.navigate(names.verifyPass,{email:email.value})
+  }
+    }).catch(err=>{
+      console.log("forgot pass err--",err)
+  setForgetRes(err)
+    }).finally(() => {
+      setIsPending(false); // Set loading to false after the API call is completed (either success or error)
+    });
+
+  }
+
   const renderContent = () => {
     return (
       <KeyboardAwareScrollView
@@ -103,10 +125,21 @@ const ForgotPass = ({ apColors }) => {
             {email?.error}
           </Text>
         </View> : null}
+
+        {forgetRes?.status == 404 ? <View style={styles.errorMsg}>
+          <Text
+            style={styles.errorTxt}
+          >
+            {forgetRes?.message}
+          </Text>
+        </View> : null}
+
         </View>
         <components.Button
+         loading={isPending}
+         disable={(email.value === '' || email.error !== '') ? true : false}
           title="send"
-          onPress={() => navigation.navigate(names.verifyPass)}
+          onPress={submitSend}
         />
       </KeyboardAwareScrollView>
     );
