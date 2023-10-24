@@ -7,12 +7,13 @@ import {
   Image,
 } from "react-native";
 import { VendorList } from "../../services/actions/VendorList";
-import React, {useState , useEffect}  from "react";
+import React, {useState , useEffect,useCallback,useMemo,useRef}  from "react";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {useDispatch, useSelector} from "react-redux";
 import {addToCart, removeFromCart} from "../../store/cartSlice";
 import {addToWishlist, removeFromWishlist} from "../../store/wishlistSlice";
 import {useNavigation, useRoute} from "@react-navigation/native";
+import { PriceValidator } from "../../utils/validation";
 import {
   flashMessage,
   productExistMessage,
@@ -22,7 +23,11 @@ import {
   renderStatusBar,
   vendorExistMessage,
 } from '../../utils/functions';
-
+import BottomSheet, {
+  BottomSheetBackdrop,
+  useBottomSheetDynamicSnapPoints,
+  BottomSheetView,
+} from "@gorhom/bottom-sheet";
 import { ProductList } from "../../services/actions/ProductList";
 import {theme, names} from "../../constants";
 import {components} from "../../components";
@@ -33,11 +38,13 @@ import {productByID} from "../../constants/mockData";
 import Wrapper from '../../components/Wrapper';
 import styles from './Styles/ProductStyles';;
 import PrimaryText from '../../components/PrimaryText';
-
+import NegotiateSvg from '../../svg/NegotiateSvg'
 import axios from 'axios';
 import { BrandProduct } from "../../services/actions/BrandProduct";
 import {selectUser} from "../../store/userSlice";
-
+import Button from "../../components/Button";
+import { PostNegotiate } from "../../services/actions/PostNegotiate";
+import OrderSuccessful from "../../svg/OrderSuccessful";
 /**
  *  Product details
  * @param {*} param0
@@ -53,7 +60,9 @@ const Product = ({apColors}) => {
   let viewRight = {
     hide: true,
     title: '',
-  };;
+  };
+  const [price , setPrice] = useState({value: "", error: ""})
+  const[pendingNego,setPendingNego]=useState(false)
   const {product} = route.params;
   const [vendorProd ,setVendorProd] = useState()
   const[averageRating , setAverageRating]= useState()
@@ -61,9 +70,30 @@ const Product = ({apColors}) => {
   const dispatch = useDispatch();
   console.log('---product---', product);
 
+  ///BOTTOMSHEET /////
+  const bottomSheetRef = useRef(null);
+  const snapPoints = useMemo(() => ["51%"], []);
+  const bottomSheetSentRef = useRef(null);
+  const snapPointsSent = useMemo(() => ["45%"], []);
+  const renderBackdropBottomSheet = useCallback(
+    (props) => (
+      <BottomSheetBackdrop
+        {...props}
+        BackdropPressBehavior="close"
+        disappearsOnIndex={-1}
+        appearsOnIndex={0}
+      />
+    ),
+    [],
+  );
+
+  /////
 
   const auth = useSelector(selectUser);;
   console.log('---auth---', auth.data);;
+
+  const userData = useSelector(state=>state?.login?.data);
+  console.log("userdata-",userData)
 
   const currentProduct = useSelector((state) => {
     return state.cart.list.find((item) => item.id === product?.id);
@@ -131,6 +161,7 @@ console.log("avg--",avg)
 
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [relatedIdsList, setRelatedIdsList] = useState(0);
+
 
   // const {data, isPending, error} = useAxios(
   //   "get",
@@ -272,12 +303,7 @@ console.log("avg--",avg)
       <components.SecondaryButton
         title="% Negotiate Price"
         onPress={() => {
-          flashMessage('COMMING SOON', '');;
-          // productExist(product)
-
-          //   ? productExistMessage()
-          //   : dispatch(addToCart(cartItem));
-          // !productExist(product) && productWasAddedMessage(product);
+          bottomSheetRef.current?.snapToIndex(0);
         }}
         containerStyle={{marginBottom: 40}}
         textStyle={{color: apColors.primaryBg}}
@@ -285,6 +311,43 @@ console.log("avg--",avg)
     );
   };
 
+  const handleOfferBtn=()=>{
+// Get the current time using the Date object
+const now = new Date();
+
+// Extract the hours, minutes, and seconds
+const hours = now.getHours();
+const minutes = now.getMinutes();
+const seconds = now.getSeconds();
+
+// Calculate the total seconds
+const totalSeconds = hours * 3600 + minutes * 60 + seconds;
+
+console.log("Current time in seconds:", totalSeconds);
+  
+    const body ={offer_id:'' , user_id:userData?.userid,
+     user_name:`${auth?.data?.billing?.first_name}${auth?.data?.billing?.last_name}`,
+    offer_value:price.value,
+    status:'pending',
+    submission_time:totalSeconds,
+    product_id:product?.id
+
+  }
+
+    console.log("bodyy-",body)
+    setPendingNego(true);
+    dispatch(PostNegotiate(body)).unwrap().then(result=>{
+      console.log("result negotiate -",result)
+      bottomSheetRef.current?.close();
+      bottomSheetSentRef.current?.snapToIndex(0);
+
+    }).catch(err=>{
+      console.log("err negotiate --",err)
+    }).finally(() => {
+      setPendingNego(false); // Set loading to false after the API call is completed (either success or error)
+    });
+
+  }
   const renderHeader = () => {
     return (
       <components.Header
@@ -1171,11 +1234,90 @@ console.log("avg--",avg)
   // }
 
   return (
-    <View style={{flex: 1, backgroundColor: apColors.white}}>
+    <View style={{flex: 1, backgroundColor: theme.COLORS.appBg}}>
       {renderStatusBar()}
       {renderHeader()}
       {renderContent()}
       {renderFooter()}
+      <BottomSheet
+        ref={bottomSheetRef}
+        snapPoints={snapPoints}
+        backdropComponent={renderBackdropBottomSheet}
+        index={-1}
+        enablePanDownToClose={true}
+        enabledInnerScrolling={true}
+      >
+        <BottomSheetView style={styles.bsCont}>
+          <NegotiateSvg />
+          <Text style={styles.bsTitleTxt}>Negotiate Price</Text>
+          <Text style={styles.bsDescTxt}>Don't like the price? Make an offer and negotiate with the seller!</Text>
+<View style={styles.mainInputCont}>
+          <components.InputField
+          title="Enter price"
+          containerStyle={styles.inpContainer}
+          onChangeText={(val) => {
+            setPrice({value: val, error: PriceValidator(val)});
+          }}
+       value={price?.value}
+        />
+        {price?.error ? <View style={styles.errorMsg}>
+          <Text
+            style={styles.errorTxt}
+          >
+            {price?.error}
+          </Text>
+        </View> : null}
+        </View>
+
+          <View style={[styles.flexDirection, {marginTop: theme.MARGINS.hy20}]}>
+            <View style={{width: "40%"}}>
+              <components.SecondaryButton
+                title={'Cancel'}
+                onPress={()=>{
+                  bottomSheetRef.current?.close();
+                }}
+              />
+            </View>
+
+            <View style={[{width: "40%"}, {marginLeft: 18}]}>
+              <Button
+                title="Send offer"
+                loading={pendingNego}
+disable={ price.value === '' || price.error !== ''}
+                 onPress={handleOfferBtn}
+              />
+            </View>
+          </View>
+        </BottomSheetView>
+      </BottomSheet>
+
+
+      <BottomSheet
+        ref={bottomSheetSentRef}
+        snapPoints={snapPointsSent}
+        backdropComponent={renderBackdropBottomSheet}
+        index={-1}
+        enablePanDownToClose={true}
+        enabledInnerScrolling={true}
+      >
+        <BottomSheetView style={styles.bsCont}>
+        <OrderSuccessful />
+          <Text style={styles.bsTitleTxt}>Offer sent</Text>
+
+
+          <View style={{marginTop: theme.MARGINS.hy20,width:'90%',marginHorizontal: theme.MARGINS.hy20}}>
+          
+              <components.SecondaryButton
+                title={'Close'}
+                onPress={()=>{
+                  bottomSheetSentRef.current?.close();
+                }}
+              />
+          
+          </View>
+        </BottomSheetView>
+      </BottomSheet>
+
     </View>
   );
 };

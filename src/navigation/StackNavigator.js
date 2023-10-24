@@ -294,7 +294,17 @@ const StackNavigator = () => {
           component={screens.ViewReview}
           options={{ headerShown: false }}
          />
+            <Stack.Screen
+          name={names.offerList}
+          component={screens.OfferList}
+          options={{ headerShown: false }}
+         />
 
+       <Stack.Screen
+          name={names.contactUs}
+          component={screens.Contact}
+          options={{ headerShown: false }}
+         />
       </Stack.Navigator>
     </NavigationContainer>
   );

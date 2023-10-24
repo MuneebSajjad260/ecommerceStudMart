@@ -175,7 +175,7 @@ const Profile = () => {
           <components.ProfileCategory
             title="My Offers"
             icon={<OfferSvg />}
-            onPress={() => navigation.navigate(names.Method)}
+            onPress={() => navigation.navigate(names.offerList)}
           />
 
           <View style={styles.divider} />
@@ -216,7 +216,7 @@ const Profile = () => {
           <components.ProfileCategory
             title="Contact us"
             icon={<ContactSvg />}
-            onPress={() => navigation.navigate(names.History)}
+            onPress={() => navigation.navigate(names.contactUs)}
           />
         </Wrapper>
 

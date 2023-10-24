@@ -24,7 +24,8 @@ const endPoints = {
   uploadVendorRating:'wp-json/sm-api/v1/upload_vendor_rating',
   getSingleRating:'wp-json/sm-api/v1/get-order-review',
   changePassword:'wp-json/sm-api/v1/change-password',
-  forgotPass:"wp-json/sm-api/v1/forget-password"
+  forgotPass:"wp-json/sm-api/v1/forget-password",
+  postNegotiate:"wp-json/sm-api/v1/custom_offers/add_custom_offer"
 }
 
 const onboardingData = [

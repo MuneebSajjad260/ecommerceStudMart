@@ -181,14 +181,18 @@ const styles = StyleSheet.create({
     //alignItems:'center',
   },
   bsTitleTxt: {
-    ...theme.FONTS.Font_l,
+    ...theme.FONTS.H5,
     color: theme.COLORS.black,
-    marginTop: 30,
+    marginTop: theme.MARGINS.hy20,
   },
   bsDescTxt: {
     ...theme.FONTS.H14,
-    color: theme.COLORS.black,
+    color: theme.COLORS.secondryTextColor,
     marginTop: theme.MARGINS.marginXParent_xxs,
+    alignSelf:'center',
+    marginHorizontal:theme.MARGINS.hy30,
+    textAlign:'center'
+    
   },
   btn: {width: "40%"},
   footer: {
@@ -196,6 +200,28 @@ const styles = StyleSheet.create({
   bottom: 0,
     right: 0,
     left: 0,
+  },
+  bsCont: {flex: 1, alignItems: "center", marginTop: 30},
+  inpContainer: {
+    borderWidth: 1,
+    borderColor: theme.COLORS.border,
+
+  },
+  mainInputCont:{
+    marginTop:theme.MARGINS.hy20,
+    marginHorizontal:theme.MARGINS.hy20,
+  },
+  errorMsg: {
+    backgroundColor: theme.COLORS.appBg,
+    padding: 5,
+    borderRadius: 16,
+   // marginBottom: 8
+  },
+  errorTxt: {
+    ...theme.FONTS.Mulish_400Regular,
+    fontSize: 12,
+    lineHeight: 12 * 1.5,
+    color: theme.COLORS.redCBg,
   },
 });
 

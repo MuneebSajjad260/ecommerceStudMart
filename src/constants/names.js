@@ -46,7 +46,9 @@ const names = {
  verifyPass: 'VerifyPass',
  review:"Review",
  giveReview:"GiveReview",
- viewReview:"ViewReview"
+ viewReview:"ViewReview",
+ offerList:"OfferList",
+ contactUs:'ContactUs'
 
 };
 

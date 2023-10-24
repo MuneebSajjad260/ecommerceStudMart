@@ -25,6 +25,15 @@ const PasswordValidator=(pass)=>{
     return "Password must be atleast 8 characters.";
   }
   return "";
+};
+
+const PriceValidator=(pass)=>{
+  const regex=/^\d+$/;
+
+  if (!regex.test(pass)) {
+    return "Please enter valid price";
+  }
+  return "";
 }
 
-export {EmailValidator, PhoneNumberValidator,PasswordValidator};
+export {EmailValidator, PhoneNumberValidator,PasswordValidator,PriceValidator};
