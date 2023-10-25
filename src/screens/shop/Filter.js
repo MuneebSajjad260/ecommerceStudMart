@@ -29,7 +29,8 @@ const Filter = () => {
   const {title,productId,categoryData,universityData} = route.params || {};
   const [category, setCategory] = useState();
   const [universityList, setUniversityList] = useState();
-  const [loading, setLoading] = useState(false);
+  const [loadingCat, setLoadingCat] = useState(false);
+  const [loadingUni, setLoadingUni] = useState(false);
   const [low, setLow] = useState(0);
   const [high, setHigh] = useState(10000);
   const [min, setMin] = useState(0);
@@ -42,7 +43,7 @@ const Filter = () => {
  
   //GET CATEGORIES FROM API
   useEffect(() => {
-    setLoading(true);
+    setLoadingCat(true);
     dispatch(getCategoriesListAction())
       .unwrap()
       .then((result) => {
@@ -54,14 +55,14 @@ const Filter = () => {
         // Handle the error by displaying it using <Text> component
       })
       .finally(() => {
-        setLoading(false);
+        setLoadingCat(false);
       });
   }, []);
 
   //GET UNIVERSITIES FROM API
 
   useEffect(() => {
-    setLoading(true);
+    setLoadingUni(true);
     dispatch(GetUniversities())
       .unwrap()
       .then((result) => {
@@ -73,7 +74,7 @@ const Filter = () => {
         // Handle the error by displaying it using <Text> component
       })
       .finally(() => {
-        setLoading(false);
+        setLoadingUni(false);
       });
   }, []);
   useEffect(() => {
@@ -186,6 +187,7 @@ const Filter = () => {
         priceFilter={priceFilter}
         categoryData={categoryData}
         universityData={universityData}
+        loading={loadingCat && loadingUni}
       />
     );
   };

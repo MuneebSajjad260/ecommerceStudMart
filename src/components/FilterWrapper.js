@@ -2,8 +2,9 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import React, { useState, useEffect } from "react";
 import { theme } from "../constants";
 import Wrapper from "./Wrapper";
+import CustomShimmerPlaceHolder from "./CustomShimmerPlaceHolder";
 
-const FilterWrapper = ({ category, university, price, renderPrice, applyFilters,priceFilter,categoryData,universityData }) => {
+const FilterWrapper = ({loading, category, university, price, renderPrice, applyFilters,priceFilter,categoryData,universityData }) => {
  
   console.log("categoryData---",categoryData)
   // const [filterData, setFilterData] = useState({ category: categoryData ? categoryData : [], university: universityData ? universityData : [] }); // Separate arrays for category and university
@@ -49,8 +50,62 @@ const FilterWrapper = ({ category, university, price, renderPrice, applyFilters,
     <Wrapper style={styles.wrapper}>
       {/* -------CATEGORIES------ */}
       <View>
-        <Text style={styles.name}>Categories</Text>
+        <Text style={[styles.name,{marginBottom: loading ? theme.MARGINS.hy10 : 0}]}>Categories</Text>
 
+        <CustomShimmerPlaceHolder visible={loading} borderRadius={10} style={{ width: "90%", height: 160, borderRadius: 10, alignSelf: 'center' , paddingBottom:theme.MARGINS.hy20}}>
+          <View style={{flexDirection:'row',marginBottom:loading ? theme.MARGINS.hy10 : 0}}>
+    <View style={{ 
+    width: loading ? 100 : 0,
+    height: loading? 30:0,
+    borderWidth: loading ? 1 : 0,
+    borderColor: "rgba(20, 0, 35, 0.1)",
+    borderRadius: 20,
+    backgroundColor: "rgba(20, 0, 35, 0.05)"
+    }}></View>
+    <View style={{ 
+     width: loading ? 100 : 0,
+     height: loading? 30:0,
+     borderWidth: loading ? 1 : 0,
+    borderColor: "rgba(20, 0, 35, 0.1)",
+    borderRadius: 20,
+    backgroundColor: "rgba(20, 0, 35, 0.05)" ,marginLeft:theme.MARGINS.hy10 }}></View>
+    <View style={{
+      width: loading ? 100 : 0,
+      height: loading? 30:0,
+      borderWidth: loading ? 1 : 0,
+    borderColor: "rgba(20, 0, 35, 0.1)",
+    borderRadius: 20,
+    backgroundColor: "rgba(20, 0, 35, 0.05)",marginLeft:theme.MARGINS.hy10  }}></View>
+    </View>
+  
+
+  </CustomShimmerPlaceHolder> 
+
+  <CustomShimmerPlaceHolder visible={loading} borderRadius={10} style={{ width: "90%", height: 160, borderRadius: 10, alignSelf: 'center' , paddingBottom:theme.MARGINS.hy20}}>
+          <View style={{flexDirection:'row'}}>
+    <View style={{ 
+    width: loading ? 100 : 0,
+    height: loading? 30:0,
+    borderWidth: loading ? 1 : 0,
+    borderColor: "rgba(20, 0, 35, 0.1)",
+    borderRadius: 20,
+    backgroundColor: "rgba(20, 0, 35, 0.05)"
+    }}></View>
+    <View style={{ 
+     width: loading ? 100 : 0,
+     height: loading? 30:0,
+     borderWidth: loading ? 1 : 0,
+    borderColor: "rgba(20, 0, 35, 0.1)",
+    borderRadius: 20,
+    backgroundColor: "rgba(20, 0, 35, 0.05)" ,marginLeft:theme.MARGINS.hy10 }}></View>
+
+    </View>
+  
+
+  </CustomShimmerPlaceHolder> 
+  
+
+{!loading ? 
         <View style={styles.nameContainerWrapper}>
           {category?.map((item) => (
             <TouchableOpacity
@@ -76,12 +131,65 @@ const FilterWrapper = ({ category, university, price, renderPrice, applyFilters,
             </TouchableOpacity>
           ))}
         </View>
+        : null}
       </View>
 
       {/* -------UNIVERSITIES------ */}
       <View style={styles.marginTop}>
-        <Text style={styles.name}>Universities</Text>
+      <Text style={[styles.name,{marginBottom: loading ? theme.MARGINS.hy10 : 0}]}>Universities</Text>
 
+        <CustomShimmerPlaceHolder visible={loading} borderRadius={10} style={{ width: "90%", height: 160, borderRadius: 10, alignSelf: 'center' , paddingBottom:theme.MARGINS.hy20}}>
+        <View style={{flexDirection:'row',marginBottom:loading ? theme.MARGINS.hy10 : 0}}>
+    <View style={{ 
+    width: loading ? 100 : 0,
+    height: loading? 30:0,
+    borderWidth: loading ? 1 : 0,
+    borderColor: "rgba(20, 0, 35, 0.1)",
+    borderRadius: 20,
+    backgroundColor: "rgba(20, 0, 35, 0.05)"
+    }}></View>
+    <View style={{ 
+     width: loading ? 100 : 0,
+     height: loading? 30:0,
+     borderWidth: loading ? 1 : 0,
+    borderColor: "rgba(20, 0, 35, 0.1)",
+    borderRadius: 20,
+    backgroundColor: "rgba(20, 0, 35, 0.05)" ,marginLeft:theme.MARGINS.hy10 }}></View>
+    <View style={{
+      width: loading ? 100 : 0,
+      height: loading? 30:0,
+      borderWidth: loading ? 1 : 0,
+    borderColor: "rgba(20, 0, 35, 0.1)",
+    borderRadius: 20,
+    backgroundColor: "rgba(20, 0, 35, 0.05)",marginLeft:theme.MARGINS.hy10  }}></View>
+    </View>
+   
+  </CustomShimmerPlaceHolder> 
+
+  <CustomShimmerPlaceHolder visible={loading} borderRadius={10} style={{ width: "90%", height: 160, borderRadius: 10, alignSelf: 'center' , paddingBottom:theme.MARGINS.hy20}}>
+          <View style={{flexDirection:'row'}}>
+    <View style={{ 
+    width: loading ? 100 : 0,
+    height: loading? 30:0,
+    borderWidth: loading ? 1 : 0,
+    borderColor: "rgba(20, 0, 35, 0.1)",
+    borderRadius: 20,
+    backgroundColor: "rgba(20, 0, 35, 0.05)"
+    }}></View>
+    <View style={{ 
+     width: loading ? 100 : 0,
+     height: loading? 30:0,
+     borderWidth: loading ? 1 : 0,
+    borderColor: "rgba(20, 0, 35, 0.1)",
+    borderRadius: 20,
+    backgroundColor: "rgba(20, 0, 35, 0.05)" ,marginLeft:theme.MARGINS.hy10 }}></View>
+
+    </View>
+  
+
+  </CustomShimmerPlaceHolder> 
+  
+  {!loading ? 
         <View style={styles.nameContainerWrapper}>
           {university?.map((item) => (
             <TouchableOpacity
@@ -107,6 +215,8 @@ const FilterWrapper = ({ category, university, price, renderPrice, applyFilters,
             </TouchableOpacity>
           ))}
         </View>
+        :
+        null}
       </View>
 
       {/* -------PRICE------ */}
