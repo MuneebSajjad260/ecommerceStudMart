@@ -16,12 +16,18 @@ import BottomSheet, {
     BottomSheetView,
   } from '@gorhom/bottom-sheet';
   import ProfileUpdateSvg from "../../svg/ProfileUpdateSvg";
+  import { ContactUsApi } from "../../services/actions/ContactUsApi";
 
 const Contact = ({route}) => {
   const navigation = useNavigation();
   const dispatch = useDispatch()
+
+  const auth = useSelector(state=>state?.login?.data);
+  console.log("auth--",auth)
+
   const [subject , setSubject] = useState({value: "", error: ""})
   const [desc , setDesc] = useState({value: "", error: ""})
+  const [isPending , setIsPending]=useState(false)
 
   const bottomSheetRef = useRef(null);
   const snapPoints = useMemo(() => ['38%'], []);
@@ -46,7 +52,20 @@ const Contact = ({route}) => {
   };
 
   const handleSubmit=()=>{
-  bottomSheetRef.current?.snapToIndex(0);
+
+    const body={name:auth?.username , email: auth?.email , message:desc, subject:subject}
+    setIsPending(true);
+    dispatch(ContactUsApi(body)).unwrap().then(result=>{
+      console.log("contact us result---",result)
+
+      bottomSheetRef.current?.snapToIndex(0);
+
+    }).catch(err=>{
+      console.log("err change pass -",err)
+    }).finally(() => {
+      setIsPending(false); // Set loading to false after the API call is completed (either success or error)
+    });
+
   }
 
   const renderContent =()=>{
@@ -86,10 +105,11 @@ return (
 
 <components.Button
   
-  disable={subject.value == '' || desc.value == ''}
-
+ disable={subject.value == '' || desc.value == ''}
+ loading={isPending}
  title="Submit"
  onPress={handleSubmit}
+
           />
 
 </ScrollView>

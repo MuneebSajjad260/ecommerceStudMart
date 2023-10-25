@@ -21,23 +21,24 @@ import {svg} from "../svg";
 import ReviewStarSvg from "../svg/ReviewStarSvg";
 import Tick from "../svg/Tick";
 import CheckoutSvg from '../svg/CheckoutSvg'
+import moment from 'moment';
 
 const OfferCard = ({data}) => {
-  console.log('data--', data);
+  console.log('data--', data?.post?.name);
   const imageSource = require('../assets/splash.png');
   return (
     <Wrapper style={[styles.wrapper]}>
       <View style={styles.flexDirection}>
         <Text style={styles.offerPrice}>
-          Offered price: <Text style={styles.price}>QAR 280</Text>
+          Offered price: <Text style={styles.price}>{`QAR ${data?.offer_value}`}</Text>
         </Text>
         <View style={{flexDirection: "row", alignItems: "center"}}>
-          <Tick />
-          <Text style={styles.accepted}>Accepted</Text>
+        {data?.status == 'Accepted' ? <Tick /> : null }
+          <Text style={styles.accepted}>{data?.status}</Text>
         </View>
       </View>
 
-      <Text style={styles.sentOn}>Sent on: 25 May,2023</Text>
+      <Text style={styles.sentOn}>{`Sent on: ${moment.unix(data?.submission_time).format('DD MMMM, YYYY')}`}</Text>
 
       <View style={styles.flexDirection}>
         <View style={styles.prodDetailCont}>
@@ -48,21 +49,23 @@ const OfferCard = ({data}) => {
             />
           </View>
           <View style={styles.productDetailCont}>
-            <Text style={styles.prodName}>Wireless charger</Text>
+            <Text style={styles.prodName}>{data?.post?.id}</Text>
 
             <View
               style={[{flexDirection: "row", justifyContent: "space-between"}]}
             >
-              <Text style={styles.prodPrice}>{`QAR ${204}`}</Text>
+              <Text style={styles.prodPrice}>{`QAR ${data?.offer_value}`}</Text>
 
                     </View>
 
                   </View>
         </View>
+        {data?.status == 'Accepted' ?
         <View style={{  alignSelf: "flex-end",flexDirection:'row',alignItems:'center'}}>
 <CheckoutSvg/>
         <Text style={styles.checkout}>Checkout</Text>
         </View>
+: null}
       </View>
     </Wrapper>
   );

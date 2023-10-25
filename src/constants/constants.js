@@ -25,7 +25,9 @@ const endPoints = {
   getSingleRating:'wp-json/sm-api/v1/get-order-review',
   changePassword:'wp-json/sm-api/v1/change-password',
   forgotPass:"wp-json/sm-api/v1/forget-password",
-  postNegotiate:"wp-json/sm-api/v1/custom_offers/add_custom_offer"
+  postNegotiate:"wp-json/sm-api/v1/custom_offers/add_custom_offer",
+  contactUs:'wp-json/sm-api/v1/contactus-form',
+  offerList:'wp-json/sm-api/v1/custom_offers'
 }
 
 const onboardingData = [

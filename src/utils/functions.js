@@ -80,7 +80,7 @@ const NegotiableTag = () => {
 }
 
 const renderProducts = (data, navigation, isPending, viewLeft, viewRight) => {
-  data = data?.filter(item => item.status === 'publish');
+  data = data?.filter(item => item?.status === 'publish');
   // console.log("----item status------", data)
   return (
     <View style={{ marginBottom: theme.MARGINS.hy10 }}>

@@ -5,11 +5,11 @@ import { setUser } from '../../store/userSlice';
 import instance from '../../utils/interceptor';
 
 
-export const ChangePasswordApi = createAsyncThunk('changePasswordApi/ ChangePasswordApi', async (data, thunkAPI) => {
+export const ContactUsApi = createAsyncThunk('contactUsApi/ContactUsApi', async (data, thunkAPI) => {
     try {
         console.log("----signup 333333 a------", data);
 
-        const response = await instance.post(Base_Url + endPoints.changePassword + Consumer_Params, data, {
+        const response = await instance.post(Base_Url + endPoints.contactUs+ Consumer_Params, data, {
             headers: {
                 'Content-Type': 'application/json'
             }
