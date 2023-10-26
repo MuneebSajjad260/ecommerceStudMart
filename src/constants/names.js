@@ -48,7 +48,9 @@ const names = {
  giveReview:"GiveReview",
  viewReview:"ViewReview",
  offerList:"OfferList",
- contactUs:'ContactUs'
+ contactUs:'ContactUs',
+ deleteAccount:'DeleteAccount'
+
 
 };
 

@@ -50,6 +50,7 @@ import GiveReview from "./giveReview/GiveReview";
 import ViewReview from "./viewReview/ViewReview";
 import OfferList from "./offerList/OfferList";
 import Contact from "./contact/Contact";
+import DeleteAccount from "./deleteAccount/DeleteAccount";
 // import Payment from "./checkout/Payment";
 
 const screens = {
@@ -105,6 +106,7 @@ const screens = {
   ViewReview,
   OfferList,
   Contact,
+  DeleteAccount
 
   // Payment,
 };

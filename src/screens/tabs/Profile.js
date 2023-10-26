@@ -208,6 +208,12 @@ const Profile = () => {
             icon={<DocumentSvg />}
             onPress={() => navigation.navigate(names.termsCond)}
           />
+            <View style={styles.divider} />
+          <components.ProfileCategory
+            title="Delete Account"
+            icon={<DocumentSvg />}
+            onPress={() => navigation.navigate(names.deleteAccount)}
+          />
         </Wrapper>
 
         <Wrapper

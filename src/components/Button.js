@@ -4,7 +4,7 @@ import getThemedColors from "../utils/themeMode";
 
 import { theme } from "../constants";
 
-const Button = ({ title, onPress, containerStyle, style, textStyle, disable, loading }) => {
+const Button = ({ title, onPress, containerStyle,style, textStyle, disable, loading }) => {
 
   const colors = getThemedColors(useColorScheme())
 

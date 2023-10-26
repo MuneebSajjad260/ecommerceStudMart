@@ -305,6 +305,11 @@ const StackNavigator = () => {
           component={screens.Contact}
           options={{ headerShown: false }}
          />
+          <Stack.Screen
+          name={names.deleteAccount}
+          component={screens.DeleteAccount}
+          options={{ headerShown: false }}
+         />
       </Stack.Navigator>
     </NavigationContainer>
   );

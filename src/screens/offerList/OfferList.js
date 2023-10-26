@@ -77,7 +77,7 @@ return (
   renderItem={({item})=>{
 return(
 
-    <OfferCard data={item}/>
+    <OfferCard data={item}  navigation={navigation}/>
 
     )
   }}

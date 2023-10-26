@@ -23,10 +23,16 @@ import Tick from "../svg/Tick";
 import CheckoutSvg from '../svg/CheckoutSvg'
 import moment from 'moment';
 
-const OfferCard = ({data}) => {
-  console.log('data--', data?.post?.name);
-  const imageSource = require('../assets/splash.png');
+const OfferCard = ({data,navigation}) => {
+  // console.log('data--', data?.post?.images[0]?.src);
+
   return (
+    <TouchableOpacity   onPress={() =>
+      navigation.navigate(names.Product, {
+        product: data?.post,
+
+      })
+    }>
     <Wrapper style={[styles.wrapper]}>
       <View style={styles.flexDirection}>
         <Text style={styles.offerPrice}>
@@ -45,16 +51,16 @@ const OfferCard = ({data}) => {
           <View style={styles.imageContainer}>
             <Image
               style={{height: "100%", width: "100%"}}
-              // source={{uri: item?.image?.src}}
+               source={{uri: data?.post?.images[0]?.src}}
             />
           </View>
           <View style={styles.productDetailCont}>
-            <Text style={styles.prodName}>{data?.post?.id}</Text>
+            <Text style={styles.prodName}>{data?.post?.name}</Text>
 
             <View
               style={[{flexDirection: "row", justifyContent: "space-between"}]}
             >
-              <Text style={styles.prodPrice}>{`QAR ${data?.offer_value}`}</Text>
+              <Text style={styles.prodPrice}>{`QAR ${data?.post?.price}`}</Text>
 
                     </View>
 
@@ -68,6 +74,7 @@ const OfferCard = ({data}) => {
 : null}
       </View>
     </Wrapper>
+    </TouchableOpacity>
   );
 };
 const styles = StyleSheet.create({

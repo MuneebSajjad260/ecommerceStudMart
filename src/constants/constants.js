@@ -27,7 +27,8 @@ const endPoints = {
   forgotPass:"wp-json/sm-api/v1/forget-password",
   postNegotiate:"wp-json/sm-api/v1/custom_offers/add_custom_offer",
   contactUs:'wp-json/sm-api/v1/contactus-form',
-  offerList:'wp-json/sm-api/v1/custom_offers'
+  offerList:'wp-json/sm-api/v1/custom_offers',
+  deleteApi:'wp-json/sm-api/v1/delete-user',
 }
 
 const onboardingData = [
