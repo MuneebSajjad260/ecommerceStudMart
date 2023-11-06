@@ -46,7 +46,7 @@ const DeleteAccount = ({route}) => {
 
   const points = [
     'Your account is queued for deletion.',
-    'You will receive an email once your accounts and associated data is deleted.',
+    'Your personal and professional information will be deleted from all of our data storages',
 
   ];
   const renderHeader = () => {

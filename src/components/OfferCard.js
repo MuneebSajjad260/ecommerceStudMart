@@ -8,6 +8,7 @@ import {
   Image,
   Pressable,
 } from "react-native";
+import { useSelector } from "react-redux";
 import {removeFromWishlist} from "../store/wishlistSlice";
 import {removeFromWishlistHandler} from "../utils/functions";
 import React from "react";
@@ -22,17 +23,39 @@ import ReviewStarSvg from "../svg/ReviewStarSvg";
 import Tick from "../svg/Tick";
 import CheckoutSvg from '../svg/CheckoutSvg'
 import moment from 'moment';
+import { productExistMessage } from "../utils/functions";
+import { addToCart } from "../store/cartSlice";
 
-const OfferCard = ({data,navigation}) => {
+const OfferCard = ({data,navigation,dispatch}) => {
   // console.log('data--', data?.post?.images[0]?.src);
 
+  const productList = useSelector((state) => state.cart.list);
+
+  console.log('product list---', productList);
+  const productExist = (product) => {
+    return productList.find((i) => i.id === product.id);
+  };
+
+  const cartItem = {
+    id: data?.post?.id,
+    name: data?.post?.name,
+    is_sale: data?.post?.is_sale,
+    price: data?.offer_value,
+    oldPrice:data?.post?.old_price,
+    image: data?.post?.images[0]?.src,
+    vendorDetail: data?.post?.vendor_detail,
+    // size: productSize,
+    // color: productColor,
+  };
   return (
     <TouchableOpacity   onPress={() =>
       navigation.navigate(names.Product, {
         product: data?.post,
 
       })
-    }>
+    }
+    disabled={data?.status == 'Accepted'}
+    >
     <Wrapper style={[styles.wrapper]}>
       <View style={styles.flexDirection}>
         <Text style={styles.offerPrice}>
@@ -67,10 +90,22 @@ const OfferCard = ({data,navigation}) => {
                   </View>
         </View>
         {data?.status == 'Accepted' ?
-        <View style={{  alignSelf: "flex-end",flexDirection:'row',alignItems:'center'}}>
+        <TouchableOpacity style={{  alignSelf: "flex-end",flexDirection:'row',alignItems:'center'}}
+        
+        onPress={() => {
+          productExist(data?.post)
+            ? productExistMessage()
+            : dispatch(addToCart(cartItem));
+          // !productExist(product) && productWasAddedMessage(product);
+          productExist(data?.post)
+            ? null
+            : navigation.navigate(names.Checkout);
+        }}
+        
+        >
 <CheckoutSvg/>
         <Text style={styles.checkout}>Checkout</Text>
-        </View>
+        </TouchableOpacity>
 : null}
       </View>
     </Wrapper>

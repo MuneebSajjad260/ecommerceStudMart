@@ -45,6 +45,7 @@ import {selectUser} from "../../store/userSlice";
 import Button from "../../components/Button";
 import { PostNegotiate } from "../../services/actions/PostNegotiate";
 import OrderSuccessful from "../../svg/OrderSuccessful";
+import moment from "moment";
 /**
  *  Product details
  * @param {*} param0
@@ -313,18 +314,12 @@ console.log("avg--",avg)
 
   const handleOfferBtn=()=>{
 // Get the current time using the Date object
-const now = new Date();
+const date = new Date();
+const momentObject = moment(date);
 
-// Extract the hours, minutes, and seconds
-const hours = now.getHours();
-const minutes = now.getMinutes();
-const seconds = now.getSeconds();
-
-// Calculate the total seconds
-const totalSeconds = hours * 3600 + minutes * 60 + seconds;
-
-console.log("Current time in seconds:", totalSeconds);
+const totalSeconds = momentObject.unix();
   
+console.log("total seconds---",totalSeconds)
     const body ={offer_id:'' , user_id:userData?.userid,
      user_name:`${auth?.data?.billing?.first_name}${auth?.data?.billing?.last_name}`,
     offer_value:price.value,
